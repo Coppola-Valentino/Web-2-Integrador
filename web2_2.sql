@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-04-2025 a las 00:17:42
+-- Tiempo de generación: 01-04-2025 a las 02:30:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `web2`
+-- Base de datos: `web2.2`
 --
 
 -- --------------------------------------------------------
@@ -156,7 +156,8 @@ ALTER TABLE `medicos`
 -- Indices de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  ADD PRIMARY KEY (`IDPaciente`);
+  ADD PRIMARY KEY (`IDPaciente`),
+  ADD KEY `Cama` (`Cama`);
 
 --
 -- Indices de la tabla `plandecuidado`
@@ -209,6 +210,16 @@ ALTER TABLE `paciente`
 --
 ALTER TABLE `plandecuidado`
   MODIFY `IDPlan` int(100) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `paciente`
+--
+ALTER TABLE `paciente`
+  ADD CONSTRAINT `paciente_ibfk_1` FOREIGN KEY (`Cama`) REFERENCES `camas` (`IDCama`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
