@@ -1,6 +1,15 @@
 mixin bar()
-    ul 
-        li: a(href="/Home") Home
-        li: a(href="/inPac") Pacientes
-        li: a(href="/Emergencias") Emergencias
-        li: a(href="/") 
+
+    div(style ="background:rgb(29, 206, 167); padding: 1rem 0; border: 3px solid #ddd;")
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;")
+            img(src="/Icons/Icono.png", alt="Logo")
+            div(style="border: 4px solid #ddd; background: rgb(124, 226, 206); padding: 3px;")
+                a(href="/") Home
+            div(style="border: 4px solid #ddd; background: rgb(124, 226, 206); padding: 3px;")
+                a(href="/inPac") Pacientes
+            div(style="border: 4px solid #ddd; background: rgb(124, 226, 206); padding: 3px;")
+                a(href="/login") Login
+            div(style="border: 4px solid #ddd; background: rgb(124, 226, 206); padding: 3px;")
+                a(href="/Emergencias") Emergencias
+            div(style="border: 4px solid #ddd; background: rgb(124, 226, 206); padding: 3px;")
+                a(href="/turnos") Turnos

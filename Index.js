@@ -6,6 +6,8 @@ const port = 3000;
 app.set('view engine', 'pug');
 app.set('views', './pugs');
 
+app.use(express.static('Imagenes'));
+
 app.get('/', (req, res) => {
     res.render('home');
 })
@@ -18,7 +20,18 @@ app.get('/inPac', (req, res) => {
 app.get('/Emergencias', (req, res) => {
     res.render('emerg');
 })
-
+app.get('/login', (req, res) => {
+    res.render('login');
+})
+app.get('/register', (req, res) => {
+    res.render('regis');
+})
+app.get('/Turnos', (req, res) => {
+    res.render('turn');
+})
+app.get('/adm', (req, res) => {
+    res.render('adm');
+})
 
 app.listen(port, () => {
     console.log("iniciado");

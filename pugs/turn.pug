@@ -3,18 +3,24 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Emergencias
+        title Turnos
+        link(rel="stylesheet", href="/styles.css")
     body(style="background: rgb(184, 253, 219);")
         include bar.pug
         +bar()
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
-            h1 EMERGENCIAS 
-            form(action="/emerg", method="POST" style="display: flex; flex-direction: column; gap: 10px;") 
+            h1 Sacar Turno
+            form(action="/turn", method="POST", style="display: flex; flex-direction: column; gap: 10px;") 
                 input(type="text" placeholder="Nombre" id="nom")
                 input(type="text" placeholder="Apellido" id="ape")
                 input(type="text" placeholder="Edad" id="edad")
                 input(type="text" placeholder="Sexo" id="sexo")
-                input(type="text" placeholder="Sintomas" id="sint")
+                select(name="especialidad", id="especialidad")
+                    option(value="") Seleccione Especialidad
+                    option(value="cardiologia") Cardiología
+                    option(value="Oftalmologia") Oftalmología
+                    option(value="Oculista") Oculista
+                    option(value="pediatria") Pediatría
                 div(style="display: flex; justify-content: center;")
                     button(type="submit") Enviar
