@@ -1,7 +1,34 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize(URIMysql);
+const sequelize = new Sequelize('web2.2', 'bingus', 'merequetenge', {
+host: 'localhost',
+dialect: 'mysql',
+logging: false,
+port: 3000,
+});
 
 class Medico extends Model {}
+
+module.exports = (sequelize, DataTypes) => {
+  const SomeModel = sequelize.define('SomeModel', {
+    IDMedico: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: false 
+    },
+    Profesion: {
+      type: DataTypes.STRING,
+      allowNull: false 
+    },
+  }, {
+    sequelize,
+    modelName: 'Medico',
+    tableName: 'Medico',
+  });
+  return SomeModel;
+};
 
 Medico.init({
 

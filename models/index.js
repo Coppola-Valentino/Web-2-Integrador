@@ -5,9 +5,11 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
+const router = require('express').Router();
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
+const app = express();
 
 let sequelize;
 if (config.use_env_variable) {
@@ -15,6 +17,34 @@ if (config.use_env_variable) {
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'pugs'));
+
+router.get('/', (req, res) => {
+    res.render('Home'); 
+});
+router.get('/Home', (req, res) => {
+    res.render('Home'); 
+});
+router.get('/inPac', (req, res) => {
+    res.render('inPac'); 
+});
+router.get('/Emergencias', (req, res) => {
+    res.render('Emergencias'); 
+});
+router.get('/Login', (req, res) => {
+    res.render('login'); 
+});
+router.get('/Adm', (req, res) => {
+    res.render('Adm'); 
+});
+router.get('/Register', (req, res) => {
+    res.render('Register'); 
+});
+router.get('/Turnos', (req, res) => {
+    res.render('turn'); 
+});
 
 fs
   .readdirSync(__dirname)
