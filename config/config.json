@@ -2,7 +2,7 @@
   "development": {
     "username": "bingus",
     "password": "merequetenge",
-    "database": "web2.2",
+    "database": "web2.3",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

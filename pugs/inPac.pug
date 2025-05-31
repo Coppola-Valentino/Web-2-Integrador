@@ -8,5 +8,31 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-        h1 pacientes, no se.
-    
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
+            table 
+             tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
+                th IDPaciente
+                th Nombre
+                th Edad
+                th DNI
+                th Genero
+                th Historial
+                th Seguro
+                th Cita Medica
+                th Acciones
+                 each pac in paciente
+                     tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
+                      td= pac.IDPaciente
+                      td= pac.Nombre
+                      td= pac.Edad
+                      td= pac.DNI
+                      td= pac.Genero
+                      td= pac.Historial
+                      td= pac.Seguro
+                      td= pac.Cita
+                        td
+                          a(href=`/inPac/${pac.IDPaciente}/editar`) Editar
+                          br
+                          a(href=`/inPac/${pac.IDPaciente}/excluir`) Eliminar
+            br
+            a(href=`/inPac/anadir`) Añadir

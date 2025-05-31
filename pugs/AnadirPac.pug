@@ -1,0 +1,32 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Añadir
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+         h1 Añadir Paciente
+         form(action=`/inPac/anadir` method="POST")
+           label(for="Nombre") Nombre:
+           input(type="text" name="Nombre" required)
+           br
+           label(for="Edad") Edad:
+           input(type="number" name="Edad" required)
+           br
+           label(for="DNI") DNI:
+           input(type="number" name="DNI" required)
+           br
+           label(for="Genero") Genero:
+           input(type="text" name="Genero" required)
+           br
+           label(for="Historial") Historial:
+           input(type="text" name="Historial")
+           br
+           label(for="Seguro") Seguro:
+           input(type="text" name="Seguro")
+           br
+           button(type="submit") Guardar cambios
+           a(href="/inPac") Cancelar

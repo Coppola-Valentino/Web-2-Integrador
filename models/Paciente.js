@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('web2.2', 'bingus', 'merequetenge', {
+const sequelize = new Sequelize('web2.3', 'bingus', 'merequetenge', {
 host: 'localhost',
 dialect: 'mysql',
 logging: false,
@@ -8,7 +8,7 @@ port: 3000,
 
 class Paciente extends Model {}
 
-module.exports = (sequelize, DataTypes) => {
+/*module.exports = (sequelize, DataTypes) => {
   const SomeModel = sequelize.define('SomeModel', {
     IDPaciente: {
       type: DataTypes.INTEGER,
@@ -18,7 +18,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false 
     },
+    edad: {
+     type: DataTypes.INTEGER,
+    },
+    dni: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     Historial: {
+      type: DataTypes.STRING,
+    },
+    seguro: {
       type: DataTypes.STRING,
     },
     Genero: {
@@ -36,6 +46,48 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'paciente',
   });
   return SomeModel;
+};*/
+
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define('paciente', {
+    IDPaciente: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoincrement: true
+    },
+    Nombre: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    Edad: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    DNI: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      unique: true
+    },
+    Genero: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    Historial: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    Seguro: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    Cita: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+  }, {
+    tableName: 'paciente',
+    timestamps: false
+  });
 };
 
 Paciente.init({

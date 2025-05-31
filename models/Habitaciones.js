@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('web2.2', 'bingus', 'merequetenge', {
+const sequelize = new Sequelize('web2.3', 'bingus', 'merequetenge', {
 host: 'localhost',
 dialect: 'mysql',
 logging: false,

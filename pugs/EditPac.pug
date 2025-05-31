@@ -1,0 +1,37 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Editar
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
+         h1 Editar Paciente
+         form(action=`/inPac/${pac.IDPaciente}/editar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+           label(for="Nombre") Nombre:
+           input(type="text" name="Nombre" value=pac.Nombre required)
+           br
+           label(for="Edad") Edad:
+           input(type="number" name="Edad" value=pac.Edad required)
+           br
+           label(for="DNI") DNI:
+           input(type="number" name="DNI" value=pac.DNI required)
+           br
+           label(for="Genero") Genero:
+           input(type="text" name="Genero" value=pac.Genero required)
+           br
+           label(for="Historial") Historial:
+           input(type="text" name="Historial" value=pac.Historial style="width: 100%;")
+           br
+           label(for="Seguro") Seguro:
+           input(type="text" name="Seguro" value=pac.Seguro)
+           br
+           label(for="Cita") Cita:
+           input(type="number" name="Cita" value=pac.Cita)
+           br
+           button(type="submit") Guardar cambios
+           br
+           a(href="/inPac") Cancelar
