@@ -6,53 +6,79 @@ logging: false,
 port: 3000,
 });
 
-class Cama extends Model {}
+class Camas extends Model {}
 
-module.exports = (sequelize, DataTypes) => {
-  const SomeModel = sequelize.define('SomeModel', {
-    IDCama: {
+/*module.exports = (sequelize, DataTypes) => {
+  const SomeModel = sequelize.define('Camas', {
+    IDCamas: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       allowNull: false,
     },
-    IDHabitacion: {
+    Paciente: {
+      type: DataTypes.INTEGER,
+    },
+    Higenizado: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+    Habitacion: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    Genero: {
-      type: DataTypes.STRING,
-    },
-    IDPaciente: {
-      type: DataTypes.INTEGER,
-    }
   }, {
     sequelize,
-    modelName: 'Cama',
-    tableName: 'Cama',
+    modelName: 'camas',
+    tableName: 'camas',
   });
   return SomeModel;
+};*/
+
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define('Cama', {
+    IDCamas: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    Paciente: {
+      type: DataTypes.INTEGER
+    },
+    Higenizado: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
+    Habitacion: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  }, {
+    tableName: 'camas',
+    timestamps: false
+  });
 };
 
-Cama.init({
+Camas.init({
 
-IDCama: {
+IDCamas: {
 type: DataTypes.INTEGER,
 primaryKey: true,
 allowNull: false,
 },
-IDHabitacion: {
+Paciente: {
+type: DataTypes.INTEGER,
+},
+Higenizado: {
+type: DataTypes.BOOLEAN,
+defaultValue: true,
+},
+Habitacion: {
 type: DataTypes.INTEGER,
 allowNull: false,
 },
-Genero: {
-type: DataTypes.STRING,
-},
-IDPaciente: {
-type: DataTypes.INTEGER,
-}
 }, {
 
 sequelize,
-modelName: 'Cama',
-tableName: 'Cama',
+modelName: 'camas',
+tableName: 'camas',
 });

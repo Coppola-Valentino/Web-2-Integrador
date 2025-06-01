@@ -1,0 +1,45 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Habitaciones
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
+          table 
+             tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
+              th IDHabitacion
+              th Tipo de Hab.
+              th Camas (total)
+              th Camas (ocupadas)
+              th Genero de Pacientes
+              th Pacientes
+              th Higenizado
+              th Acciones
+              each hab in Habits
+                -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
+                tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
+                  td= hab.IDHab
+                  td= hab.Tipo
+                  td= camasDeHab.length 
+                  -var ocupadas = camasDeHab.filter(cama => cama.Paciente).length;
+                  td= ocupadas
+                  each cama in camasDeHab
+                    - var pac = pacientes.find(p => p.IDPaciente === cama.Paciente)
+                    - var gen = pac ? pac.Genero : 'Desconocido'
+                  td= gen
+                  td
+                    each cama in camasDeHab
+                       #{cama.Paciente} 
+                  td 
+                    each cama in camasDeHab
+                       #{cama.Higenizado}
+                  td
+                   a(href=`/Habit/${hab.IDHab}/editar`) Editar
+                   br
+                   a(href=`/Habit/${hab.IDHab}/eliminar`) Eliminar
+          br
+          a(href=`/Habit/anadir`) Añadir

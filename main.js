@@ -26,12 +26,26 @@ router.get('/Home', (req, res) => {
 });
 
 const Paciente = require('./models/Paciente')(sequelize, DataTypes);
+const Habitacion = require('./models/Habitaciones')(sequelize, DataTypes);
+const Camas = require('./models/Cama')(sequelize, DataTypes);
+
+
 router.get('/inPac', async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
     res.render('inPac', { paciente: pacientes });
   } catch (err) {
     res.status(500).send('Error fetching pacientes');
+  }
+});
+router.get('/Habitaciones', async (req, res) => {
+  try {
+    const pacientes = await Paciente.findAll();
+    const Habits = await Habitacion.findAll();
+    const camas = await Camas.findAll();
+    res.render('Habit', { Habits, camas, pacientes});
+  } catch (err) {
+    res.status(500).send('Error fetching habitaciones');
   }
 });
 router.get('/Emergencias', (req, res) => {

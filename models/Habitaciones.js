@@ -6,55 +6,56 @@ logging: false,
 port: 3000,
 });
 
-class Habitaciones extends Model {}
+class Habitacion extends Model {}
 
-module.exports = (sequelize, DataTypes) => {
-  const SomeModel = sequelize.define('SomeModel', {
-    IDHabitacion: {
+/*module.exports = (sequelize, DataTypes) => {
+  const SomeModel = sequelize.define('Cabitacion', {
+    IDHab: {
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    IDCama: {
-      type: DataTypes.INTEGER,
-    },
-    Genero: {
+    Tipo: {
       type: DataTypes.STRING,
-    },
-    Desinfectada: {
-      type: DataTypes.BOOLEAN,
-    },
-    Ala: {
-      type: DataTypes.INTEGER,    
+      allowNull: false,
     }
   }, {
     sequelize,
-    modelName: 'Habitaciones',
-    tableName: 'Habitaciones',
+    modelName: 'habitacion',
+    tableName: 'habitacion',
   });
   return SomeModel;
+};*/
+
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define('Habitacion', {
+    IDHab: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    Tipo: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, {
+    tableName: 'habitacion',
+    timestamps: false
+  });
 };
 
-Habitaciones.init({
+Habitacion.init({
 
-IDHabitacion: {
+IDHab: {
 type: DataTypes.INTEGER,
 primaryKey: true,
 },
-IDCama: {
-type: DataTypes.INTEGER,
-},
-Genero: {
+Tipo: {
 type: DataTypes.STRING,
-},
-Desinfectada: {
-type: DataTypes.BOOLEAN,
-},
-Ala: {
-type: DataTypes.INTEGER,    
+allowNull: false,
 }
 }, {
 
 sequelize,
-modelName: 'Habitaciones',
-tableName: 'Habitaciones',
+modelName: 'habitacion',
+tableName: 'habitacion',
 });
