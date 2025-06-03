@@ -1,0 +1,29 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Añadir Camas
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+         h1 Añadir una Cama al sistema
+         form(action=`/Habit/anadirCam` method="POST")
+           label(for="Tipo") Tipo de Habitacion:
+           select(name="Tipo" required)
+             option(value="Urgencias") Urgencias
+             option(value="Quimioterapia") Quimioterapia
+             option(value="Cirujia") Cirujia
+             option(value="Pediatria") Pediatria
+             option(value="Traumatologia") Traumatologia
+             option(value="Ginecologia") Ginecologia
+             option(value="Neurologia") Neurologia
+           label(for="Habitacion") Habitación donde alojar la cama:
+           select(name="Habitacion" required)
+             each Habit in Habits
+               - var camasDeHab = camas.filter(cama => cama.Habitacion === Habit.IDHab);
+               if camasDeHab.length < 2
+                 option(value=Habit.IDHab) Habitación #{Habit.IDHab} (#{Habit.Tipo}) - Camas: #{camasDeHab.length}
+           button(type="submit") Guardar cambios
+           a(href="/Habit") Cancelar

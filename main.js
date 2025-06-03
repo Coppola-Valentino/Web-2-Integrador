@@ -38,6 +38,29 @@ router.get('/inPac', async (req, res) => {
     res.status(500).send('Error fetching pacientes');
   }
 });
+router.get(`/inPac/:id/internar`, async (req, res) => {
+  try {
+    const pacientesS = await Paciente.findByPk(req.params.id);
+    const pacientesT = await Paciente.findAll();
+    const Habits = await Habitacion.findAll();
+    const camas = await Camas.findAll();
+    res.render('Inter', { pacT: pacientesT, pacS: pacientesS, Habits, camas });
+  } catch (err) {
+    res.status(500).send('Error fetching data for internar');
+  }
+});
+router.post('/inPac/:id/internar', async (req, res) => {
+  const pac = await Paciente.findByPk(req.params.id);
+  try {
+    await Camas.update(
+      { Paciente: pac.IDPaciente},
+      { where: { IDCamas: req.body.Cama } }
+    );
+  } catch (err) {
+    res.status(500).send('Error with Internation: ' + err.message);
+  }
+});
+
 router.get('/Habitaciones', async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
@@ -47,6 +70,60 @@ router.get('/Habitaciones', async (req, res) => {
   } catch (err) {
     res.status(500).send('Error fetching habitaciones');
   }
+});
+router.get('/Habit/anadir', async (req, res) => {
+  try {
+    const pacientes = await Paciente.findAll();
+    const Habits = await Habitacion.findAll();
+    const camas = await Camas.findAll();
+    res.render('AnadirHab', { Habits, camas, pacientes});
+  } catch (err) {
+    res.status(500).send('Error fetching habitaciones');
+  }
+});
+router.post('/Habit/anadir', async (req, res) => {
+  try {
+    await Habitacion.create(req.body);
+    res.redirect('/Habit');
+  } catch (err) {
+    res.status(500).send('Error adding Habitacion: ' + err.message);
+  }
+});
+router.get('/Habit/anadirCam', async (req, res) => {
+  try {
+    const pacientes = await Paciente.findAll();
+    const Habits = await Habitacion.findAll();
+    const camas = await Camas.findAll();
+    res.render('AnadirCam', { Habits, camas, pacientes});
+  } catch (err) {
+    res.status(500).send('Error fetching habitaciones');
+  }
+});
+router.post('/Habit/anadirCam', async (req, res) => {
+  try {
+    await Camas.create(req.body);
+    res.redirect('/Habit');
+  } catch (err) {
+    res.status(500).send('Error adding cama: ' + err.message);
+  }
+});
+router.get('/Habit/:id/editar', async (req, res) => {
+  try {
+    const pacientes = await Paciente.findAll();
+    const Hab = await Habitacion.findByPk(req.params.id);
+    const camas = await Camas.findAll();
+    res.render('EditHab', { Hab, camas, pacientes});
+  } catch (err) {
+    res.status(500).send('Error fetching habitaciones');
+  }
+});
+router.post('/Habit/:id/editar', async (req, res) => {
+  await Habitacion.update(req.body, { where: { IDHab: req.params.id } });
+  res.redirect('/Habit');
+});
+router.get('/Habit/:id/eliminar', async (req, res) => {
+  await Habitacion.destroy({ where: { IDHab: req.params.id } });
+  res.redirect('/Habit');
 });
 router.get('/Emergencias', (req, res) => {
     res.render('emerg'); 

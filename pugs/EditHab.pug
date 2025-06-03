@@ -1,0 +1,36 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Editar
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
+         h1 Editar Habitacion
+         form(action=`/Habit/${hab.IDHab}/editar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+           -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
+           label(for="Tipo") Tipo de Habitacion:
+           input(type="text" name="Tipo" value=Hab.Tipo required)
+           br
+           label Selecciona las camas para esta habitación:
+           select(name="Camas")
+            each cama in camas
+             if cama.Habitacion == null || cama.Habitacion === hab.IDHab
+              option(
+                value=cama.IDCama
+                selected=(cama.Habitacion === hab.IDHab)
+              ) #{cama.IDCama}
+           br
+           label Higenene:
+            each cama in camasDeHab
+             div
+              span Cama #{cama.IDCama}:
+              select(name=`Higenizado_${cama.IDCama}`)
+               option(value=true selected=cama.Higenizado) Si
+               option(value=false selected=!cama.Higenizado) No
+           button(type="submit") Guardar cambios
+           br
+           a(href="/Habit") Cancelar

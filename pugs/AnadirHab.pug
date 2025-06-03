@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Añadir Habitacion
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+         h1 Añadir Habitacion al sistema
+         form(action=`/Habit/anadir` method="POST")
+           label(for="Tipo") Tipo de Habitacion:
+           select(name="Tipo" required)
+             option(value="Urgencias") Urgencias
+             option(value="Quimioterapia") Quimioterapia
+             option(value="Cirujia") Cirujia
+             option(value="Pediatria") Pediatria
+             option(value="Traumatologia") Traumatologia
+             option(value="Ginecologia") Ginecologia
+             option(value="Neurologia") Neurologia
+           label(for="Camas") camas para esta habitación:
+              select(name="Camas")
+                 each cama in camas
+                  if cama.Habitacion == null
+                   option(value=cama.IDCama) Cama #{cama.IDCama}
+           button(type="submit") Guardar cambios
+           a(href="/Habit") Cancelar

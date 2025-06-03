@@ -1,0 +1,29 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Internar Paciente
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
+         h1 INTERNACIONES 
+          form(action=`/inPac/${pacS.IDPaciente}/internar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+            label(for="Cama") Cama a asignar:
+            select(name="Cama" required)
+                each cama in camas                
+                 - var otrasCamas = camas.filter(c => c.Habitacion === cama.Habitacion && c.IDCama !== cama.IDCama);
+                 - var otroPacienteObj = null;
+                 if otrasCamas.length
+                   - var camaConPaciente = otrasCamas.find(c => c.Paciente !== null && c.Paciente !== undefined);
+                   if camaConPaciente
+                     - var otroPacienteObj = pacT.find(p => p.IDPaciente === camaConPaciente.Paciente);
+                     if cama.Paciente === null || cama.Paciente === undefined
+                      -var HabDeCama = Habitaciones.find(hab => hab.IDHab === cama.Habitacion);
+                      option(value=cama.IDCama) Cama #{cama.IDCama} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
+            br
+           button(type="submit") Guardar
+           br
+           a(href="/inPac") Cancelar
