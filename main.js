@@ -56,6 +56,7 @@ router.post('/inPac/:id/internar', async (req, res) => {
       { Paciente: pac.IDPaciente},
       { where: { IDCamas: req.body.Cama } }
     );
+    res.redirect('/inPac');
   } catch (err) {
     res.status(500).send('Error with Internation: ' + err.message);
   }
@@ -84,7 +85,7 @@ router.get('/Habit/anadir', async (req, res) => {
 router.post('/Habit/anadir', async (req, res) => {
   try {
     await Habitacion.create(req.body);
-    res.redirect('/Habit');
+    res.redirect('/Habitaciones');
   } catch (err) {
     res.status(500).send('Error adding Habitacion: ' + err.message);
   }
@@ -102,32 +103,68 @@ router.get('/Habit/anadirCam', async (req, res) => {
 router.post('/Habit/anadirCam', async (req, res) => {
   try {
     await Camas.create(req.body);
-    res.redirect('/Habit');
+    res.redirect('/Habitaciones');
   } catch (err) {
     res.status(500).send('Error adding cama: ' + err.message);
   }
 });
+
+router.get('/Cama/:id/eliminar', async (req, res) => {
+ try {
+    await Camas.destroy({ where: { IDCamas: req.params.id } });
+    res.redirect('/Habitaciones');
+  } catch (err) {
+    res.status(500).send('Error deleting cama: ' + err.message);
+  }
+});
+
 router.get('/Habit/:id/editar', async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
-    const Hab = await Habitacion.findByPk(req.params.id);
+    const hab = await Habitacion.findByPk(req.params.id);
     const camas = await Camas.findAll();
-    res.render('EditHab', { Hab, camas, pacientes});
+    res.render('EditHab', { hab, camas, pacientes});
   } catch (err) {
     res.status(500).send('Error fetching habitaciones');
   }
 });
 router.post('/Habit/:id/editar', async (req, res) => {
   await Habitacion.update(req.body, { where: { IDHab: req.params.id } });
-  res.redirect('/Habit');
+   const camasDeHab = await Camas.findAll({ where: { Habitacion: req.params.id } });
+    for (const cama of camasDeHab) {
+      const higenizadoValue = req.body[`Higenizado_${cama.IDCamas}`] === "true";
+      await cama.update({ Higenizado: higenizadoValue });
+    }
+  res.redirect('/Habitaciones');
 });
 router.get('/Habit/:id/eliminar', async (req, res) => {
   await Habitacion.destroy({ where: { IDHab: req.params.id } });
-  res.redirect('/Habit');
+  res.redirect('/Habitaciones');
 });
-router.get('/Emergencias', (req, res) => {
-    res.render('emerg'); 
+router.get('/Emergencias', async (req, res) => {
+  try {
+    const pacientes = await Paciente.findAll();
+    const Habits = await Habitacion.findAll();
+    const camas = await Camas.findAll();
+    res.render('emerg', { Habits, camas, pacientes});
+  } catch (err) {
+    res.status(500).send('Error fetching');
+  }
 });
+
+router.post('/Emergencias', async (req, res) => {
+  try {
+    await Paciente.create(req.body);
+    await Camas.update(
+      { Paciente: pac.IDPaciente},
+      { where: { IDCamas: req.body.Cama } }
+    );
+    res.redirect('/inPac');
+  } catch (err) {
+    res.status(500).send('Error with emergencia: ' + err.message);
+  }
+});
+
 router.get('/Login', (req, res) => {
     res.render('login'); 
 });

@@ -18,7 +18,8 @@ html(lang="en")
               th Genero de Pacientes
               th Pacientes
               th Higenizado
-              th Acciones
+              th Acciones para cama 
+              th Acciones para habitacion
               each hab in Habits
                 -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
                 tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
@@ -33,10 +34,26 @@ html(lang="en")
                   td= gen
                   td
                     each cama in camasDeHab
-                       #{cama.Paciente} 
+                      if cama.Paciente 
+                        - var pac = pacientes.find(p => p.IDPaciente === cama.Paciente)
+                        span(style="color: blue;") #{pac.Nombre}- #{pac.Genero} - ID: #{pac.IDPaciente} 
+                        br
+                      else
+                        span(style="color: Green;") Libre
+                        br
                   td 
                     each cama in camasDeHab
-                       #{cama.Higenizado}
+                      if cama.Higenizado
+                        span(style="color: green;") Si
+                        br
+                      else
+                        span(style="color: red;") No
+                        br
+                  td 
+                    each cama in camasDeHab
+                      if cama.Paciente === null || cama.Paciente === undefined
+                        a(href=`/Cama/${cama.IDCamas}/eliminar`) Eliminar
+                        br
                   td
                    a(href=`/Habit/${hab.IDHab}/editar`) Editar
                    br

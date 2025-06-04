@@ -10,15 +10,6 @@ html(lang="en")
         block content
          h1 Añadir una Cama al sistema
          form(action=`/Habit/anadirCam` method="POST")
-           label(for="Tipo") Tipo de Habitacion:
-           select(name="Tipo" required)
-             option(value="Urgencias") Urgencias
-             option(value="Quimioterapia") Quimioterapia
-             option(value="Cirujia") Cirujia
-             option(value="Pediatria") Pediatria
-             option(value="Traumatologia") Traumatologia
-             option(value="Ginecologia") Ginecologia
-             option(value="Neurologia") Neurologia
            label(for="Habitacion") Habitación donde alojar la cama:
            select(name="Habitacion" required)
              each Habit in Habits
@@ -26,4 +17,4 @@ html(lang="en")
                if camasDeHab.length < 2
                  option(value=Habit.IDHab) Habitación #{Habit.IDHab} (#{Habit.Tipo}) - Camas: #{camasDeHab.length}
            button(type="submit") Guardar cambios
-           a(href="/Habit") Cancelar
+           a(href="/Habitaciones") Cancelar

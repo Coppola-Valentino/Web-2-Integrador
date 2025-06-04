@@ -9,12 +9,47 @@ html(lang="en")
         +bar()
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
-            h1 EMERGENCIAS 
-            form(action="/emerg", method="POST" style="display: flex; flex-direction: column; gap: 10px;") 
-                input(type="text" placeholder="Nombre" id="nom")
-                input(type="text" placeholder="Apellido" id="ape")
-                input(type="text" placeholder="Edad" id="edad")
-                input(type="text" placeholder="Sexo" id="sexo")
-                input(type="text" placeholder="Sintomas" id="sint")
-                div(style="display: flex; justify-content: center;")
-                    button(type="submit") Enviar
+          h1 EMERGENCIAS 
+          h2 Añadir Datos Conocidos del Paciente
+           form(action=`/emerg` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+               br
+               label(for="Nombre") Nombre:
+               input(type="text" name="Nombre" value="John Doe" required)
+               br
+               label(for="Edad") Edad:
+               input(type="number" name="Edad" value="0" required)
+               br
+               label(for="DNI") DNI:
+               input(type="number" name="DNI" value=null) 
+               br
+               label(for="Genero") Genero:
+                 select(name="Genero" required)
+                   option(value="Masculino") Masculino
+                   option(value="Femenino") Femenino
+                   option(value="Otro") Otro
+                   option(value="Desconocido") Desconocido
+               br
+               label(for="Cama") Cama a asignar:
+               select(name="Cama" required)
+                each cama in camas                
+                 - var otrasCamas = camas.filter(c => c.Habitacion === cama.Habitacion && c.IDCama !== cama.IDCama);
+                 - var otroPacienteObj = null;
+                 if otrasCamas.length
+                   - var camaConPaciente = otrasCamas.find(c => c.Paciente !== null && c.Paciente !== undefined);
+                   if camaConPaciente
+                     - var otroPacienteObj = pacT.find(p => p.IDPaciente === camaConPaciente.Paciente);
+                     if (cama.Paciente === null || cama.Paciente === undefined) && otroPacienteObj.Genero === pacS.Genero
+                      -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
+                      option(value=cama.IDCama) Cama #{cama.IDCama} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
+                   else
+                     if cama.Paciente === null || cama.Paciente === undefined
+                      -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
+                      option(value=cama.IDCama) Cama #{cama.IDCama} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
+                 else 
+                  if cama.Paciente === null || cama.Paciente === undefined
+                      -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
+                      option(value=cama.IDCama) Cama #{cama.IDCama} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
+           br
+           button(type="submit") Guardar
+           br
+           a(href="/inPac") Cancelar

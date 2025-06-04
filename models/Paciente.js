@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     DNI: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       unique: true
     },
     Genero: {

@@ -19,10 +19,5 @@ html(lang="en")
              option(value="Traumatologia") Traumatologia
              option(value="Ginecologia") Ginecologia
              option(value="Neurologia") Neurologia
-           label(for="Camas") camas para esta habitación:
-              select(name="Camas")
-                 each cama in camas
-                  if cama.Habitacion == null
-                   option(value=cama.IDCama) Cama #{cama.IDCama}
            button(type="submit") Guardar cambios
-           a(href="/Habit") Cancelar
+           a(href="/Habitaciones") Cancelar

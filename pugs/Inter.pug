@@ -20,10 +20,14 @@ html(lang="en")
                    - var camaConPaciente = otrasCamas.find(c => c.Paciente !== null && c.Paciente !== undefined);
                    if camaConPaciente
                      - var otroPacienteObj = pacT.find(p => p.IDPaciente === camaConPaciente.Paciente);
+                     if (cama.Paciente === null || cama.Paciente === undefined) && otroPacienteObj.Genero === pacS.Genero
+                      -var HabDeCama = Habitaciones.find(hab => hab.IDHab === cama.Habitacion);
+                      option(value=cama.IDCama) Cama #{cama.IDCama} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
+                   else
                      if cama.Paciente === null || cama.Paciente === undefined
                       -var HabDeCama = Habitaciones.find(hab => hab.IDHab === cama.Habitacion);
                       option(value=cama.IDCama) Cama #{cama.IDCama} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
-            br
+           br
            button(type="submit") Guardar
            br
            a(href="/inPac") Cancelar

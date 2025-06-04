@@ -13,24 +13,22 @@ html(lang="en")
          form(action=`/Habit/${hab.IDHab}/editar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
            -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
            label(for="Tipo") Tipo de Habitacion:
-           input(type="text" name="Tipo" value=Hab.Tipo required)
-           br
-           label Selecciona las camas para esta habitación:
-           select(name="Camas")
-            each cama in camas
-             if cama.Habitacion == null || cama.Habitacion === hab.IDHab
-              option(
-                value=cama.IDCama
-                selected=(cama.Habitacion === hab.IDHab)
-              ) #{cama.IDCama}
+           select(name="Tipo" required)
+             option(value="Urgencias" selected=(hab.Tipo === "Urgencias") ) Urgencias
+             option(value="Quimioterapia" selected=(hab.Tipo === "Quimioterapia")) Quimioterapia
+             option(value="Cirujia" selected=(hab.Tipo === "Cirujia") ) Cirujia
+             option(value="Pediatria" selected=(hab.Tipo === "Pediatria") ) Pediatria
+             option(value="Traumatologia" selected=(hab.Tipo === "Traumatologia") ) Traumatologia
+             option(value="Ginecologia" selected=(hab.Tipo === "Ginecologia")) Ginecologia
+             option(value="Neurologia" selected=(hab.Tipo === "Neurologia")) Neurologia
            br
            label Higenene:
             each cama in camasDeHab
              div
-              span Cama #{cama.IDCama}:
-              select(name=`Higenizado_${cama.IDCama}`)
-               option(value=true selected=cama.Higenizado) Si
-               option(value=false selected=!cama.Higenizado) No
+              span Cama #{cama.IDCamas}:
+              select(name=`Higenizado_${cama.IDCamas}`)
+               option(value="true" selected=(cama.Higenizado === true)) Si
+               option(value="false" selected=(cama.Higenizado === false)) No
            button(type="submit") Guardar cambios
            br
-           a(href="/Habit") Cancelar
+           a(href="/Habitaciones") Cancelar

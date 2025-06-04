@@ -20,7 +20,10 @@ html(lang="en")
            input(type="number" name="DNI" required)
            br
            label(for="Genero") Genero:
-           input(type="text" name="Genero" required)
+             select(name="Genero" required)
+                 option(value="Masculino" selected=(pac.Genero === "Masculino")) Masculino
+                 option(value="Femenino" selected=(pac.Genero === "Femenino")) Femenino
+                 option(value="Otro" selected=(pac.Genero === "Otro")) Otro
            br
            label(for="Historial") Historial:
            input(type="text" name="Historial")
