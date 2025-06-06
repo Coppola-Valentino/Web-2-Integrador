@@ -22,6 +22,9 @@ html(lang="en")
              option(value="Ginecologia" selected=(hab.Tipo === "Ginecologia")) Ginecologia
              option(value="Neurologia" selected=(hab.Tipo === "Neurologia")) Neurologia
            br
+           label(for="Ala") Ala de la Habitacion:
+           input(type="number" name="Ala" value=hab.Ala required)
+           br
            label Higenene:
             each cama in camasDeHab
              div

@@ -36,6 +36,9 @@ module.exports = (sequelize, DataTypes) => {
     Tipo: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    Ala: {
+      type: DataTypes.INTEGER,
     }
   }, {
     tableName: 'habitacion',
@@ -52,6 +55,9 @@ primaryKey: true,
 Tipo: {
 type: DataTypes.STRING,
 allowNull: false,
+},
+Ala: {
+type: DataTypes.INTEGER,
 }
 }, {
 

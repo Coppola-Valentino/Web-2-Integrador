@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     IDPaciente: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoincrement: true
+      autoIncrement: true
     },
     Nombre: {
       type: DataTypes.STRING,
@@ -61,12 +61,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     Edad: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     DNI: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      unique: true
+      allowNull: true
     },
     Genero: {
       type: DataTypes.STRING,
@@ -99,6 +98,12 @@ nombre: {
 type: DataTypes.STRING,
 allowNull: false 
 },
+DNI: {
+type: DataTypes.INTEGER,
+},
+Edad: {
+type: DataTypes.INTEGER,
+},
 Historial: {
 type: DataTypes.STRING,
 },
@@ -108,10 +113,7 @@ type: DataTypes.STRING,
 Citas: {
 type: DataTypes.INTEGER,
 },
-Cama:{
-type: DataTypes.INTEGER,
-},
-Historial:{
+Seguro: {
 type: DataTypes.STRING,
 }
 }, {

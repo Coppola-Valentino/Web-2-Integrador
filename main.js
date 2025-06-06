@@ -33,7 +33,9 @@ const Camas = require('./models/Cama')(sequelize, DataTypes);
 router.get('/inPac', async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
-    res.render('inPac', { paciente: pacientes });
+    const Habits = await Habitacion.findAll();
+    const camas = await Camas.findAll();
+    res.render('inPac', { paciente: pacientes, Habits, camas });
   } catch (err) {
     res.status(500).send('Error fetching pacientes');
   }
@@ -52,6 +54,11 @@ router.get(`/inPac/:id/internar`, async (req, res) => {
 router.post('/inPac/:id/internar', async (req, res) => {
   const pac = await Paciente.findByPk(req.params.id);
   try {
+    await Camas.update(
+      { Paciente: null },
+      { where: { Paciente: pac.IDPaciente } }
+    );
+
     await Camas.update(
       { Paciente: pac.IDPaciente},
       { where: { IDCamas: req.body.Cama } }
@@ -154,12 +161,8 @@ router.get('/Emergencias', async (req, res) => {
 
 router.post('/Emergencias', async (req, res) => {
   try {
-    await Paciente.create(req.body);
-    await Camas.update(
-      { Paciente: pac.IDPaciente},
-      { where: { IDCamas: req.body.Cama } }
-    );
-    res.redirect('/inPac');
+    let pac = await Paciente.create(req.body);
+    res.redirect(`/inPac/${pac.IDPaciente}/internar`);
   } catch (err) {
     res.status(500).send('Error with emergencia: ' + err.message);
   }
@@ -190,6 +193,11 @@ router.post('/inPac/:id/editar', async (req, res) => {
 });
 
 router.get('/inPac/:id/excluir', async (req, res) => {
+  const pac = await Paciente.findByPk(req.params.id);
+  await Camas.update(
+    { Paciente: null },
+    { where: { Paciente: pac.IDPaciente } }
+  );
   await Paciente.destroy({ where: { IDPaciente: req.params.id } });
   res.redirect('/inPac');
 });

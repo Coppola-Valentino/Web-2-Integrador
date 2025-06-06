@@ -11,8 +11,8 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
          h1 INTERNACIONES 
           form(action=`/inPac/${pacS.IDPaciente}/internar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
-            label(for="Cama") Cama a asignar:
-            select(name="Cama" required)
+           label(for="Cama") Cama a asignar:
+           select(name="Cama" required)
                 each cama in camas                
                  - var otrasCamas = camas.filter(c => c.Habitacion === cama.Habitacion && c.IDCama !== cama.IDCama);
                  - var otroPacienteObj = null;
@@ -20,14 +20,18 @@ html(lang="en")
                    - var camaConPaciente = otrasCamas.find(c => c.Paciente !== null && c.Paciente !== undefined);
                    if camaConPaciente
                      - var otroPacienteObj = pacT.find(p => p.IDPaciente === camaConPaciente.Paciente);
-                     if (cama.Paciente === null || cama.Paciente === undefined) && otroPacienteObj.Genero === pacS.Genero
-                      -var HabDeCama = Habitaciones.find(hab => hab.IDHab === cama.Habitacion);
-                      option(value=cama.IDCama) Cama #{cama.IDCama} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
+                     if (cama.Paciente === null || cama.Paciente === undefined) && otroPacienteObj.Genero === pacS.Genero && cama.Higenizado === true
+                      -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
+                      option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
                    else
-                     if cama.Paciente === null || cama.Paciente === undefined
-                      -var HabDeCama = Habitaciones.find(hab => hab.IDHab === cama.Habitacion);
-                      option(value=cama.IDCama) Cama #{cama.IDCama} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
+                     if (cama.Paciente === null || cama.Paciente === undefined) && cama.Higenizado === true
+                      -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
+                      option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
+                 else
+                     if (cama.Paciente === null || cama.Paciente === undefined) && cama.Higenizado === true
+                      -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
+                      option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}     
            br
            button(type="submit") Guardar
-           br
-           a(href="/inPac") Cancelar
+          br
+          a(href="/inPac") Cancelar

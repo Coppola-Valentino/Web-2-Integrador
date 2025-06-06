@@ -10,6 +10,8 @@ html(lang="en")
         block content
          h1 Añadir Habitacion al sistema
          form(action=`/Habit/anadir` method="POST")
+           label (for="Ala") Ala de la Habitacion:
+           input(type="number" name="Ala" required)
            label(for="Tipo") Tipo de Habitacion:
            select(name="Tipo" required)
              option(value="Urgencias") Urgencias

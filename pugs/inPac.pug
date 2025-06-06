@@ -9,6 +9,35 @@ html(lang="en")
         +bar()
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
+            label(for="paciente") Pacientes
+            input(type="text" id="paciente" name="paciente" placeholder="Buscar paciente por datos" oninput="buscarPaciente()")
+            script.
+                function buscarPaciente() {
+                    const input = document.getElementById('paciente');
+                    const filter = input.value.toLowerCase();
+                    const table = document.querySelector('table');
+                    const rows = table.querySelectorAll('tr');
+                    rows.forEach((row, idx) => {
+                         if (idx === 0) {
+                          row.style.display = '';
+                          return;
+                         }
+                         rows.forEach(row => {
+                           const cells = row.querySelectorAll('td, th');
+                           let found = false;
+                           cells.forEach(cell => {
+                             if (cell.textContent.toLowerCase().includes(filter)) {
+                                 found = true;
+                             }
+                           });
+                             if (found) {
+                              row.style.display = '';
+                             } else {
+                              row.style.display = 'none';
+                             }
+                       });
+                    });
+                }
             table 
              tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
                 th IDPaciente
@@ -19,6 +48,8 @@ html(lang="en")
                 th Historial
                 th Seguro
                 th Cita Medica
+                th Cama asignada 
+                th en Habitacion
                 th Acciones
                  each pac in paciente
                      tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
@@ -30,6 +61,19 @@ html(lang="en")
                       td= pac.Historial
                       td= pac.Seguro
                       td= pac.Cita
+                      td
+                        -var cama = (camas || []).find(c => c.Paciente === pac.IDPaciente)
+                        if (cama) 
+                          span Cama #{cama.IDCamas}
+                        else
+                          span(style="color: Blue;") No asignada 
+                      td 
+                        -var cama = (camas || []).find(c => c.Paciente === pac.IDPaciente)
+                        if (cama) 
+                          -var habitacion = Habits.find(h => h.IDHab === cama.Habitacion);
+                          span Habitación #{habitacion.IDHab} - #{habitacion.Tipo}
+                        else
+                          span(style="color: Blue;") No asignada 
                         td
                           a(href=`/inPac/${pac.IDPaciente}/editar`) Editar
                           br

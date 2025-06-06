@@ -12,6 +12,7 @@ html(lang="en")
           table 
              tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
               th IDHabitacion
+              th Ala
               th Tipo de Hab.
               th Camas (total)
               th Camas (ocupadas)
@@ -24,6 +25,7 @@ html(lang="en")
                 -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
                 tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
                   td= hab.IDHab
+                  td= hab.Ala
                   td= hab.Tipo
                   td= camasDeHab.length 
                   -var ocupadas = camasDeHab.filter(cama => cama.Paciente).length;
@@ -36,10 +38,10 @@ html(lang="en")
                     each cama in camasDeHab
                       if cama.Paciente 
                         - var pac = pacientes.find(p => p.IDPaciente === cama.Paciente)
-                        span(style="color: blue;") #{pac.Nombre}- #{pac.Genero} - ID: #{pac.IDPaciente} 
+                        span(style="color: blue;") #{pac.Nombre} - #{pac.Genero} - ID: #{pac.IDPaciente} - Cama #{cama.IDCamas}
                         br
                       else
-                        span(style="color: Green;") Libre
+                        span(style="color: Green;") Cama #{cama.IDCamas} Libre
                         br
                   td 
                     each cama in camasDeHab
@@ -57,7 +59,12 @@ html(lang="en")
                   td
                    a(href=`/Habit/${hab.IDHab}/editar`) Editar
                    br
-                   a(href=`/Habit/${hab.IDHab}/eliminar`) Eliminar
+                   each cama in camasDeHab
+                      -var otrasCamas = camas.filter(c => c.Habitacion === cama.Habitacion && c.IDCama !== cama.IDCama);
+                      -var todasLibres = camasDeHab.every(c => c.Paciente === null || c.Paciente === undefined)
+                      if todasLibres
+                       a(href=`/Habit/${hab.IDHab}/eliminar`) Eliminar
+                       
           br
           a(href=`/Habit/anadir`) Añadir Habitaciones 
           a(href=`/Habit/anadirCam`) Añadir Camas
