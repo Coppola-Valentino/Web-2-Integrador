@@ -40,27 +40,24 @@ html(lang="en")
                 }
             table 
              tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
-                th IDPaciente
                 th Nombre
                 th Edad
                 th DNI
                 th Genero
                 th Historial
                 th Seguro
-                th Cita Medica
                 th Cama asignada 
-                th en Habitacion
+                th Habitacion
                 th Acciones
                  each pac in paciente
                      tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
-                      td= pac.IDPaciente
                       td= pac.Nombre
                       td= pac.Edad
                       td= pac.DNI
                       td= pac.Genero
-                      td= pac.Historial
+                      td
+                       a(href=`/inPac/${pac.IDPaciente}/Historial`) Ver Historial
                       td= pac.Seguro
-                      td= pac.Cita
                       td
                         -var cama = (camas || []).find(c => c.Paciente === pac.IDPaciente)
                         if (cama) 
@@ -81,4 +78,4 @@ html(lang="en")
                           br
                           a(href=`/inPac/${pac.IDPaciente}/internar`) Internar
             br
-            a(href=`/inPac/anadir`) Añadir
+            a(href=`/inPac/anadir`) Admitir Paciente

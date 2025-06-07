@@ -30,6 +30,22 @@ const Habitacion = require('./models/Habitaciones')(sequelize, DataTypes);
 const Camas = require('./models/Cama')(sequelize, DataTypes);
 
 
+router.get('/inPac/:id/Historial', async (req, res) => {
+  try {
+    const pac = await Paciente.findByPk(req.params.id);
+    res.render('histo', { pac });
+  } catch (err) {
+    res.status(500).send('Error fetching paciente: ' + err.message);
+  }
+});
+router.post('/inPac/:id/Historial', async (req, res) => {
+  try {
+   await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
+   res.redirect(`/inPac/${req.params.id}/Historial`);
+  } catch (err) {
+    res.status(500).send('Error adding historial: ' + err.message);
+  }
+});
 router.get('/inPac', async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
@@ -116,6 +132,13 @@ router.post('/Habit/anadirCam', async (req, res) => {
   }
 });
 
+router.get('/Cama/:id/desocupar', async (req, res) => {
+  await Camas.update(
+    { Paciente: null },
+    { where: { IDCamas: req.params.id } }
+  );
+  res.redirect('/Habitaciones');
+});
 router.get('/Cama/:id/eliminar', async (req, res) => {
  try {
     await Camas.destroy({ where: { IDCamas: req.params.id } });
@@ -153,7 +176,8 @@ router.get('/Emergencias', async (req, res) => {
     const pacientes = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
     const camas = await Camas.findAll();
-    res.render('emerg', { Habits, camas, pacientes});
+    const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
+    res.render('emerg', { Habits, camas, pacientes, dnis});
   } catch (err) {
     res.status(500).send('Error fetching');
   }
@@ -164,7 +188,7 @@ router.post('/Emergencias', async (req, res) => {
     let pac = await Paciente.create(req.body);
     res.redirect(`/inPac/${pac.IDPaciente}/internar`);
   } catch (err) {
-    res.status(500).send('Error with emergencia: ' + err.message);
+    res.status(500).send('Error adding paciente: ' + err.message);
   }
 });
 
@@ -184,7 +208,9 @@ router.get('/Turnos', (req, res) => {
 
 router.get('/inPac/:id/editar', async (req, res) => {
   const pac = await Paciente.findByPk(req.params.id);
-  res.render('EditPac', { pac });
+  const pacientes = await Paciente.findAll(); 
+  const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
+  res.render('EditPac', { pac, dnis });
 });
 
 router.post('/inPac/:id/editar', async (req, res) => {
@@ -202,8 +228,14 @@ router.get('/inPac/:id/excluir', async (req, res) => {
   res.redirect('/inPac');
 });
 
-router.get('/inPac/anadir', (req, res) => {
-  res.render('Anadirpac');
+router.get('/inPac/anadir', async (req, res) => {
+  try{
+    const pacientes = await Paciente.findAll();
+    const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
+    res.render('Anadirpac' , { dnis });
+  } catch (err) {
+    res.status(500).send('Error fetching pacientes: ' + err.message);
+  }
 });
 
 router.post('/inPac/anadir', async (req, res) => {

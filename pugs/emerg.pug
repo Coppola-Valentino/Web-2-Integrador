@@ -11,7 +11,7 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
           h1 EMERGENCIAS 
           h2 Añadir Datos Conocidos del Paciente
-           form(action=`/Emergencias` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+           form(action=`/Emergencias` id="formi" method="POST" style="display: flex; flex-direction: column; gap: 1px;")
                br
                label(for="Nombre") Nombre:
                input(type="text" name="Nombre" value="John Doe" required)
@@ -35,11 +35,44 @@ html(lang="en")
                br
                label(for="Genero") Genero:
                  select(name="Genero" required)
+                   option(value="Desconocido") Desconocido
                    option(value="Masculino") Masculino
                    option(value="Femenino") Femenino
                    option(value="Otro") Otro
-                   option(value="Desconocido") Desconocido
+               br
+               label(for="Seguro") Seguro Medico:
+                  select(for="Seguro" name="Seguro" required)
+                    option(value="Desconocido") Desconocido
+                    option(value="Ninguno") Ninguno
+                    option(value="Privado") Privado
+                    option(value="Publico") Publico
                br
                button(type="submit") Guardar y Asignar Cama
                br
                a(href="/inPac") Cancelar
+               //script.
+                  document.getElementById('formi').addEventListener('submit', function(event) {  
+                  const dni = document.getElementById('DNI');
+                   if (dni.value === pac.DNI) {
+                     alert('El DNI ya está registrado.');
+                     dni.value = '';
+                     event.preventDefault();
+                   }
+                  });
+               script.
+                const DNIs = !{JSON.stringify(dnis)};
+                document.getElementById('formi').addEventListener('submit', function(event) {
+                 const dniInp = document.getElementById('DNI');
+                 if (!dniInp.disabled && dniInp.value && DNIs.includes(Number(dniInp.value))) {
+                  alert('El DNI ya está registrado.');
+                  dniInp.value = '';
+                  dniInp.disabled = true;
+                  event.preventDefault();
+                 }
+                 if(dniInp.value.length === 0 && !dniInp.disabled) {
+                  alert('introduzca un DNI o marque "Sin DNI".');
+                  dniInp.value = '';
+                  dniInp.disabled = true;
+                  event.preventDefault();
+                }
+                 });

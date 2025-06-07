@@ -8,13 +8,16 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
          h1 Añadir una Cama al sistema
-         form(action=`/Habit/anadirCam` method="POST")
+         form(action=`/Habit/anadirCam` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
            label(for="Habitacion") Habitación donde alojar la cama:
            select(name="Habitacion" required)
              each Habit in Habits
                - var camasDeHab = camas.filter(cama => cama.Habitacion === Habit.IDHab);
                if camasDeHab.length < 2
                  option(value=Habit.IDHab) Habitación #{Habit.IDHab} (#{Habit.Tipo}) - Camas: #{camasDeHab.length}
+           br       
            button(type="submit") Guardar cambios
+           br
            a(href="/Habitaciones") Cancelar

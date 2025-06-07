@@ -19,7 +19,7 @@ html(lang="en")
                  if otrasCamas.length
                    - var camaConPaciente = otrasCamas.find(c => c.Paciente !== null && c.Paciente !== undefined);
                    if camaConPaciente
-                     - var otroPacienteObj = pacT.find(p => p.IDPaciente === camaConPaciente.Paciente);
+                     -var otroPacienteObj = pacT.find(p => p.IDPaciente === camaConPaciente.Paciente);
                      if (cama.Paciente === null || cama.Paciente === undefined) && otroPacienteObj.Genero === pacS.Genero && cama.Higenizado === true
                       -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
                       option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}

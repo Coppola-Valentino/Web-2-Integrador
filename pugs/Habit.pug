@@ -8,62 +8,59 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
+         div(style="max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
           table 
              tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
-              th IDHabitacion
-              th Ala
+              th Numero de Habitacion
+              th(style="min-width: 40px;") Ala
               th Tipo de Hab.
-              th Camas (total)
-              th Camas (ocupadas)
-              th Genero de Pacientes
-              th Pacientes
-              th Higenizado
-              th Acciones para cama 
-              th Acciones para habitacion
+              th Cama 1
+              th Cama 2
+              th(style="min-width: 130px;") Higenizado  
+              th(style="min-width: 130px;") Camas 
+              th Administrar habitacion
               each hab in Habits
                 -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
                 tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
                   td= hab.IDHab
                   td= hab.Ala
                   td= hab.Tipo
-                  td= camasDeHab.length 
-                  -var ocupadas = camasDeHab.filter(cama => cama.Paciente).length;
-                  td= ocupadas
-                  each cama in camasDeHab
-                    - var pac = pacientes.find(p => p.IDPaciente === cama.Paciente)
-                    - var gen = pac ? pac.Genero : 'Desconocido'
-                  td= gen
-                  td
                     each cama in camasDeHab
                       if cama.Paciente 
                         - var pac = pacientes.find(p => p.IDPaciente === cama.Paciente)
-                        span(style="color: blue;") #{pac.Nombre} - #{pac.Genero} - ID: #{pac.IDPaciente} - Cama #{cama.IDCamas}
+                        td #{pac.Nombre} - #{pac.Genero} - ID: #{pac.IDPaciente} - Cama #{cama.IDCamas}
+                        if camasDeHab.length === 1
+                          td Sin Cama 
                         br
                       else
-                        span(style="color: Green;") Cama #{cama.IDCamas} Libre
+                        td(style="color: Green;") Cama #{cama.IDCamas} Libre
+                        if camasDeHab.length === 1
+                          td Sin Cama 
                         br
                   td 
                     each cama in camasDeHab
                       if cama.Higenizado
-                        span(style="color: green;") Si
+                        span(style="color: green;") #{cama.IDCamas}: Limpia
                         br
                       else
-                        span(style="color: red;") No
+                        span(style="color: red;") #{cama.IDCamas}: No Limpia
                         br
                   td 
                     each cama in camasDeHab
                       if cama.Paciente === null || cama.Paciente === undefined
-                        a(href=`/Cama/${cama.IDCamas}/eliminar`) Eliminar
+                        a(href=`/Cama/${cama.IDCamas}/eliminar`) Eliminar #{cama.IDCamas}
                         br
+                      else 
+                        -var pac = pacientes.find(p => p.IDPaciente === cama.Paciente);
+                        a(href=`/Cama/${cama.IDCamas}/desocupar`) Desocupar #{cama.IDCamas}
+                        br  
                   td
                    a(href=`/Habit/${hab.IDHab}/editar`) Editar
                    br
-                   each cama in camasDeHab
-                      -var otrasCamas = camas.filter(c => c.Habitacion === cama.Habitacion && c.IDCama !== cama.IDCama);
-                      -var todasLibres = camasDeHab.every(c => c.Paciente === null || c.Paciente === undefined)
-                      if todasLibres
-                       a(href=`/Habit/${hab.IDHab}/eliminar`) Eliminar
+                   -var otrasCamas = camas.filter(c => c.Habitacion === camas.Habitacion && c.IDCama !== camas.IDCama);
+                   -var todasLibres = camasDeHab.every(c => c.Paciente === null || c.Paciente === undefined)
+                   if todasLibres
+                    a(href=`/Habit/${hab.IDHab}/eliminar`) Eliminar
                        
           br
           a(href=`/Habit/anadir`) Añadir Habitaciones 
