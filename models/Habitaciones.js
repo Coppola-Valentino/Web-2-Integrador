@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     Ala: {
       type: DataTypes.INTEGER,
+    },
+    GeneroHab: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     tableName: 'habitacion',
@@ -58,7 +62,11 @@ allowNull: false,
 },
 Ala: {
 type: DataTypes.INTEGER,
-}
+},
+GeneroHab: {
+type: DataTypes.STRING,
+allowNull: true,
+},
 }, {
 
 sequelize,

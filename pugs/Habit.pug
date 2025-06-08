@@ -35,8 +35,11 @@ html(lang="en")
                       else
                         td(style="color: Green;") Cama #{cama.IDCamas} Libre
                         if camasDeHab.length === 1
-                          td Sin Cama 
+                          td Sin Cama                     
                         br
+                    if camasDeHab.length === 0
+                     td Sin Cama 
+                     td Sin Cama    
                   td 
                     each cama in camasDeHab
                       if cama.Higenizado

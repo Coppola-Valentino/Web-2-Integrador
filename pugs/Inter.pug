@@ -13,25 +13,11 @@ html(lang="en")
           form(action=`/inPac/${pacS.IDPaciente}/internar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
            label(for="Cama") Cama a asignar:
            select(name="Cama" required)
-                each cama in camas                
-                 - var otrasCamas = camas.filter(c => c.Habitacion === cama.Habitacion && c.IDCama !== cama.IDCama);
-                 - var otroPacienteObj = null;
-                 if otrasCamas.length
-                   - var camaConPaciente = otrasCamas.find(c => c.Paciente !== null && c.Paciente !== undefined);
-                   if camaConPaciente
-                     -var otroPacienteObj = pacT.find(p => p.IDPaciente === camaConPaciente.Paciente);
-                     if (cama.Paciente === null || cama.Paciente === undefined) && otroPacienteObj.Genero === pacS.Genero && cama.Higenizado === true
-                      -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
-                      option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
-                   else
-                     if (cama.Paciente === null || cama.Paciente === undefined) && cama.Higenizado === true
-                      -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
-                      option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}
-                 else
-                     if (cama.Paciente === null || cama.Paciente === undefined) && cama.Higenizado === true
-                      -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
-                      option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}     
+             each cama in camas                
+              -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
+              if (cama.Paciente === null || cama.Paciente === undefined) && cama.Higenizado === true && (HabDeCama.GeneroHab === pacS.Genero || HabDeCama.GeneroHab === "Vacio") 
+                option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}     
            br
            button(type="submit") Guardar
-          br
-          a(href="/inPac") Cancelar
+           br
+           a(href="/inPac") Cancelar

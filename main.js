@@ -58,11 +58,11 @@ router.get('/inPac', async (req, res) => {
 });
 router.get(`/inPac/:id/internar`, async (req, res) => {
   try {
-    const pacientesS = await Paciente.findByPk(req.params.id);
-    const pacientesT = await Paciente.findAll();
+    const pacS = await Paciente.findByPk(req.params.id);
+    const pacT = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
     const camas = await Camas.findAll();
-    res.render('Inter', { pacT: pacientesT, pacS: pacientesS, Habits, camas });
+    res.render('Inter', { pacT, pacS, Habits, camas });
   } catch (err) {
     res.status(500).send('Error fetching data for internar');
   }
@@ -74,10 +74,14 @@ router.post('/inPac/:id/internar', async (req, res) => {
       { Paciente: null },
       { where: { Paciente: pac.IDPaciente } }
     );
-
     await Camas.update(
       { Paciente: pac.IDPaciente},
       { where: { IDCamas: req.body.Cama } }
+    );
+    const cama = await Camas.findByPk(req.body.Cama);
+    await Habitacion.update(
+      { GeneroHab: pac.Genero},
+      { where: { IDHab: cama.Habitacion} }
     );
     res.redirect('/inPac');
   } catch (err) {
@@ -137,12 +141,30 @@ router.get('/Cama/:id/desocupar', async (req, res) => {
     { Paciente: null },
     { where: { IDCamas: req.params.id } }
   );
+  const cama = await Camas.findByPk(req.params.id);
+  const hab = await Habitacion.findByPk(cama.Habitacion)
+  const camasDeHab = await Camas.findAll({ where: { Habitacion: hab.IDHab } });
+  if (camasDeHab.every(c => c.Paciente === null)) {
+    await Habitacion.update(
+      { GeneroHab: "Vacio" },
+      { where: { IDHab: hab.IDHab } }
+    );
+  }
   res.redirect('/Habitaciones');
 });
 router.get('/Cama/:id/eliminar', async (req, res) => {
  try {
-    await Camas.destroy({ where: { IDCamas: req.params.id } });
-    res.redirect('/Habitaciones');
+   const cama = await Camas.findByPk(req.params.id);
+   await Camas.destroy({ where: { IDCamas: req.params.id } });
+   const hab = await Habitacion.findByPk(cama.Habitacion)
+   const camasDeHab = await Camas.findAll({ where: { Habitacion: hab.IDHab } });
+   if (camasDeHab.length === 0 || camasDeHab.every(c => c.Paciente === null)) {
+    await Habitacion.update(
+      { GeneroHab: "Vacio" },
+      { where: { IDHab: hab.IDHab } }
+    );
+  }
+   res.redirect('/Habitaciones');
   } catch (err) {
     res.status(500).send('Error deleting cama: ' + err.message);
   }
@@ -168,6 +190,7 @@ router.post('/Habit/:id/editar', async (req, res) => {
   res.redirect('/Habitaciones');
 });
 router.get('/Habit/:id/eliminar', async (req, res) => {
+  await Camas.destroy({ where: { Habitacion: req.params.id }})
   await Habitacion.destroy({ where: { IDHab: req.params.id } });
   res.redirect('/Habitaciones');
 });
@@ -209,21 +232,62 @@ router.get('/Turnos', (req, res) => {
 router.get('/inPac/:id/editar', async (req, res) => {
   const pac = await Paciente.findByPk(req.params.id);
   const pacientes = await Paciente.findAll(); 
-  const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
+  const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null && dni != pac.DNI);
   res.render('EditPac', { pac, dnis });
 });
 
 router.post('/inPac/:id/editar', async (req, res) => {
   await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
+  const pac = await Paciente.findByPk(req.params.id);
+  const cam = await Camas.findAll({ where: { Paciente: pac.IDPaciente } });
+  if(cam.length > 0){
+   for (const cama of cam){
+    const hab = await Habitacion.findByPk(cama.Habitacion);
+    const camasDeHab = await Camas.findAll({ where: { Habitacion: hab.IDHab } });
+    if(camasDeHab.length === 1){
+     await Habitacion.update(
+      { GeneroHab: pac.Genero},
+      { where: { IDHab: cama.Habitacion} }
+     );
+    } else {
+      for(const cam2 of camasDeHab){
+        if(cam2.Paciente !== pac.IDPaciente){
+          const pac2 = await Paciente.findByPk(cam2.Paciente);
+          if(pac2 !== null){
+           if(pac2.Genero !== pac.Genero){
+              await Camas.update(
+               { Paciente: null },
+               { where: { Paciente: pac.IDPaciente } }
+            );
+          }
+         }else{
+          await Habitacion.update(
+          { GeneroHab: pac.Genero},
+          { where: { IDHab: cama.Habitacion} }
+          );
+         }
+        }
+      }
+    }
+   }
+  }
   res.redirect('/inPac');
 });
 
 router.get('/inPac/:id/excluir', async (req, res) => {
   const pac = await Paciente.findByPk(req.params.id);
-  await Camas.update(
-    { Paciente: null },
-    { where: { Paciente: pac.IDPaciente } }
-  );
+  const cam = await Camas.findAll({ where: { Paciente: pac.IDPaciente } });
+  for (const cama of cam) {
+    await cama.update({ Paciente: null });
+    const hab = await Habitacion.findByPk(cama.Habitacion);
+    const camasDeHab = await Camas.findAll({ where: { Habitacion: hab.IDHab } });
+    if (camasDeHab.length > 0 && camasDeHab.every(c => c.Paciente === null)) {
+      await Habitacion.update(
+        { GeneroHab: "Vacio" },
+        { where: { IDHab: hab.IDHab } }
+      );
+    }
+  }
   await Paciente.destroy({ where: { IDPaciente: req.params.id } });
   res.redirect('/inPac');
 });
