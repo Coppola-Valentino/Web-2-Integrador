@@ -8,15 +8,15 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-         div(style="max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
-          table 
-             tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
+         div(style="max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
+          table
+           tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
               th Numero de Habitacion
               th(style="min-width: 40px;") Ala
-              th Tipo de Hab.
+              th(style="min-width: 120px;") Tipo de Hab.
               th Cama 1
               th Cama 2
-              th(style="min-width: 130px;") Higenizado  
+              th(style="min-width: 120px;") Higenizado  
               th(style="min-width: 130px;") Camas 
               th Administrar habitacion
               each hab in Habits
@@ -31,12 +31,10 @@ html(lang="en")
                         td #{pac.Nombre} - #{pac.Genero} - ID: #{pac.IDPaciente} - Cama #{cama.IDCamas}
                         if camasDeHab.length === 1
                           td Sin Cama 
-                        br
                       else
                         td(style="color: Green;") Cama #{cama.IDCamas} Libre
                         if camasDeHab.length === 1
                           td Sin Cama                     
-                        br
                     if camasDeHab.length === 0
                      td Sin Cama 
                      td Sin Cama    
@@ -63,8 +61,10 @@ html(lang="en")
                    -var otrasCamas = camas.filter(c => c.Habitacion === camas.Habitacion && c.IDCama !== camas.IDCama);
                    -var todasLibres = camasDeHab.every(c => c.Paciente === null || c.Paciente === undefined)
                    if todasLibres
-                    a(href=`/Habit/${hab.IDHab}/eliminar`) Eliminar
-                       
+                    a(href=`/Habit/${hab.IDHab}/eliminar`) Eliminar     
           br
-          a(href=`/Habit/anadir`) Añadir Habitaciones 
-          a(href=`/Habit/anadirCam`) Añadir Camas
+          div(class="Container-fluid text-center justify-content-center")
+           div(class="col btn btn-link")
+            a.btn.btn-primary(href=`/Habit/anadir`) Añadir Habitaciones 
+           div(class="col btn btn-link")
+            a.btn.btn-primary(href=`/Habit/anadirCam`) Añadir Camas

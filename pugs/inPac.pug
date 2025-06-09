@@ -8,7 +8,7 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
+        div(style="max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
             label(for="paciente") Pacientes
             input(type="text" id="paciente" name="paciente" placeholder="Buscar paciente por datos" oninput="buscarPaciente()")
             script.
@@ -54,7 +54,7 @@ html(lang="en")
                       td= pac.Nombre
                       td= pac.Edad
                       td= pac.DNI
-                      td= pac.Genero
+                      td(style="min-width: 110px;")= pac.Genero
                       td
                        a(href=`/inPac/${pac.IDPaciente}/Historial`) Ver Historial
                       td= pac.Seguro
@@ -77,5 +77,6 @@ html(lang="en")
                           a(href=`/inPac/${pac.IDPaciente}/excluir`) Eliminar
                           br
                           a(href=`/inPac/${pac.IDPaciente}/internar`) Internar
-            br
-            a(href=`/inPac/anadir`) Admitir Paciente
+            div(class="Container-fluid text-center justify-content-center")
+             div(class="col btn btn-link")
+              a.btn.btn-primary(href=`/inPac/anadir`) Admitir Paciente

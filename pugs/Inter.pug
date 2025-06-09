@@ -10,7 +10,7 @@ html(lang="en")
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
          h1 INTERNACIONES 
-          form(action=`/inPac/${pacS.IDPaciente}/internar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+         form(action=`/inPac/${pacS.IDPaciente}/internar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
            label(for="Cama") Cama a asignar:
            select(name="Cama" required)
              each cama in camas                
@@ -18,6 +18,6 @@ html(lang="en")
               if (cama.Paciente === null || cama.Paciente === undefined) && cama.Higenizado === true && (HabDeCama.GeneroHab === pacS.Genero || HabDeCama.GeneroHab === "Vacio") 
                 option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}     
            br
-           button(type="submit") Guardar
+           button(class="btn btn-primary" type="submit") Guardar
            br
-           a(href="/inPac") Cancelar
+           a.btn.btn-warning(href="/inPac") Cancelar

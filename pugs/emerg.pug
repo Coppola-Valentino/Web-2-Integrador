@@ -8,10 +8,10 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 100px;")
           h1 EMERGENCIAS 
           h2 Añadir Datos Conocidos del Paciente
-           form(action=`/Emergencias` id="formi" method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+          form(action=`/Emergencias` id="formi" method="POST" style="display: flex; flex-direction: column;")
                br
                label(for="Nombre") Nombre:
                input(type="text" name="Nombre" value="John Doe" required)
@@ -47,18 +47,9 @@ html(lang="en")
                     option(value="Privado") Privado
                     option(value="Publico") Publico
                br
-               button(type="submit") Guardar y Asignar Cama
+               button(class="btn btn-primary" type="submit") Guardar y Asignar Cama
                br
-               a(href="/inPac") Cancelar
-               //script.
-                  document.getElementById('formi').addEventListener('submit', function(event) {  
-                  const dni = document.getElementById('DNI');
-                   if (dni.value === pac.DNI) {
-                     alert('El DNI ya está registrado.');
-                     dni.value = '';
-                     event.preventDefault();
-                   }
-                  });
+               a.btn.btn-warning(href="/inPac") Cancelar
                script.
                 const DNIs = !{JSON.stringify(dnis)};
                 document.getElementById('formi').addEventListener('submit', function(event) {

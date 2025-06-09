@@ -41,9 +41,9 @@ html(lang="en")
            //label(for="Cita") Cita:  no implementado aun
            //input(type="number" name="Cita" value=pac.Cita)
            //br
-           button(type="submit") Guardar cambios
+           button(class="btn btn-primary" type="submit") Guardar cambios
            br
-           a(href="/inPac") Cancelar
+           a.btn.btn-warning(href="/inPac") Cancelar
             script.
                 const DNIs = !{JSON.stringify(dnis)};
                 document.getElementById('formi').addEventListener('submit', function(event) {

@@ -32,6 +32,6 @@ html(lang="en")
               select(name=`Higenizado_${cama.IDCamas}`)
                option(value="true" selected=(cama.Higenizado === true)) Si
                option(value="false" selected=(cama.Higenizado === false)) No
-           button(type="submit") Guardar cambios
+           button(class="btn btn-primary" type="submit") Guardar cambios
            br
-           a(href="/Habitaciones") Cancelar
+           a.btn.btn-warning(href="/Habitaciones") Cancelar

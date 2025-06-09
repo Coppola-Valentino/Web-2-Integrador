@@ -1,17 +1,14 @@
 mixin bar()
-
-    div(style ="background:rgb(29, 206, 167); padding: 1rem 0; border: 3px solid #ddd;")
-        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;")
-            img(src="/Imagenes/Icons/Icono.png", alt="Logo")
-            div(style="border: 6px solid #ddd; background: rgb(255, 255, 255); padding: 3px; padding-left: 10px; padding-right: 10px;") 
-                p Hospitales 2
-            div(style="border: 2px solid #ddd; background: rgb(124, 226, 206); padding: 5px;")
-                a(href="/") Home
-            div(style="border: 2px solid #ddd; background: rgb(124, 226, 206); padding: 5px;")
-                a(href="/inPac") Pacientes
-            div(style="border: 2px solid #ddd; background: rgb(124, 226, 206); padding: 5px;")
-                a(href="/Emergencias") Emergencias
-            div(style="border: 2px solid #ddd; background: rgb(124, 226, 206); padding: 5px;")
-                a(href="/Habitaciones") Habitaciones
-            //div(style="border: 2px solid #ddd; background: rgb(124, 226, 206); padding: 5px;")
-                a(href="/turnos") Turnos
+        link(href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT")
+        div(class="Container-fluid text-center" style="border: 5px solid rgb(2, 131, 71) background: rgb(0, 201, 151)")
+         header(class="d-flex flex-wrap justify-content-center py-3 mb-4")
+            div(class="col-4")
+             img(src="/Imagenes/Icons/Icono.png", alt="Logo")
+            div(class="col-2 btn btn-success")
+             a.btn.btn-success(href="/") Sistemas Hospitalarios Sudamericanos
+            div(class="col btn btn-link")
+             a.btn.btn-primary(href="/inPac") Pacientes
+            div(class="col btn btn-link")
+             a.btn.btn-primary(href="/Emergencias") Emergencias
+            div(class="col btn btn-link")
+             a.btn.btn-primary(href="/Habitaciones") Habitaciones

@@ -3,12 +3,19 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Hospital 2       
+        title S.H.S.      
+        style.
+            .cursive-title {
+                font-size: 70px;
+                font-family: 'JetBrains Mono';
+            }
     body(style="background: rgb(184, 253, 219);")
         include bar.pug
         +bar()
         block content
-        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
-            h1 Servicios del Hospital 2
-            br
-            p Imagina un about us aca, no se me ocurre mucho
+         .container-fluid.d-flex.align-items-center.justify-content-center
+            .row.w-100
+                .col.d-flex.align-items-center.justify-content-center
+                  h1.cursive-title.text-center S.H.S.            
+                .col-auto.d-flex.align-items-center.justify-content-end
+                  img(src="/Imagenes/Icons/Caudecus.png" style="width: 810px; height: 800px; float: right;")

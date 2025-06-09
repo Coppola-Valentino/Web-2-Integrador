@@ -13,6 +13,7 @@ port: 3306,
 });
 
 app.use(express.urlencoded({ extended: true }));
+app.use('/css', express.static(path.join(__dirname, 'css')));
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'pugs'));
