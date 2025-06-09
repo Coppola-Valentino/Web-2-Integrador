@@ -1,9 +1,9 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize('web2.3', 'bingus', 'merequetenge', {
-host: 'localhost',
+const sequelize = new Sequelize(process.env.root, process.env.user, process.env.pass, {
+host: process.env.host,
 dialect: 'mysql',
 logging: false,
-port: 3000,
+port: process.env.port,
 });
 
 class Camas extends Model {}

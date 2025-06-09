@@ -4,12 +4,13 @@ const path = require('path');
 const app = express();
 const router = express.Router();
 const { Sequelize, DataTypes } = require('sequelize');
+require('dotenv').config()
 
-const sequelize = new Sequelize('web2.3', 'bingus', 'merequetenge', {
-host: 'localhost',
+const sequelize = new Sequelize(process.env.root, process.env.user, process.env.pass, {
+host: process.env.host,
 dialect: 'mysql',
 logging: false,
-port: 3306,
+port: process.env.port,
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -316,8 +317,6 @@ app.use('/', router);
 
 app.use('/Imagenes', express.static(path.join(__dirname, 'Imagenes')));
 
-module.exports = app;
-
 sequelize.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
@@ -325,6 +324,8 @@ sequelize.authenticate()
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
+
+module.exports = app;
 
 //const PORT = 3000;
 //app.listen(PORT, () => {
