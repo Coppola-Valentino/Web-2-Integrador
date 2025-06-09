@@ -4,7 +4,6 @@
     "bootstrap": "^5.3.6",
     "express": "^5.1.0",
     "http": "^0.0.1-security",
-    "mysql": "^2.18.1",
     "mysql2": "^3.14.1",
     "node": "^20.19.2",
     "pug": "^3.0.3",
