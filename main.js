@@ -316,7 +316,7 @@ app.use('/', router);
 
 app.use('/Imagenes', express.static(path.join(__dirname, 'Imagenes')));
 
-module.exports = sequelize;
+module.exports = app;
 
 sequelize.authenticate()
   .then(() => {
@@ -326,7 +326,7 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+//const PORT = 3000;
+//app.listen(PORT, () => {
+//  console.log(`Server running at http://localhost:${PORT}`);
+//});
