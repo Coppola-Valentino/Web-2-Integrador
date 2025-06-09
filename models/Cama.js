@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize(process.env.root, process.env.user, process.env.pass, {
+const sequelize = new Sequelize(process.env.name, process.env.user, process.env.pass, {
 host: process.env.host,
 dialect: 'mysql',
 logging: false,
