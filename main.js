@@ -79,7 +79,7 @@ router.get(`/inPac/:id/internar`, async (req, res) => {
      return (
       (cama.Paciente === null || cama.Paciente === undefined) &&
       cama.Higenizado === true &&
-      (hab?.GeneroHab === pacS.Genero || hab?.GeneroHab === "Vacio")
+      (hab?.GeneroHab.toLowerCase() === pacS.Genero.toLowerCase() || hab?.GeneroHab === "Vacio")
   );
 }).map(cama => {
         const hab = Habits.find(h => h.IDHab === cama.Habitacion);
@@ -137,7 +137,7 @@ router.get('/Habit/anadir', async (req, res) => {
 });
 router.post('/Habit/anadir', async (req, res) => {
   try {
-    await Habitacion.create(req.body);
+    await Habitacion.create({...req.body, GeneroHab: "Vacio" });
     res.redirect('/Habitaciones');
   } catch (err) {
     res.status(500).send('Error adding Habitacion: ' + err.message);
