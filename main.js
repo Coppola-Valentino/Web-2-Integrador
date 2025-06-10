@@ -50,10 +50,17 @@ router.post('/inPac/:id/Historial', async (req, res) => {
 });
 router.get('/inPac', async (req, res) => {
   try {
-    const pacientes = await Paciente.findAll();
-    const Habits = await Habitacion.findAll();
-    const camas = await Camas.findAll();
-    res.render('inPac', { paciente: pacientes, Habits, camas });
+    const pacienteData = pacientes.map(pac => {
+    const cama = camas.find(c => c.Paciente === pac.IDPaciente);
+    const habitacion = cama ? Habits.find(h => h.IDHab === cama.Habitacion) : null;
+     return {
+     ...pac.toJSON(),
+     cama,
+     habitacion
+  };
+  });
+
+  res.render('inPac', { pacientes: pacienteData });
   } catch (err) {
     res.status(500).send('Error fetching pacientes');
   }
@@ -64,7 +71,15 @@ router.get(`/inPac/:id/internar`, async (req, res) => {
     const pacT = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
     const camas = await Camas.findAll();
-    res.render('Inter', { pacT, pacS, Habits, camas });
+    const camasDisponibles = camas.filter(cama => {
+     const hab = Habits.find(h => h.IDHab === cama.Habitacion);
+     return (
+      (cama.Paciente === null || cama.Paciente === undefined) &&
+      cama.Higenizado === true &&
+      (hab?.GeneroHab === pacS.Genero || hab?.GeneroHab === "Vacio")
+  );
+});
+    res.render('Inter', { pacT, pacS, Habits, camas,camasDisponibles });
   } catch (err) {
     res.status(500).send('Error fetching data for internar');
   }
@@ -124,6 +139,11 @@ router.get('/Habit/anadirCam', async (req, res) => {
     const pacientes = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
     const camas = await Camas.findAll();
+    const HabitsDisp = await Habitacion.filter(Habs =>
+      return(
+
+      )
+    );
     res.render('AnadirCam', { Habits, camas, pacientes});
   } catch (err) {
     res.status(500).send('Error fetching habitaciones');

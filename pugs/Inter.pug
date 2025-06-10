@@ -13,10 +13,9 @@ html(lang="en")
          form(action=`/inPac/${pacS.IDPaciente}/internar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
            label(for="Cama") Cama a asignar:
            select(name="Cama" required)
-             each cama in camas                
-              -var HabDeCama = Habits.find(hab => hab.IDHab === cama.Habitacion);
-              if (cama.Paciente === null || cama.Paciente === undefined) && cama.Higenizado === true && (HabDeCama.GeneroHab === pacS.Genero || HabDeCama.GeneroHab === "Vacio") 
-                option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{HabDeCama.Tipo}     
+            each cama in camasDisponibles
+             -var hab = Habits.find(h => h.IDHab === cama.Habitacion)
+             option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{hab.Tipo}
            br
            button(class="btn btn-primary" type="submit") Guardar
            br

@@ -59,16 +59,13 @@ html(lang="en")
                        a(href=`/inPac/${pac.IDPaciente}/Historial`) Ver Historial
                       td= pac.Seguro
                       td
-                        -var cama = (camas || []).find(c => c.Paciente === pac.IDPaciente)
-                        if (cama) 
-                          span Cama #{cama.IDCamas}
+                        if (pac.cama) 
+                          span Cama #{pac.cama.IDCamas}
                         else
                           span(style="color: Blue;") No asignada 
                       td 
-                        -var cama = (camas || []).find(c => c.Paciente === pac.IDPaciente)
-                        if (cama) 
-                          -var habitacion = Habits.find(h => h.IDHab === cama.Habitacion);
-                          span Habitación #{habitacion.IDHab} - #{habitacion.Tipo}
+                        if (pac.cama)
+                          span Habitación #{pac.habitacion?.IDHab} - #{pac.habitacion?.Tipo}
                         else
                           span(style="color: Blue;") No asignada 
                         td
