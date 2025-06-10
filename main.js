@@ -139,12 +139,13 @@ router.get('/Habit/anadirCam', async (req, res) => {
     const pacientes = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
     const camas = await Camas.findAll();
-    const HabitsDisp = await Habitacion.filter(Habs =>
+    const HabitsDisp = await Habits.filter(Habs =>{
+      const camasDeHab = camas.filter(c => camas.Habitacion === Habits.IDHab);
       return(
-
+        camasDeHab.length < 2
       )
-    );
-    res.render('AnadirCam', { Habits, camas, pacientes});
+  });
+    res.render('AnadirCam', { Habits, camas, pacientes, HabitsDisp});
   } catch (err) {
     res.status(500).send('Error fetching habitaciones');
   }

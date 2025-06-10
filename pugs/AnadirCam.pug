@@ -13,10 +13,8 @@ html(lang="en")
          form(action=`/Habit/anadirCam` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
            label(for="Habitacion") Habitación donde alojar la cama:
            select(name="Habitacion" required)
-             each Habit in Habits
-               - var camasDeHab = camas.filter(cama => cama.Habitacion === Habit.IDHab);
-               if camasDeHab.length < 2
-                 option(value=Habit.IDHab) Habitación #{Habit.IDHab} (#{Habit.Tipo}) - Camas: #{camasDeHab.length}
+             each Habit in HabitsDisp
+                 option(value=Habit.IDHab) Habitación #{Habit.IDHab} (#{Habit.Tipo})
            br       
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
