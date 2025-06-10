@@ -50,6 +50,9 @@ router.post('/inPac/:id/Historial', async (req, res) => {
 });
 router.get('/inPac', async (req, res) => {
   try {
+    const pacientes = await Paciente.findAll();
+    const camas = await Camas.findAll();
+    const Habits = await Habitacion.findAll();
     const pacienteData = pacientes.map(pac => {
     const cama = camas.find(c => c.Paciente === pac.IDPaciente);
     const habitacion = cama ? Habits.find(h => h.IDHab === cama.Habitacion) : null;
@@ -136,16 +139,14 @@ router.post('/Habit/anadir', async (req, res) => {
 });
 router.get('/Habit/anadirCam', async (req, res) => {
   try {
-    const pacientes = await Paciente.findAll();
-    const Habits = await Habitacion.findAll();
+    const habits = await Habitacion.findAll();
     const camas = await Camas.findAll();
-    const HabitsDisp = await Habits.filter(Habs =>{
-      const camasDeHab = camas.filter(c => camas.Habitacion === Habits.IDHab);
-      return(
-        camasDeHab.length < 2
-      )
-  });
-    res.render('AnadirCam', { Habits, camas, pacientes, HabitsDisp});
+    const HabitsDisp = habits.filter(habit => {
+      const camasDeHab = camas.filter(cama => cama.Habitacion === habit.IDHab);
+      return camasDeHab.length < 2;
+    });
+
+    res.render('AnadirCam', { HabitsDisp, camas }); 
   } catch (err) {
     res.status(500).send('Error fetching habitaciones');
   }
