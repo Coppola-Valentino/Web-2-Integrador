@@ -14,8 +14,7 @@ html(lang="en")
            label(for="Cama") Cama a asignar:
            select(name="Cama" required)
             each cama in camasDisponibles
-             -var hab = Habits.find(h => h.IDHab === cama.Habitacion)
-             option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{hab.Tipo}
+             option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{cama.hab.Tipo}
            br
            button(class="btn btn-primary" type="submit") Guardar
            br

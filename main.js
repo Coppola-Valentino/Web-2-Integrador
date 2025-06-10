@@ -54,12 +54,12 @@ router.get('/inPac', async (req, res) => {
     const camas = await Camas.findAll();
     const Habits = await Habitacion.findAll();
     const pacienteData = pacientes.map(pac => {
-    const cama = camas.find(c => c.Paciente === pac.IDPaciente);
-    const habitacion = cama ? Habits.find(h => h.IDHab === cama.Habitacion) : null;
+     const cama = camas.find(c => c.Paciente === pac.IDPaciente);
+     const habitacion = cama ? Habits.find(h => h.IDHab === cama.Habitacion) : null;
      return {
-     ...pac.toJSON(),
-     cama,
-     habitacion
+      ...pac.toJSON(),
+      cama,
+      habitacion
   };
   });
 
@@ -81,8 +81,14 @@ router.get(`/inPac/:id/internar`, async (req, res) => {
       cama.Higenizado === true &&
       (hab?.GeneroHab === pacS.Genero || hab?.GeneroHab === "Vacio")
   );
-});
-    res.render('Inter', { pacT, pacS, Habits, camas,camasDisponibles });
+}).map(cama => {
+        const hab = Habits.find(h => h.IDHab === cama.Habitacion);
+        return {
+          ...cama.toJSON(),
+          habitacion: hab,
+        };
+      });
+    res.render('Inter', { pacT, pacS, Habits, camas, camasDisponibles });
   } catch (err) {
     res.status(500).send('Error fetching data for internar');
   }
