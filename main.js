@@ -63,7 +63,7 @@ router.get('/inPac', async (req, res) => {
   };
   });
 
-  res.render('inPac', { pacientes: pacienteData });
+  res.render('inPac', { paciente: pacienteData, camas, Habits });
   } catch (err) {
     res.status(500).send('Error fetching pacientes');
   }
