@@ -14,7 +14,7 @@ html(lang="en")
            label(for="Cama") Cama a asignar:
            select(name="Cama" required)
             each cama in camasDisponibles
-             option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{cama.hab.Tipo}
+             option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{cama.Habitacion.Tipo}
            br
            button(class="btn btn-primary" type="submit") Guardar
            br
