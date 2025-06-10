@@ -14,6 +14,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 app.use(express.urlencoded({ extended: true }));
 app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'pugs'));
@@ -297,7 +298,7 @@ router.get('/inPac/anadir', async (req, res) => {
   try{
     const pacientes = await Paciente.findAll();
     const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
-    res.render('Anadirpac' , { dnis });
+    res.render('AnadirPac' , { dnis });
   } catch (err) {
     res.status(500).send('Error fetching pacientes: ' + err.message);
   }
