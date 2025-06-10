@@ -6,11 +6,10 @@ const router = express.Router();
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config()
 
-const sequelize = new Sequelize(process.env.name, process.env.user, process.env.pass, {
-host: process.env.host,
-dialect: 'mysql',
-logging: false,
-port: process.env.port,
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'mysql',
+  dialectModule: require('mysql2'),
+  logging: false,
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -319,11 +318,13 @@ app.use('/Imagenes', express.static(path.join(__dirname, 'Imagenes')));
 
 sequelize.authenticate()
   .then(() => {
-    console.log('Connection has been established successfully.');
+    console.log('DB connected');
+    return sequelize.sync(); 
   })
   .catch(err => {
-    console.error('Unable to connect to the database:', err);
+    console.error('DB connection error:', err);
   });
+
 
 module.exports = app;
 
