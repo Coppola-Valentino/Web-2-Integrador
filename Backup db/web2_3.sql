@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-05-2025 a las 00:39:57
+-- Tiempo de generación: 10-06-2025 a las 22:54:32
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -30,8 +30,23 @@ SET time_zone = "+00:00";
 CREATE TABLE `camas` (
   `IDCamas` int(11) NOT NULL,
   `Paciente` int(11) DEFAULT NULL,
-  `Higenizado` tinyint(1) NOT NULL
+  `Higenizado` tinyint(1) NOT NULL,
+  `Habitacion` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `camas`
+--
+
+INSERT INTO `camas` (`IDCamas`, `Paciente`, `Higenizado`, `Habitacion`) VALUES
+(3, NULL, 0, 2),
+(6, 211, 1, 4),
+(9, 5, 1, 3),
+(12, NULL, 1, 6),
+(13, NULL, 1, 6),
+(15, NULL, 1, 4),
+(16, 4, 1, 1),
+(17, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -49,6 +64,30 @@ CREATE TABLE `citas` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `habitacion`
+--
+
+CREATE TABLE `habitacion` (
+  `IDHab` int(11) NOT NULL,
+  `Tipo` char(100) NOT NULL,
+  `Ala` int(11) NOT NULL,
+  `GeneroHab` char(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `habitacion`
+--
+
+INSERT INTO `habitacion` (`IDHab`, `Tipo`, `Ala`, `GeneroHab`) VALUES
+(1, 'Ginecologia', 2, 'Femenino'),
+(2, 'Pediatria', 1, 'Vacio'),
+(3, 'Neurologia', 2, 'Femenino'),
+(4, 'Urgencias', 4, 'Desconocido'),
+(6, 'Quimioterapia', 2, 'Vacio');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `medicos`
 --
 
@@ -57,6 +96,15 @@ CREATE TABLE `medicos` (
   `Nombre` char(100) NOT NULL,
   `DNI` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `medicos`
+--
+
+INSERT INTO `medicos` (`IDMed`, `Nombre`, `DNI`) VALUES
+(1, 'Juan Perez', 47040879),
+(2, 'Peron Perez', 8289472),
+(3, 'Ana Perez', 2739124);
 
 -- --------------------------------------------------------
 
@@ -67,13 +115,26 @@ CREATE TABLE `medicos` (
 CREATE TABLE `paciente` (
   `IDPaciente` int(11) NOT NULL,
   `Nombre` char(100) NOT NULL,
-  `Edad` int(3) NOT NULL,
-  `DNI` int(11) NOT NULL,
+  `DNI` int(11) DEFAULT NULL,
+  `Edad` int(3) DEFAULT NULL,
   `Genero` char(100) NOT NULL,
-  `Historial` char(100) NOT NULL,
+  `Historial` char(255) DEFAULT NULL,
   `Seguro` char(100) DEFAULT NULL,
   `Cita` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `paciente`
+--
+
+INSERT INTO `paciente` (`IDPaciente`, `Nombre`, `DNI`, `Edad`, `Genero`, `Historial`, `Seguro`, `Cita`) VALUES
+(1, 'Ana María López', 1245678, 1945, 'Femenino', 'Alergia a penicilina. Cirugía en 2020.', 'Ninguno', NULL),
+(3, 'Lucía Torres', 3759372, 2001, 'Femenino', 'Sin antecedentes clínicos importantes.', 'Ninguno', 0),
+(4, 'Miguel Ángel Ruiz', 9573821, 1988, 'Femenino', 'Diabético tipo 2. Tratamiento con metformina.', 'Ninguno', NULL),
+(5, 'Sam Rivera', 57391052, 1992, 'Femenino', 'Asma diagnosticada en infancia.', 'Ninguno', NULL),
+(6, 'Elena García', 0, 1983, 'Masculino', 'Paciente oncológico. Seguimiento desde 2019.', 'Ninguno', 1),
+(211, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL),
+(212, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -84,7 +145,9 @@ CREATE TABLE `paciente` (
 --
 ALTER TABLE `camas`
   ADD PRIMARY KEY (`IDCamas`),
-  ADD KEY `Paciente` (`Paciente`);
+  ADD KEY `Paciente` (`Paciente`),
+  ADD KEY `Habitacion` (`Habitacion`),
+  ADD KEY `Habitacion_2` (`Habitacion`);
 
 --
 -- Indices de la tabla `citas`
@@ -92,6 +155,12 @@ ALTER TABLE `camas`
 ALTER TABLE `citas`
   ADD PRIMARY KEY (`IDCita`),
   ADD KEY `Medico` (`Medico`);
+
+--
+-- Indices de la tabla `habitacion`
+--
+ALTER TABLE `habitacion`
+  ADD PRIMARY KEY (`IDHab`);
 
 --
 -- Indices de la tabla `medicos`
@@ -116,7 +185,7 @@ ALTER TABLE `paciente`
 -- AUTO_INCREMENT de la tabla `camas`
 --
 ALTER TABLE `camas`
-  MODIFY `IDCamas` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDCamas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `citas`
@@ -125,16 +194,22 @@ ALTER TABLE `citas`
   MODIFY `IDCita` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `habitacion`
+--
+ALTER TABLE `habitacion`
+  MODIFY `IDHab` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT de la tabla `medicos`
 --
 ALTER TABLE `medicos`
-  MODIFY `IDMed` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDMed` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `IDPaciente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IDPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=213;
 
 --
 -- Restricciones para tablas volcadas
@@ -144,7 +219,8 @@ ALTER TABLE `paciente`
 -- Filtros para la tabla `camas`
 --
 ALTER TABLE `camas`
-  ADD CONSTRAINT `camas_ibfk_1` FOREIGN KEY (`Paciente`) REFERENCES `paciente` (`IDPaciente`);
+  ADD CONSTRAINT `camas_ibfk_1` FOREIGN KEY (`Paciente`) REFERENCES `paciente` (`IDPaciente`),
+  ADD CONSTRAINT `camas_ibfk_2` FOREIGN KEY (`Habitacion`) REFERENCES `habitacion` (`IDHab`);
 
 --
 -- Filtros para la tabla `citas`

@@ -6,7 +6,7 @@ const router = express.Router();
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config()
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize(process.env.dburl, {
   dialect: 'mysql',
   dialectModule: require('mysql2'),
   logging: false,
