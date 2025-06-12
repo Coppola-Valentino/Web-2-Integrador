@@ -2,80 +2,59 @@
 
 trabajo integrador de valentino coppola
 
-# Tablas:
+# librerias usadas
 
-Paciente{
-  `IDPaciente` int(11) NOT NULL PRIMARY_KEY AUTO_INCREMENT,
-  `Nombre` char(100) NOT NULL,
-  `Edad` int(3) NOT NULL,
-  `DNI` int(11) NOT NULL,
-  `Genero` char(100) NOT NULL,
-  `Historial` char(100) NOT NULL,
-  `Seguro` char(100) DEFAULT NULL,
-  `Cita` int(11) DEFAULT NULL
-}
+Sequelize
+Pug
+Node
+mysql2
+express
+dotenv
+bootstrap
 
-Camas{
-  `IDCamas` int(11) NOT NULL PRIMARY_KEY AUTO_INCREMENT,
-  `Paciente` int(11) DEFAULT NULL, (conectado a IDPaciente)
-  `Higenizado` tinyint(1) NOT NULL,
-  `Habitacion` int(100) NOT NULL (conectado a IDHab)
-}
 
-Habitacion{ 
-  `IDHab` int(11) NOT NULL PRIMARY_KEY AUTO_INCREMENT,
-  `Tipo` char(100) NOT NULL,
-  `Ala` int(11) NOT NULL,
-  `GeneroHab` char(100) DEFAULT NULL
-}
+# Endpoints
 
-# Valores de Testeo en backup
+get /inPac (lleva al menu principal de pacientes, y tiene una tabla mostrando todos los pacientes, sus valores y si estan asignados a una cama, muestra la cama y la habitacion en donde dicha cama se aloja)
 
-`camas`{ (`IDCamas`, `Paciente`, `Higenizado`, `Habitacion`)
-  (3, NULL, 0, 2),
-  (6, 211, 1, 4),
-  (9, 5, 1, 3),
-  (12, NULL, 1, 6),
-  (13, NULL, 1, 6),
-  (15, NULL, 1, 4),
-  (16, 4, 1, 1),
-  (17, 1, 1, 1);
-}
+get /inPac/anadir (lleva a una vista en donde se ingresan los datos de un paciente para luego ingresarlo al sistema)
+post /inPac/anadir (crea el paciente y lo añade a la base de datos)
 
-`habitacion`{ (`IDHab`, `Tipo`, `Ala`, `GeneroHab`)
-  (1, 'Ginecologia', 2, 'Femenino'),
-  (2, 'Pediatria', 1, 'Vacio'),
-  (3, 'Neurologia', 2, 'Femenino'),
-  (4, 'Urgencias', 4, 'Desconocido'),
-  (6, 'Quimioterapia', 2, 'Vacio');
-}
+get /inPac/:id/internar (lleva a una vista en donde se muestran las camas disponibles para el paciente a internar)
+post /inPac/:id/internar (ingresa el id del paciente a la cama y actualiza los valores de genero de la habitacion)
 
-`paciente`{ (`IDPaciente`, `Nombre`, `DNI`, `Edad`, `Genero`, `Historial`, `Seguro`, `Cita`)
-  (1, 'Ana María López', 1245678, 1945, 'Femenino', 'Alergia a penicilina. Cirugía en 2020.', 'Ninguno', NULL),
-  (3, 'Lucía Torres', 3759372, 2001, 'Femenino', 'Sin antecedentes clínicos importantes.', 'Ninguno', NULL),
-  (4, 'Miguel Ángel Ruiz', 9573821, 1988, 'Femenino', 'Diabético tipo 2. Tratamiento con metformina.', 'Ninguno', NULL),
-  (5, 'Sam Rivera', 57391052, 1992, 'Femenino', 'Asma diagnosticada en infancia.', 'Ninguno', NULL),
-  (6, 'Elena García', 0, 1983, 'Masculino', 'Paciente oncológico. Seguimiento desde 2019.', 'Ninguno', NULL),
-  (211, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL),
-  (212, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL);
-}
+get /inPac/:id/editar (lleva a una vista en donde se puede cambiar los datos de un paciente)
+post /inPac/:id/editar (le cambia los datos al  paciente)
 
-# Cambios para su funcionamiento local
+get /inPac/:id/Historial (lleva a una vista donde uno puede ver y cambiar el historial medico del paciente)
+post /inPac/:id/Historial (cambia el historial medico del paciente y vuelve a cargar la vista)
 
-## Cambiar:
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'mysql',
-  dialectModule: require('mysql2'),
-  logging: false,
-});
+get /inPac/:id/excluir (elimina el paciente del sistema y si tenia una cama asignada la desocupa)
 
-## Por:
-const sequelize = new Sequelize("web2_3", "bingus", "merequetenge", {
-host: localhost,
-dialect: 'mysql',
-logging: false,
-port: 3000,
-});
+get /emergencias (lleva a una vista donde se puede crear un paciente de emergencia, al que se le pueden dejar valores nulos si se desconocen datos del paciente)
+post /emergencias (crea el paciente y redirije al usuario hacia /inpac/:id/internar con el usuario recien creado como parametro)
 
-## luego ir a:
-http://localhost:3000
+
+get /habitaciones (lleva al menu principal de habitaciones, tiene una tabla mostrando todas las habitaciones, sus valores y las camas asignadas a cada habitacion y los pacientes en esas camas)
+
+get /Habit/anadir (lleva a una vista en donde se ingresan los datos de una Habitacion para luego ingresarlo al sistema)
+post /Habit/anadir (crea la habitacion y la añade a la base de datos)
+
+get /Habit/anadirCam (lleva a una vista en donde se selecciona una habitacion con menos de 2 camas)
+post /Habit/anadirCam (crea la cama y le asigna la cama seleccionada)
+
+get /Habit/:id/editar (lleva a una vista en donde se puede cambiar los valores de una habitacion y las camas asignadas a esa habitacion)
+post /Habit/:id/editar (cambia los valores de la habitacion y las camas)
+
+get /Habit/:id/eliminar (elimina la habitacion y las camas de dicha habitacion)
+
+get /cama/:id/desocupar (saca al paciente de la cama)
+get /cama/:id/eliminar (elimina la cama del sistema)
+
+
+# Instalacion/Uso
+
+1 ejecutar `npm install` en consola
+2 crear un .env con los valores [user, pass, host, port, name, DATABASE_URL]
+3 ejecutar npm run start
+
