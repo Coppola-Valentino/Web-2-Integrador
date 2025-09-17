@@ -16,6 +16,21 @@ html(lang="en")
             each cama in camasDisponibles
              option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{cama.habitacion.Tipo}
            br
+           label(for="Motivo") Motivo de la Internacion: 
+            input(type="text" name="Motivo" style="width: 100%;" required)
+           br
+           label(for="Sintomas") Sintomas Medicos: 
+            input(type="text" name="Sintomas" style="width: 100%;" required)
+           br
+           label(for="Prioridad") Prioridad:
+            select(name="Prioridad" required)
+             option(value="Baja" selected=(pacS.Prioridad==='Baja')) Baja
+             option(value="Media" selected=(pacS.Prioridad==='Media')) Media
+             option(value="Alta" selected=(pacS.Prioridad==='Alta')) Alta
+           br
+           label(for="PlanAtencion") Plan de Atencion
+            input(type="text" name="PlanAtencion" style="width: 100%;" required)
+           br
            button(class="btn btn-primary" type="submit") Guardar
            br
            a.btn.btn-warning(href="/inPac") Cancelar

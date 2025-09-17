@@ -28,7 +28,7 @@ html(lang="en")
                     each cama in camasDeHab
                       if cama.Paciente 
                         - var pac = pacientes.find(p => p.IDPaciente === cama.Paciente)
-                        td #{pac.Nombre} - #{pac.Genero} - ID: #{pac.IDPaciente} - Cama #{cama.IDCamas}
+                        td #{pac.Nombre} - #{pac.Genero} - ID: #{pac.IDPaciente} - Cama #{cama.IDCamas} - Prioridad #{pac.Prioridad}
                         if camasDeHab.length === 1
                           td Sin Cama 
                       else
@@ -53,7 +53,7 @@ html(lang="en")
                         br
                       else 
                         -var pac = pacientes.find(p => p.IDPaciente === cama.Paciente);
-                        a(href=`/Cama/${cama.IDCamas}/desocupar`) Desocupar #{cama.IDCamas}
+                        a(href=`/inPac/${pac.IDPaciente}/Alta`) Dar de Alta
                         br  
                   td
                    a(href=`/Habit/${hab.IDHab}/editar`) Editar

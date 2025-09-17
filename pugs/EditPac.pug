@@ -38,10 +38,9 @@ html(lang="en")
                 if pac.Seguro === "Desconocido"
                    option(value="Desconocido" selected) Desconocido
            br
-           //label(for="Cita") Cita:  no implementado aun
-           //input(type="number" name="Cita" value=pac.Cita)
-           //br
            button(class="btn btn-primary" type="submit") Guardar cambios
+           br
+           a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/Historial`) Ver y editar Datos de Internacion
            br
            a.btn.btn-warning(href="/inPac") Cancelar
             script.

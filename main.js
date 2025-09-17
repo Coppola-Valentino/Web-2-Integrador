@@ -94,6 +94,7 @@ router.get(`/inPac/:id/internar`, async (req, res) => {
   }
 });
 router.post('/inPac/:id/internar', async (req, res) => {
+  await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
   const pac = await Paciente.findByPk(req.params.id);
   try {
     await Camas.update(
@@ -166,7 +167,38 @@ router.post('/Habit/anadirCam', async (req, res) => {
   }
 });
 
-router.get('/Cama/:id/desocupar', async (req, res) => {
+router.get('/inPac/:id/Alta', async (req, res) => {
+ try {
+    const pac = await Paciente.findByPk(req.params.id);
+    res.render('Alta', {pac});
+ } catch (err) {
+    res.status(500).send('Error: ' + err.message);
+  }
+});
+
+router.post('/inPac/:id/Alta', async (req, res) => {
+ try {
+  await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
+  const cama = await Camas.findAll({ where: {Paciente: req.params.id} });
+  const hab = await Habitacion.findByPk(cama.Habitacion)
+  const camasDeHab = await Camas.findAll({ where: { Habitacion: hab.IDHab } });
+  await Camas.update(
+    { Paciente: null },
+    { where: { Paciente: req.params.id } }
+  );
+  if (camasDeHab.every(c => c.Paciente === null)) {
+    await Habitacion.update(
+      { GeneroHab: "Vacio" },
+      { where: { IDHab: hab.IDHab } }
+    );
+  }
+  res.redirect('/inPac');
+ } catch (err) {
+    res.status(500).send('Error: ' + err.message);
+  }
+});
+
+/*router.get('/Cama/:id/desocupar', async (req, res) => {
   await Camas.update(
     { Paciente: null },
     { where: { IDCamas: req.params.id } }
@@ -181,7 +213,8 @@ router.get('/Cama/:id/desocupar', async (req, res) => {
     );
   }
   res.redirect('/Habitaciones');
-});
+});*/
+
 router.get('/Cama/:id/eliminar', async (req, res) => {
  try {
    const cama = await Camas.findByPk(req.params.id);
@@ -244,20 +277,6 @@ router.post('/Emergencias', async (req, res) => {
     res.status(500).send('Error adding paciente: ' + err.message);
   }
 });
-
-router.get('/Login', (req, res) => {
-    res.render('login'); 
-});
-router.get('/Adm', (req, res) => {
-    res.render('Adm'); 
-});
-router.get('/Register', (req, res) => {
-    res.render('Register'); 
-});
-router.get('/Turnos', (req, res) => {
-    res.render('turn'); 
-});
-
 
 router.get('/inPac/:id/editar', async (req, res) => {
   const pac = await Paciente.findByPk(req.params.id);

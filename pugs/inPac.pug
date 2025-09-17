@@ -44,8 +44,9 @@ html(lang="en")
                 th(style="max-width: 90px;") Fecha de Nacimiento
                 th DNI
                 th Genero
-                th Historial
+                th Datos Medicos
                 th Seguro
+                th Prioridad
                 th Cama asignada 
                 th Habitacion
                 th Acciones
@@ -56,8 +57,17 @@ html(lang="en")
                       td= pac.DNI
                       td(style="min-width: 110px;")= pac.Genero
                       td
-                       a(href=`/inPac/${pac.IDPaciente}/Historial`) Ver Historial
+                       a(href=`/inPac/${pac.IDPaciente}/Historial`) Historial y Datos de Internacion
                       td= pac.Seguro
+                      td 
+                        if pac.Prioridad === 'Alta'
+                          span(style="color: Red;") Alta
+                        else if pac.Prioridad === 'Media'
+                          span(style="color: Orange;") Media
+                        else if pac.Prioridad === 'Baja'
+                          span(style="color: Green;") Baja
+                        else 
+                          span No Internado
                       td
                         if (pac.cama) 
                           span Cama #{pac.cama.IDCamas}
@@ -74,6 +84,8 @@ html(lang="en")
                           a(href=`/inPac/${pac.IDPaciente}/excluir`) Eliminar
                           br
                           a(href=`/inPac/${pac.IDPaciente}/internar`) Internar
+                          br
+                          a(href=`/inPac/${pac.IDPaciente}/Alta`) Dar de Alta
             div(class="Container-fluid text-center justify-content-center")
              div(class="col btn btn-link")
               a.btn.btn-primary(href=`/inPac/anadir`) Admitir Paciente

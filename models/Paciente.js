@@ -83,6 +83,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true
     },
+    Motivo: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    Sintoma: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    Prioridad: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    EvaluacionFisica: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    PlanAtencion: {
+      type: DataTypes.STRING,
+      allowNull: true
+    }
   }, {
     tableName: 'paciente',
     timestamps: false
@@ -114,6 +134,21 @@ Citas: {
 type: DataTypes.INTEGER,
 },
 Seguro: {
+type: DataTypes.STRING,
+},
+Motivo: {
+type: DataTypes.STRING,
+},
+Sintoma: {
+type: DataTypes.STRING,
+},
+Prioridad: {
+type: DataTypes.STRING,
+},
+EvaluacionFisica: {
+type: DataTypes.STRING,
+},
+PlanAtencion: {
 type: DataTypes.STRING,
 }
 }, {

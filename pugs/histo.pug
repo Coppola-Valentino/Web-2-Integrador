@@ -3,17 +3,33 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Editar
+        title Datos Medicos
     body(style="background: rgb(184, 253, 219);")
         include bar.pug
         +bar()
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
-         h1 Historial de Paciente: #{pac.Nombre} - DNI: #{pac.DNI}
+         h1 Historial Medico del Paciente: #{pac.Nombre} - DNI: #{pac.DNI}
          form(action=`/inPac/${pac.IDPaciente}/Historial` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
             label(for="Historial") Historial:
             input(type="text" name="Historial" value=pac.Historial style="width: 100%;" required)
             br
+            if pac.PlanAtencion 
+             label(for="Motivo") Motivo de la Internacion: 
+              input(type="text" name="Motivo" style="width: 100%;" required)
+             br
+             label(for="Sintomas") Sintomas Medicos: 
+              input(type="text" name="Sintomas" style="width: 100%;" required)
+             br
+             label(for="Prioridad") Prioridad:
+              select(name="Prioridad" required)
+               option(value="Baja" selected=(pacS.Prioridad==='Baja')) Baja
+               option(value="Media" selected=(pacS.Prioridad==='Media')) Media
+               option(value="Alta" selected=(pacS.Prioridad==='Alta')) Alta
+             br
+             label(for="PlanAtencion") Plan de Atencion
+              input(type="text" name="PlanAtencion" style="width: 100%;" required)
+             br
             button(class="btn btn-primary" type="submit") Guardar cambios
             br
             a.btn.btn-secondary(href="/inPac") Volver
