@@ -21,6 +21,9 @@ html(lang="en")
              label(for="Sintomas") Sintomas Medicos: 
               input(type="text" name="Sintomas" style="width: 100%;" required)
              br
+             label(for="EvaluacionFisica") Evaluacion Fisica: 
+              input(type="text" name="EvaluacionFisica" style="width: 100%;" required)
+             br
              label(for="Prioridad") Prioridad:
               select(name="Prioridad" required)
                option(value="Baja" selected=(pacS.Prioridad==='Baja')) Baja
