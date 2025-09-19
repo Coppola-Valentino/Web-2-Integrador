@@ -8,24 +8,6 @@ port: process.env.port,
 
 class Habitacion extends Model {}
 
-/*module.exports = (sequelize, DataTypes) => {
-  const SomeModel = sequelize.define('Cabitacion', {
-    IDHab: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-    },
-    Tipo: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    }
-  }, {
-    sequelize,
-    modelName: 'habitacion',
-    tableName: 'habitacion',
-  });
-  return SomeModel;
-};*/
-
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('Habitacion', {
     IDHab: {

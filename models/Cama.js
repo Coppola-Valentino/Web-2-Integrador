@@ -8,32 +8,6 @@ port: process.env.port,
 
 class Camas extends Model {}
 
-/*module.exports = (sequelize, DataTypes) => {
-  const SomeModel = sequelize.define('Camas', {
-    IDCamas: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      allowNull: false,
-    },
-    Paciente: {
-      type: DataTypes.INTEGER,
-    },
-    Higenizado: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
-    },
-    Habitacion: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  }, {
-    sequelize,
-    modelName: 'camas',
-    tableName: 'camas',
-  });
-  return SomeModel;
-};*/
-
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('Cama', {
     IDCamas: {

@@ -8,46 +8,6 @@ port: process.env.port,
 
 class Paciente extends Model {}
 
-/*module.exports = (sequelize, DataTypes) => {
-  const SomeModel = sequelize.define('SomeModel', {
-    IDPaciente: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-    },
-    nombre: {
-      type: DataTypes.STRING,
-      allowNull: false 
-    },
-    edad: {
-     type: DataTypes.INTEGER,
-    },
-    dni: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    Historial: {
-      type: DataTypes.STRING,
-    },
-    seguro: {
-      type: DataTypes.STRING,
-    },
-    Genero: {
-      type: DataTypes.STRING,
-    },
-    Citas: {
-      type: DataTypes.INTEGER,
-    },
-    Cama:{
-      type: DataTypes.INTEGER,
-    },
-  }, {
-    sequelize,
-    modelName: 'Paciente',
-    tableName: 'paciente',
-  });
-  return SomeModel;
-};*/
-
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('paciente', {
     IDPaciente: {
