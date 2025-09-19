@@ -60,6 +60,7 @@ html(lang="en")
                        a(href=`/inPac/${pac.IDPaciente}/Historial`) Historial y Datos de Internacion
                       td= pac.Seguro
                       td 
+                       if (!pac.cama) 
                         if pac.Prioridad === 'Alta'
                           span(style="color: Red;") Alta
                         else if pac.Prioridad === 'Media'
@@ -68,6 +69,8 @@ html(lang="en")
                           span(style="color: Green;") Baja
                         else 
                           span No Internado
+                       else 
+                         span No Internado
                       td
                         if (pac.cama) 
                           span Cama #{pac.cama.IDCamas}
@@ -86,7 +89,9 @@ html(lang="en")
                           if (!pac.cama)
                             a(href=`/inPac/${pac.IDPaciente}/internar`) Internar
                             br
-                          a(href=`/inPac/${pac.IDPaciente}/AltaPac`) Dar de Alta
+                          if (pac.cama)
+                            a(href=`/inPac/${pac.IDPaciente}/AltaPac`) Dar de Alta
+                            br
             div(class="Container-fluid text-center justify-content-center")
              div(class="col btn btn-link")
               a.btn.btn-primary(href=`/inPac/anadir`) Admitir Paciente

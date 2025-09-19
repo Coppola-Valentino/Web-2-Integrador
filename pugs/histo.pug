@@ -12,7 +12,7 @@ html(lang="en")
          h1 Historial Medico del Paciente: #{pac.Nombre} - DNI: #{pac.DNI}
          form(action=`/inPac/${pac.IDPaciente}/Historial` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
             label(for="Historial") Historial:
-            input(type="text" name="Historial" value=pac.Historial style="width: 100%;" required)
+            input(type="text" name="Historial" value=pac.Historial style="width: 100%;")
             br
             label(for="Motivo") Motivo de la Internacion: 
              input(type="text" name="Motivo" style="width: 100%;" value=pac.Motivo)
