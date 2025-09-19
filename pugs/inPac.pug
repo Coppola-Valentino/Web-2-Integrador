@@ -8,7 +8,7 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-        div(style="max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
+        div(style="max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
             label(for="paciente") Pacientes
             input(type="text" id="paciente" name="paciente" placeholder="Buscar paciente por datos" oninput="buscarPaciente()")
             script.
@@ -41,7 +41,7 @@ html(lang="en")
             table 
              tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
                 th Nombre
-                th(style="max-width: 90px;") Fecha de Nacimiento
+                th(style="max-width: 90px;") año de Nacimiento
                 th DNI
                 th Genero
                 th Datos Medicos
@@ -83,8 +83,9 @@ html(lang="en")
                           br
                           a(href=`/inPac/${pac.IDPaciente}/excluir`) Eliminar
                           br
-                          a(href=`/inPac/${pac.IDPaciente}/internar`) Internar
-                          br
+                          if (!pac.cama)
+                            a(href=`/inPac/${pac.IDPaciente}/internar`) Internar
+                            br
                           a(href=`/inPac/${pac.IDPaciente}/Alta`) Dar de Alta
             div(class="Container-fluid text-center justify-content-center")
              div(class="col btn btn-link")

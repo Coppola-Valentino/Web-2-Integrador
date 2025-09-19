@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-06-2025 a las 22:54:32
+-- Tiempo de generación: 17-09-2025 a las 09:16:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -120,21 +120,26 @@ CREATE TABLE `paciente` (
   `Genero` char(100) NOT NULL,
   `Historial` char(255) DEFAULT NULL,
   `Seguro` char(100) DEFAULT NULL,
-  `Cita` int(11) DEFAULT NULL
+  `Cita` int(11) DEFAULT NULL,
+  `Motivo` varchar(100) DEFAULT NULL,
+  `Sintoma` varchar(255) DEFAULT NULL,
+  `Prioridad` varchar(100) DEFAULT NULL,
+  `EvaluacionFisica` varchar(255) DEFAULT NULL,
+  `PlanAtencion` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `paciente`
 --
 
-INSERT INTO `paciente` (`IDPaciente`, `Nombre`, `DNI`, `Edad`, `Genero`, `Historial`, `Seguro`, `Cita`) VALUES
-(1, 'Ana María López', 1245678, 1945, 'Femenino', 'Alergia a penicilina. Cirugía en 2020.', 'Ninguno', NULL),
-(3, 'Lucía Torres', 3759372, 2001, 'Femenino', 'Sin antecedentes clínicos importantes.', 'Ninguno', 0),
-(4, 'Miguel Ángel Ruiz', 9573821, 1988, 'Femenino', 'Diabético tipo 2. Tratamiento con metformina.', 'Ninguno', NULL),
-(5, 'Sam Rivera', 57391052, 1992, 'Femenino', 'Asma diagnosticada en infancia.', 'Ninguno', NULL),
-(6, 'Elena García', 0, 1983, 'Masculino', 'Paciente oncológico. Seguimiento desde 2019.', 'Ninguno', 1),
-(211, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL),
-(212, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL);
+INSERT INTO `paciente` (`IDPaciente`, `Nombre`, `DNI`, `Edad`, `Genero`, `Historial`, `Seguro`, `Cita`, `Motivo`, `Sintoma`, `Prioridad`, `EvaluacionFisica`, `PlanAtencion`) VALUES
+(1, 'Ana María López', 1245678, 1945, 'Femenino', 'Alergia a penicilina. Cirugía en 2020.', 'Ninguno', NULL, '', '', '', '', ''),
+(3, 'Lucía Torres', 3759372, 2001, 'Femenino', 'Sin antecedentes clínicos importantes.', 'Ninguno', NULL, '', '', '', '', ''),
+(4, 'Miguel Ángel Ruiz', 9573821, 1988, 'Femenino', 'Diabético tipo 2. Tratamiento con metformina.', 'Ninguno', NULL, '', '', '', '', ''),
+(5, 'Sam Rivera', 57391052, 1992, 'Femenino', 'Asma diagnosticada en infancia.', 'Ninguno', NULL, '', '', '', '', ''),
+(6, 'Elena García', 0, 1983, 'Masculino', 'Paciente oncológico. Seguimiento desde 2019.', 'Ninguno', NULL, '', '', '', '', ''),
+(211, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL, '', '', '', '', ''),
+(212, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL, '', '', '', '', '');
 
 --
 -- Índices para tablas volcadas

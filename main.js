@@ -40,6 +40,7 @@ router.get('/inPac/:id/Historial', async (req, res) => {
     res.status(500).send('Error fetching paciente: ' + err.message);
   }
 });
+
 router.post('/inPac/:id/Historial', async (req, res) => {
   try {
    await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
@@ -48,6 +49,7 @@ router.post('/inPac/:id/Historial', async (req, res) => {
     res.status(500).send('Error adding historial: ' + err.message);
   }
 });
+
 router.get('/inPac', async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
