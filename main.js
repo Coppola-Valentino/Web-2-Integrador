@@ -180,10 +180,10 @@ router.get('/inPac/:id/AltaPac', async (req, res) => {
 
 router.post('/inPac/:id/AltaPac', async (req, res) => {
  try {
-  await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
   const cama = await Camas.findAll({ where: {Paciente: req.params.id} });
   const hab = await Habitacion.findByPk(cama.Habitacion)
   const camasDeHab = await Camas.findAll({ where: { Habitacion: hab.IDHab } });
+  await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
   await Camas.update(
     { Paciente: null },
     { where: { Paciente: req.params.id } }
