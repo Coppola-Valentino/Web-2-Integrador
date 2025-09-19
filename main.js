@@ -169,16 +169,16 @@ router.post('/Habit/anadirCam', async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/Alta', async (req, res) => {
+router.get('/inPac/:id/AltaPac', async (req, res) => {
  try {
     const pac = await Paciente.findByPk(req.params.id);
-    res.render('Alta', {pac});
+    res.render('AltaPac', {pac});
  } catch (err) {
     res.status(500).send('Error: ' + err.message);
   }
 });
 
-router.post('/inPac/:id/Alta', async (req, res) => {
+router.post('/inPac/:id/AltaPac', async (req, res) => {
  try {
   await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
   const cama = await Camas.findAll({ where: {Paciente: req.params.id} });
