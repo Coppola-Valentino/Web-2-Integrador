@@ -9,13 +9,13 @@ html(lang="en")
         +bar()
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
-        h1 Dar de Alta al Paciente: #{pac.Nombre} - DNI: #{pac.DNI}
-         form(action=`/inPac/${pac.IDPaciente}/Alta` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+         h1 Dar de Alta al Paciente: #{pac.Nombre} - DNI: #{pac.DNI}
+         form(action=`/inPac/${pac.IDPaciente}/AltaPac` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
             label(for="Motivo") Motivo del Alta: 
-            input(type="text" name="Motivo" style="width: 100%;" required)
+            input(type="text" name="Motivo" style="width: 100%;" value=pac.Motivo required)
             br 
             label(for="PlanAtencion") Plan de Atencion Posterior: 
-            input(type="text" name="PlanAtencion" style="width: 100%;" required)
+            input(type="text" name="PlanAtencion" style="width: 100%;" value=pac.PlanAtencion required)
             br
             label(for="Historial") Añadir al Historial:
             input(type="text" name="Historial" value=pac.Historial style="width: 100%;" required)
