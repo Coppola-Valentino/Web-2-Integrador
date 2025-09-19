@@ -14,24 +14,25 @@ html(lang="en")
             label(for="Historial") Historial:
             input(type="text" name="Historial" value=pac.Historial style="width: 100%;" required)
             br
-            label(for="Motivo") Motivo de la Internacion: 
-             input(type="text" name="Motivo" style="width: 100%;" required)
-            br
-            label(for="Sintomas") Sintomas Medicos: 
-             input(type="text" name="Sintomas" style="width: 100%;" required)
-            br
-            label(for="EvaluacionFisica") Evaluacion Fisica: 
-             input(type="text" name="EvaluacionFisica" style="width: 100%;" required)
-            br
-            label(for="Prioridad") Prioridad:
-             select(name="Prioridad" required)
-              option(value="Baja" selected=(pacS.Prioridad==='Baja')) Baja
-              option(value="Media" selected=(pacS.Prioridad==='Media')) Media
-              option(value="Alta" selected=(pacS.Prioridad==='Alta')) Alta
-            br
-            label(for="PlanAtencion") Plan de Atencion
-             input(type="text" name="PlanAtencion" style="width: 100%;" required)
-            br
+            if pac.Motivo
+             label(for="Motivo") Motivo de la Internacion: 
+              input(type="text" name="Motivo" style="width: 100%;" required)
+             br
+             label(for="Sintomas") Sintomas Medicos: 
+              input(type="text" name="Sintomas" style="width: 100%;" required)
+             br
+             label(for="EvaluacionFisica") Evaluacion Fisica: 
+              input(type="text" name="EvaluacionFisica" style="width: 100%;" required)
+             br
+             label(for="Prioridad") Prioridad:
+              select(name="Prioridad" required)
+               option(value="Baja" selected=(pac.Prioridad==='Baja')) Baja
+               option(value="Media" selected=(pac.Prioridad==='Media')) Media
+               option(value="Alta" selected=(pac.Prioridad==='Alta')) Alta
+             br
+             label(for="PlanAtencion") Plan de Atencion
+              input(type="text" name="PlanAtencion" style="width: 100%;" required)
+             br
             button(class="btn btn-primary" type="submit") Guardar cambios
             br
             a.btn.btn-secondary(href="/inPac") Volver
