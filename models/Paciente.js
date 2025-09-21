@@ -62,6 +62,18 @@ module.exports = (sequelize, DataTypes) => {
     PlanAtencion: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    Telefono: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    Direccion: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    AnteFamiliar: {
+      Type: DataTypes.STRING,
+      allowNull: true
     }
   }, {
     tableName: 'paciente',
