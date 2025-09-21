@@ -44,6 +44,8 @@ html(lang="en")
                 th(style="max-width: 90px;") año de Nacimiento
                 th DNI
                 th Genero
+                th Numero Telefonico 
+                th Domicilio
                 th Datos Medicos
                 th Seguro
                 th Prioridad
@@ -56,6 +58,8 @@ html(lang="en")
                       td= pac.Edad
                       td= pac.DNI
                       td(style="min-width: 110px;")= pac.Genero
+                      td= pac.Telefono
+                      td= pac.Direccion
                       td
                        a(href=`/inPac/${pac.IDPaciente}/Historial`) Historial y Datos de Internacion
                       td= pac.Seguro

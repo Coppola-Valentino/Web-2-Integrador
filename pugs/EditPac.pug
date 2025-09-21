@@ -38,6 +38,16 @@ html(lang="en")
                 if pac.Seguro === "Desconocido"
                    option(value="Desconocido" selected) Desconocido
            br
+           label(for="Telefono") Numero de Telefono: 
+            input(Type="number" name="Telefono" value=pac.Telefono)
+           br
+           label(for="Direccion") Direccion de Domicilio: 
+            input(Type="text" name="Direccion" value=pac.Direccion)
+           br
+           if pac.planAtencion !== null
+            label(for="PlanAtencion") Plan de Atencion
+             input(type="text" name="PlanAtencion" style="width: 100%;" value=pac.PlanAtencion)
+            br
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
            a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/Historial`) Ver y editar Datos de Internacion

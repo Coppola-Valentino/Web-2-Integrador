@@ -110,6 +110,15 @@ type: DataTypes.STRING,
 },
 PlanAtencion: {
 type: DataTypes.STRING,
+},
+Telefono: {
+  type: DataTypes.INTEGER,
+},
+Direccion: {
+  Type: DataTypes.STRING,
+},
+AnteFamiliar: {
+  Type: DataTypes.STRING,
 }
 }, {
 
