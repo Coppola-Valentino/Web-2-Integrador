@@ -112,13 +112,13 @@ PlanAtencion: {
 type: DataTypes.STRING,
 },
 Telefono: {
-  type: DataTypes.INTEGER,
+type: DataTypes.INTEGER,
 },
 Direccion: {
-  Type: DataTypes.STRING,
+Type: DataTypes.STRING,
 },
 AnteFamiliar: {
-  Type: DataTypes.STRING,
+Type: DataTypes.STRING,
 }
 }, {
 
