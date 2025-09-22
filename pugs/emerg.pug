@@ -8,7 +8,7 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 100px;")
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
           h1 EMERGENCIAS 
           h2 Añadir Datos Conocidos del Paciente
           form(action=`/Emergencias` id="formi" method="POST" style="display: flex; flex-direction: column;")
@@ -59,6 +59,11 @@ html(lang="en")
                script.
                 const DNIs = !{JSON.stringify(dnis)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
+                 const telInp = document.getElementById('Telefono');
+                 if (telInp.value.length > 11) {
+                  alert('El número de teléfono no puede tener más de 10 dígitos.');
+                  event.preventDefault();
+                 }
                  const dniInp = document.getElementById('DNI');
                  if (!dniInp.disabled && dniInp.value && DNIs.includes(Number(dniInp.value))) {
                   alert('El DNI ya está registrado.');

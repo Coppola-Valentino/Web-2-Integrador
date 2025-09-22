@@ -8,7 +8,7 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-        div(style="max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
+        div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
             label(for="paciente") Pacientes
             input(type="text" id="paciente" name="paciente" placeholder="Buscar paciente por datos" oninput="buscarPaciente()")
             script.
@@ -51,7 +51,7 @@ html(lang="en")
                 th Prioridad
                 th Cama asignada 
                 th Habitacion
-                th Acciones
+                th(style="min-width: 60px;") Acciones
                  each pac in paciente
                      tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
                       td= pac.Nombre
@@ -64,7 +64,6 @@ html(lang="en")
                        a(href=`/inPac/${pac.IDPaciente}/Historial`) Historial y Datos de Internacion
                       td= pac.Seguro
                       td 
-                       if (!pac.cama) 
                         if pac.Prioridad === 'Alta'
                           span(style="color: Red;") Alta
                         else if pac.Prioridad === 'Media'
@@ -73,8 +72,6 @@ html(lang="en")
                           span(style="color: Green;") Baja
                         else 
                           span No Internado
-                       else 
-                         span No Internado
                       td
                         if (pac.cama) 
                           span Cama #{pac.cama.IDCamas}
@@ -97,5 +94,5 @@ html(lang="en")
                             a(href=`/inPac/${pac.IDPaciente}/AltaPac`) Dar de Alta
                             br
             div(class="Container-fluid text-center justify-content-center")
-             div(class="col btn btn-link")
+             div(class="col btn btn-link" style="Padding-bottom: 40px;")
               a.btn.btn-primary(href=`/inPac/anadir`) Admitir Paciente

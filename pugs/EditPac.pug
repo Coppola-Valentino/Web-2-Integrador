@@ -44,7 +44,7 @@ html(lang="en")
            label(for="Direccion") Direccion de Domicilio: 
             input(Type="text" name="Direccion" value=pac.Direccion)
            br
-           if pac.planAtencion !== null
+           if pac.planAtencion !== ""
             label(for="PlanAtencion") Plan de Atencion
              input(type="text" name="PlanAtencion" style="width: 100%;" value=pac.PlanAtencion)
             br
@@ -56,6 +56,11 @@ html(lang="en")
             script.
                 const DNIs = !{JSON.stringify(dnis)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
+                 const telInp = document.getElementById('Telefono');
+                 if (telInp.value.length > 11) {
+                  alert('El número de teléfono no puede tener más de 10 dígitos.');
+                  event.preventDefault();
+                 }
                  const dniInp = document.getElementById('DNI');
                  if (dniInp.value && DNIs.includes(Number(dniInp.value))) {
                   alert('El DNI ya está registrado.');

@@ -8,7 +8,7 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
          h1 Añadir Paciente
          form(action=`/inPac/anadir` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
            label(for="Nombre") Nombre:
@@ -40,6 +40,7 @@ html(lang="en")
            br
            label(for="Direccion") Direccion de Domicilio: 
             input(Type="text" name="Direccion")
+           br
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
            a.btn.btn-warning(href="/inPac") Cancelar
@@ -52,4 +53,8 @@ html(lang="en")
                   dniInp.value = '0';
                   event.preventDefault();
                  }
+                 const telInp = document.getElementById('Telefono');
+                 if (telInp.value.length > 11) {
+                  alert('El número de teléfono no puede tener más de 10 dígitos.');
+                  event.preventDefault();
                  });
