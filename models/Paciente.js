@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     AnteFamiliar: {
-      Type: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: true
     }
   }, {
@@ -127,10 +127,10 @@ Telefono: {
 type: DataTypes.INTEGER,
 },
 Direccion: {
-Type: DataTypes.STRING,
+type: DataTypes.STRING,
 },
 AnteFamiliar: {
-Type: DataTypes.STRING,
+type: DataTypes.STRING,
 }
 }, {
 

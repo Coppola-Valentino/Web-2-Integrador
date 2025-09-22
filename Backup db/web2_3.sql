@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `camas` (
-  `IDCamas` int(11) NOT NULL,
+  `IDCamas` int(11) NOT NULL PRIMARY KEY,
   `Paciente` int(11) DEFAULT NULL,
   `Higenizado` tinyint(1) NOT NULL,
   `Habitacion` int(100) NOT NULL
@@ -48,18 +48,6 @@ INSERT INTO `camas` (`IDCamas`, `Paciente`, `Higenizado`, `Habitacion`) VALUES
 (16, 4, 1, 1),
 (17, 1, 1, 1);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `citas`
---
-
-CREATE TABLE `citas` (
-  `IDCita` int(11) NOT NULL,
-  `Fecha` date NOT NULL,
-  `Medico` int(11) NOT NULL,
-  `Tipo` char(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -68,7 +56,7 @@ CREATE TABLE `citas` (
 --
 
 CREATE TABLE `habitacion` (
-  `IDHab` int(11) NOT NULL,
+  `IDHab` int(11) NOT NULL PRIMARY KEY,
   `Tipo` char(100) NOT NULL,
   `Ala` int(11) NOT NULL,
   `GeneroHab` char(100) DEFAULT NULL
@@ -85,26 +73,6 @@ INSERT INTO `habitacion` (`IDHab`, `Tipo`, `Ala`, `GeneroHab`) VALUES
 (4, 'Urgencias', 4, 'Desconocido'),
 (6, 'Quimioterapia', 2, 'Vacio');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `medicos`
---
-
-CREATE TABLE `medicos` (
-  `IDMed` int(11) NOT NULL,
-  `Nombre` char(100) NOT NULL,
-  `DNI` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `medicos`
---
-
-INSERT INTO `medicos` (`IDMed`, `Nombre`, `DNI`) VALUES
-(1, 'Juan Perez', 47040879),
-(2, 'Peron Perez', 8289472),
-(3, 'Ana Perez', 2739124);
 
 -- --------------------------------------------------------
 
@@ -113,7 +81,7 @@ INSERT INTO `medicos` (`IDMed`, `Nombre`, `DNI`) VALUES
 --
 
 CREATE TABLE `paciente` (
-  `IDPaciente` int(11) NOT NULL,
+  `IDPaciente` int(11) NOT NULL PRIMARY KEY,
   `Nombre` char(100) NOT NULL,
   `DNI` int(11) DEFAULT NULL,
   `Edad` int(3) DEFAULT NULL,
@@ -128,7 +96,7 @@ CREATE TABLE `paciente` (
   `PlanAtencion` varchar(255) DEFAULT NULL,
   `Telefono` int(11) DEFAULT NULL,
   `Direccion` char(255) DEFAULT NULL,
-  `AnteFamiliar` char(255) DEFAULT NULL,
+  `AnteFamiliar` char(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -152,36 +120,14 @@ INSERT INTO `paciente` (`IDPaciente`, `Nombre`, `DNI`, `Edad`, `Genero`, `Histor
 -- Indices de la tabla `camas`
 --
 ALTER TABLE `camas`
-  ADD PRIMARY KEY (`IDCamas`),
   ADD KEY `Paciente` (`Paciente`),
   ADD KEY `Habitacion` (`Habitacion`),
   ADD KEY `Habitacion_2` (`Habitacion`);
 
 --
--- Indices de la tabla `citas`
---
-ALTER TABLE `citas`
-  ADD PRIMARY KEY (`IDCita`),
-  ADD KEY `Medico` (`Medico`);
-
---
--- Indices de la tabla `habitacion`
---
-ALTER TABLE `habitacion`
-  ADD PRIMARY KEY (`IDHab`);
-
---
--- Indices de la tabla `medicos`
---
-ALTER TABLE `medicos`
-  ADD PRIMARY KEY (`IDMed`),
-  ADD UNIQUE KEY `DNI` (`DNI`);
-
---
 -- Indices de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  ADD PRIMARY KEY (`IDPaciente`),
   ADD UNIQUE KEY `DNI` (`DNI`),
   ADD UNIQUE KEY `Cita` (`Cita`);
 
@@ -196,22 +142,10 @@ ALTER TABLE `camas`
   MODIFY `IDCamas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT de la tabla `citas`
---
-ALTER TABLE `citas`
-  MODIFY `IDCita` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `habitacion`
 --
 ALTER TABLE `habitacion`
   MODIFY `IDHab` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT de la tabla `medicos`
---
-ALTER TABLE `medicos`
-  MODIFY `IDMed` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
@@ -230,13 +164,6 @@ ALTER TABLE `camas`
   ADD CONSTRAINT `camas_ibfk_1` FOREIGN KEY (`Paciente`) REFERENCES `paciente` (`IDPaciente`),
   ADD CONSTRAINT `camas_ibfk_2` FOREIGN KEY (`Habitacion`) REFERENCES `habitacion` (`IDHab`);
 
---
--- Filtros para la tabla `citas`
---
-ALTER TABLE `citas`
-  ADD CONSTRAINT `citas_ibfk_1` FOREIGN KEY (`IDCita`) REFERENCES `paciente` (`Cita`),
-  ADD CONSTRAINT `citas_ibfk_2` FOREIGN KEY (`Medico`) REFERENCES `medicos` (`IDMed`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
