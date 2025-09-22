@@ -39,7 +39,7 @@ html(lang="en")
                    option(value="Desconocido" selected) Desconocido
            br
            label(for="Telefono") Numero de Telefono: 
-            input(Type="number" name="Telefono" id="Telefono" value=pac.Telefono)
+            input(Type="number" name="Telefono" id="Telefono" value=pac.Telefono maxlength="10")
            br
            label(for="Direccion") Direccion de Domicilio: 
             input(Type="text" name="Direccion" value=pac.Direccion)
@@ -59,7 +59,6 @@ html(lang="en")
                  const telInp = document.getElementById('Telefono');
                  if (telInp.value.length > 10) {
                   alert('El número de teléfono no puede tener más de 10 dígitos.');
-                  telInp.value = '';
                   event.preventDefault();
                  }
                  const dniInp = document.getElementById('DNI');
