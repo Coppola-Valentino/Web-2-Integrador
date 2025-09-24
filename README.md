@@ -38,10 +38,13 @@ post /inPac/:id/Historial (cambia el historial medico del paciente y vuelve a ca
 
 get /inPac/:id/excluir (elimina el paciente del sistema y si tenia una cama asignada la desocupa)
 
+get /inPac/:id/Alta (lleva a una vista para dar los motivos y tratamientos posteriores para el paciente)
+ 
+post /inPac/:id/Alta (desocupa la cama que el paciente estaba usando y actualiza sus valores)
+
 get /emergencias (lleva a una vista donde se puede crear un paciente de emergencia, al que se le pueden dejar valores nulos si se desconocen datos del paciente)
 
 post /emergencias (crea el paciente y redirije al usuario hacia /inpac/:id/internar con el usuario recien creado como parametro)
-
 
 get /habitaciones (lleva al menu principal de habitaciones, tiene una tabla mostrando todas las habitaciones, sus valores y las camas asignadas a cada habitacion y los pacientes en esas camas)
 
@@ -59,19 +62,13 @@ post /Habit/:id/editar (cambia los valores de la habitacion y las camas)
 
 get /Habit/:id/eliminar (elimina la habitacion y las camas de dicha habitacion)
 
-
-get /cama/:id/desocupar (saca al paciente de la cama)
-
-get /cama/:id/eliminar (elimina la cama del sistema)
-
-
 # Instalacion/Uso
 
 1 ejecutar `npm install` en consola
 
 2 crear un .env con los valores [user, pass, host, port, name, DATABASE_URL]
 
-3 ejecutar npm run start
+3 ejecutar `npm run start` en consola
 
 # Otros Links
 
