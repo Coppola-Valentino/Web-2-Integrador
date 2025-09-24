@@ -9,10 +9,10 @@ html(lang="en")
                 font-size: 70px;
                 font-family: 'JetBrains Mono';
             }
-    body(style="background: rgb(184, 253, 219);")
         include bar.pug
         +bar()
         block content
+        body(style="background: rgb(184, 253, 219);")
          .container-fluid.d-flex.align-items-center.justify-content-center
             .row.w-100
                 .col.d-flex.align-items-center.justify-content-center
