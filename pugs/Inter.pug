@@ -10,17 +10,17 @@ html(lang="en")
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px; padding-bottom: 40px;")
          h1 INTERNACIONES 
-         form(action=`/inPac/${pacS.IDPaciente}/internar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+         form(action=`/inPac/${pacS.IDPaciente}/internar` id="formi" method="POST" style="display: flex; flex-direction: column; gap: 1px;")
            label(for="Cama") Cama a asignar:
            select(name="Cama" required)
             each cama in camasDisponibles
              option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{cama.habitacion.Tipo}
            br
            label(for="Motivo") Motivo de la Internacion: 
-            input(type="text" name="Motivo" style="width: 100%;" required)
+            input(type="text" name="Motivo" id="Motivo" style="width: 100%;" required)
            br
            label(for="Sintoma") Sintomas Medicos: 
-            input(type="text" name="Sintoma" style="width: 100%;" required)
+            input(type="text" name="Sintoma" id="Sintoma" style="width: 100%;" required)
            br
            label(for="Prioridad") Prioridad:
             select(name="Prioridad" required)
@@ -29,11 +29,34 @@ html(lang="en")
              option(value="Alta" selected=(pacS.Prioridad==='Alta')) Alta
            br
            label(for="PlanAtencion") Plan de Atencion
-            input(type="text" name="PlanAtencion" style="width: 100%;" required)
+            input(type="text" name="PlanAtencion" id="PlanAtencion" style="width: 100%;" required)
            br
            label(for="EvaluacionFisica") Evaluacion Fisica: 
-            input(type="text" name="EvaluacionFisica" style="width: 100%;" required)
+            input(type="text" name="EvaluacionFisica" id="EvualuacionFIsica" style="width: 100%;" required)
            br
            button(class="btn btn-primary" type="submit") Guardar
            br
            a.btn.btn-warning(href="/inPac") Cancelar
+           script.
+                document.getElementById('formi').addEventListener('submit', function(event) {
+                  const motImp = document.getElementById('Motivo');
+                  if (motImp.value.length > 250) {
+                    alert('El motivo no puede tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                  const sintImp = document.getElementById('Sintoma');
+                  if (sintImp.value.length > 250) {
+                    alert('Los sintomas no pueden tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                  const planImp = document.getElementById('PlanAtencion');
+                  if (planImp.value.length > 250) {
+                    alert('El plan de atencion no puede tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                  const evalImp = document.getElementById('EvaluacionFisica');
+                  if (evalImp.value.length > 250) {
+                    alert('La evaluacion fisica no puede tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                 });

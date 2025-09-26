@@ -10,11 +10,11 @@ html(lang="en")
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
          h1 Añadir Habitacion al sistema
-         form(action=`/Habit/anadir` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+         form(action=`/Habit/anadir` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;")
            label(for="Ala") Ala de la Habitacion:
-           input(type="number" name="Ala" required)
+            input(type="number" name="Ala" id="Ala" required)
            label(for="Tipo") Tipo de Habitacion:
-           select(name="Tipo" required)
+            select(name="Tipo" required)
              option(value="Urgencias") Urgencias
              option(value="Quimioterapia") Quimioterapia
              option(value="Cirujia") Cirujia
@@ -26,3 +26,11 @@ html(lang="en")
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
            a.btn.btn-warning(href="/Habitaciones") Cancelar
+              script.
+                document.getElementById('formi').addEventListener('submit', function(event) {
+                  const alaImp = document.getElementById('Ala');
+                  if (alaImp.value.length > 4) {
+                    alert('El Ala no puede tener más de 4 digitos.');
+                    event.preventDefault();
+                  }
+                 });

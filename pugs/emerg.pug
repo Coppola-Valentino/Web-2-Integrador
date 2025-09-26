@@ -14,10 +14,10 @@ html(lang="en")
           form(action=`/Emergencias` id="formi" method="POST" style="display: flex; flex-direction: column;")
                br
                label(for="Nombre") Nombre:
-               input(type="text" name="Nombre" value="John Doe" required)
+               input(type="text" name="Nombre" id="Nombre" value="John Doe" required)
                br
                label(for="Edad") Fecha de Nacimiento:
-               input(type="number" name="Edad" value="0" required)
+               input(type="number" name="Edad" id="Edad" value="0" required)
                br
                label(for="DNI") DNI:
                input(type="number" name="DNI" id="DNI" value="0")
@@ -51,7 +51,7 @@ html(lang="en")
                 input(Type="number" name="Telefono" id="Telefono" maxlength="10")
                br
                label(for="Direccion") Direccion de Domicilio: 
-                input(Type="text" name="Direccion")
+                input(Type="text" name="Direccion" id="Direccion")
                br
                button(class="btn btn-primary" type="submit") Guardar y Asignar Cama
                br
@@ -59,23 +59,35 @@ html(lang="en")
                script.
                 const DNIs = !{JSON.stringify(dnis)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
-                 const telInp = document.getElementById('Telefono');
-                 if (telInp.value.length > 9) {
-                  alert('El número de teléfono no puede tener más de 9 dígitos.');
-                  telInp.value = '';
-                  event.preventDefault();
-                 }
                  const dniInp = document.getElementById('DNI');
                  if (!dniInp.disabled && dniInp.value && DNIs.includes(Number(dniInp.value))) {
                   alert('El DNI ya está registrado.');
-                  dniInp.value = '';
-                  dniInp.disabled = true;
                   event.preventDefault();
+                 }
+                 const telInp = document.getElementById('Telefono');
+                 if (telInp.value.length > 10) {
+                  alert('El número de teléfono no puede tener más de 10 dígitos.');
+                  event.preventDefault();
+                 }
+                 if (telInp.value.length > 0 && telInp.value.length < 10) {
+                  alert('El número de teléfono debe tener 10 dígitos o estar vacío.');
+                  event.preventDefault();
+                 }
+                 const edImp = document.getElementById('Edad');
+                 const hoy = new Date().getFullYear();
+                 if (edImp.value < 1900 || edImp.value > hoy) {
+                   alert('El año de nacimiento debe estar entre 1900 y ' + hoy + '.');
+                   event.preventDefault();
                  }
                  if(dniInp.value.length === 0 && !dniInp.disabled) {
                   alert('introduzca un DNI o marque "Sin DNI".');
                   dniInp.value = '';
                   dniInp.disabled = true;
+                  event.preventDefault();
+                }
+                const dirImp = document.getElementById('Direccion');
+                if (dirImp.value.length > 250) {
+                  alert('La dirección no puede tener más de 250 caracteres.');
                   event.preventDefault();
                 }
                  });

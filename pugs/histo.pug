@@ -10,21 +10,21 @@ html(lang="en")
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px; padding-bottom: 40px;")
          h1 Historial Medico del Paciente: #{pac.Nombre} - DNI: #{pac.DNI}
-         form(action=`/inPac/${pac.IDPaciente}/Historial` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+         form(action=`/inPac/${pac.IDPaciente}/Historial` id="formi" method="POST" style="display: flex; flex-direction: column; gap: 1px;")
             label(for="Historial") Historial:
-            input(type="text" name="Historial" value=pac.Historial style="width: 100%;")
+            input(type="text" name="Historial" id="Historial" value=pac.Historial style="width: 100%;")
             br
             label(for="AnteFamiliar") Antecedentes Familiares
-             input(type="text" name="AnteFamiliar" style="width: 100%;" value=pac.AnteFamiliar)
+             input(type="text" name="AnteFamiliar" id="AnteFamiliar" style="width: 100%;" value=pac.AnteFamiliar)
             br
             label(for="Motivo") Motivo de la Internacion: 
-             input(type="text" name="Motivo" style="width: 100%;" value=pac.Motivo)
+             input(type="text" name="Motivo" id="Motivo" style="width: 100%;" value=pac.Motivo)
             br
             label(for="Sintoma") Sintomas Medicos: 
-             input(type="text" name="Sintoma" style="width: 100%;" value=pac.Sintoma)
+             input(type="text" name="Sintoma"  id="Sintoma" style="width: 100%;" value=pac.Sintoma)
             br
             label(for="EvaluacionFisica") Evaluacion Fisica: 
-             input(type="text" name="EvaluacionFisica" style="width: 100%;" value=pac.EvaluacionFisica)
+             input(type="text" name="EvaluacionFisica" id="EvaluacionFisica" style="width: 100%;" value=pac.EvaluacionFisica)
             br
             label(for="Prioridad") Prioridad:
              select(name="Prioridad" )
@@ -33,8 +33,41 @@ html(lang="en")
               option(value="Alta" selected=(pac.Prioridad==='Alta')) Alta
             br
             label(for="PlanAtencion") Plan de Atencion
-             input(type="text" name="PlanAtencion" style="width: 100%;" value=pac.PlanAtencion)
+             input(type="text" name="PlanAtencion" id="PlanAtencion" style="width: 100%;" value=pac.PlanAtencion)
             br
             button(class="btn btn-primary" type="submit") Guardar cambios
             br
             a.btn.btn-secondary(href="/inPac") Volver
+            script.
+                document.getElementById('formi').addEventListener('submit', function(event) {
+                  const motImp = document.getElementById('Motivo');
+                  if (motImp.value.length > 250) {
+                    alert('El motivo no puede tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                  const sintImp = document.getElementById('Sintoma');
+                  if (sintImp.value.length > 250) {
+                    alert('Los sintomas no pueden tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                  const planImp = document.getElementById('PlanAtencion');
+                  if (planImp.value.length > 250) {
+                    alert('El plan de atencion no puede tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                  const evalImp = document.getElementById('EvaluacionFisica');
+                  if (evalImp.value.length > 250) {
+                    alert('La evaluacion fisica no puede tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                  const histImp = document.getElementById('Historial');
+                  if (histImp.value.length > 250) {
+                    alert('El historial no puede tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                  const famImp = document.getElementById('AnteFamiliar');
+                   if (famImp.value.length > 250) {
+                     alert('Los antecedentes familiares no pueden tener más de 250 caracteres.');
+                     event.preventDefault();
+                   }
+                 });

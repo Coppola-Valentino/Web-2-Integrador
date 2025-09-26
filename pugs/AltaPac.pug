@@ -10,16 +10,34 @@ html(lang="en")
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
          h1 Dar de Alta al Paciente: #{pac.Nombre} - DNI: #{pac.DNI}
-         form(action=`/inPac/${pac.IDPaciente}/AltaPac` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+         form(action=`/inPac/${pac.IDPaciente}/AltaPac` id="formi" method="POST" style="display: flex; flex-direction: column; gap: 1px;")
             label(for="Motivo") Motivo del Alta: 
-            input(type="text" name="Motivo" style="width: 100%;" value=pac.Motivo required)
+            input(type="text" name="Motivo" id="Motivo" style="width: 100%;" value=pac.Motivo required)
             br 
             label(for="PlanAtencion") Plan de Atencion Posterior: 
-            input(type="text" name="PlanAtencion" style="width: 100%;" value=pac.PlanAtencion required)
+            input(type="text" name="PlanAtencion" id="PlanAtencion" style="width: 100%;" value=pac.PlanAtencion required)
             br
             label(for="Historial") Añadir al Historial:
-            input(type="text" name="Historial" value=pac.Historial style="width: 100%;" required)
+            input(type="text" name="Historial" id="Historial" value=pac.Historial style="width: 100%;" required)
             br
             button(class="btn btn-primary" type="submit") Dar de Alta
             br
             a.btn.btn-secondary(href="/inPac") Volver
+            script.
+                document.getElementById('formi').addEventListener('submit', function(event) {
+                  const motImp = document.getElementById('Motivo');
+                  if (motImp.value.length > 250) {
+                    alert('El motivo no puede tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                  const planImp = document.getElementById('PlanAtencion');
+                  if (planImp.value.length > 250) {
+                    alert('El plan de atencion no puede tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                  const histImp = document.getElementById('Historial');
+                  if (histImp.value.length > 250) {
+                    alert('El historial no puede tener más de 250 caracteres.');
+                    event.preventDefault();
+                  }
+                 });

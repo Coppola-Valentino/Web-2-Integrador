@@ -10,7 +10,7 @@ html(lang="en")
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
          h1 Editar Habitacion
-         form(action=`/Habit/${hab.IDHab}/editar` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
+         form(action=`/Habit/${hab.IDHab}/editar` id="formi" method="POST" style="display: flex; flex-direction: column; gap: 1px;")
            -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
            label(for="Tipo") Tipo de Habitacion:
            select(name="Tipo" required)
@@ -35,3 +35,11 @@ html(lang="en")
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
            a.btn.btn-warning(href="/Habitaciones") Cancelar
+           script.
+                document.getElementById('formi').addEventListener('submit', function(event) {
+                  const alaImp = document.getElementById('Ala');
+                  if (alaImp.value.length > 4) {
+                    alert('El Ala no puede tener más de 4 digitos.');
+                    event.preventDefault();
+                  }
+                 });

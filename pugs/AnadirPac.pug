@@ -12,10 +12,10 @@ html(lang="en")
          h1 Añadir Paciente
          form(action=`/inPac/anadir` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
            label(for="Nombre") Nombre:
-           input(type="text" name="Nombre" required)
+           input(type="text" name="Nombre" id="Nombre" required)
            br
            label(for="Edad") año de Nacimiento:
-           input(type="number" name="Edad" required)
+           input(type="number" name="Edad" id="Edad" required)
            br
            label(for="DNI") DNI:
            input(type="number" name="DNI" id="DNI" required)
@@ -27,7 +27,7 @@ html(lang="en")
                  option(value="Otro") Otro
            br
            label(for="Historial") Historial:
-           input(type="text" name="Historial")
+           input(type="text" name="Historial" id="Historial")
            br
            label(for="Seguro") Seguro Medico:
               select(for="Seguro" name="Seguro" required)
@@ -39,7 +39,7 @@ html(lang="en")
             input(Type="number" name="Telefono" id="Telefono" maxlength="10")
            br
            label(for="Direccion") Direccion de Domicilio: 
-            input(Type="text" name="Direccion")
+            input(Type="text" name="Direccion" id="Direccion")
            br
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
@@ -50,13 +50,40 @@ html(lang="en")
                  const dniInp = document.getElementById('DNI');
                  if (!dniInp.disabled && dniInp.value && DNIs.includes(Number(dniInp.value))) {
                   alert('El DNI ya está registrado.');
-                  dniInp.value = '0';
                   event.preventDefault();
                  }
                  const telInp = document.getElementById('Telefono');
-                 if (telInp.value.length > 9) {
-                  alert('El número de teléfono no puede tener más de 9 dígitos.');
-                  telInp.value = '';
+                 if (telInp.value.length > 10) {
+                  alert('El número de teléfono no puede tener más de 10 dígitos.');
                   event.preventDefault();
+                 }
+                 if (telInp.value.length > 0 && telInp.value.length < 10) {
+                  alert('El número de teléfono debe tener 10 dígitos o estar vacío.');
+                  event.preventDefault();
+                 }
+                 const edImp = document.getElementById('Edad');
+                 const hoy = new Date().getFullYear();
+                 if (edImp.value < 1900 || edImp.value > hoy) {
+                   alert('El año de nacimiento debe estar entre 1900 y ' + hoy + '.');
+                   event.preventDefault();
+                 }
+                 const nomImp = document.getElementById('Nombre');
+                 if (nomImp.value.trim().length === 0) {
+                   alert('El nombre no puede estar vacío.');
+                   event.preventDefault();
+                 }
+                 if (nomImp.value.length > 100) {
+                   alert('El nombre no puede tener más de 100 caracteres.');
+                   event.preventDefault();
+                 }
+                 const histImp = document.getElementById('Historial');
+                 if (histImp.value.length > 250) {
+                   alert('El historial no puede tener más de 250 caracteres.');
+                   event.preventDefault();
+                 }
+                 const dirImp = document.getElementById('Direccion');
+                 if (dirImp.value.length > 250) {
+                   alert('La dirección no puede tener más de 250 caracteres.');
+                   event.preventDefault();
                  }
                  });
