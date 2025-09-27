@@ -62,6 +62,27 @@ post /Habit/:id/editar (cambia los valores de la habitacion y las camas)
 
 get /Habit/:id/eliminar (elimina la habitacion y las camas de dicha habitacion)
 
+get /Users (lleva a una vista donde se muestran los usuarios y su informacion (solo accesible por administradores))
+
+get /Users/Register (lleva a una vista donde se permite crear otro usuario y darle un rol (solo accesible por administradores))
+
+post /Users/Register (crea el usuario para su uso en el sistema (solo accesible por administradores))
+
+get /Login (permite iniciar sesion en un usuario de la base de datos si se pasa un usuario y contraseña validos)
+
+post /Login (WIP)
+
+get /Users/:id/EditUser (lleva a una vista que permite cambiar los datos del usuario pasado por parametros (solo accesible por administradores))
+
+post /User/:id/EditUser (cambia los datos del usuario en cuestion)
+
+# Usuarios para Testeo
+
+Usuario: 'John Admin', Contraseña: 'John #1', Rol: 'Admin'
+Usuario: 'John Doctor', Contraseña: 'John #2', Rol: 'Doctor'
+Usuario: 'John Enfermero', Contraseña: 'John #3', Rol: 'Enfermero'
+Usuario: 'John Recepcionista', Contraseña: 'John #4', Rol: 'Recepcionista'
+
 # Instalacion/Uso
 
 1 ejecutar `npm install` en consola

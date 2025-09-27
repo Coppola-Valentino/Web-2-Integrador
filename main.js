@@ -30,6 +30,7 @@ router.get('/Home', (req, res) => {
 const Paciente = require('./models/Paciente')(sequelize, DataTypes);
 const Habitacion = require('./models/Habitaciones')(sequelize, DataTypes);
 const Camas = require('./models/Cama')(sequelize, DataTypes);
+const User = require('./models/Usuario')(sequelize, DataTypes);
 
 
 router.get('/inPac/:id/Historial', async (req, res) => {
@@ -37,7 +38,7 @@ router.get('/inPac/:id/Historial', async (req, res) => {
     const pac = await Paciente.findByPk(req.params.id);
     res.render('histo', { pac });
   } catch (err) {
-    res.status(500).send('Error fetching paciente: ' + err.message);
+    res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -46,7 +47,7 @@ router.post('/inPac/:id/Historial', async (req, res) => {
    await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
    res.redirect(`/inPac/${req.params.id}/Historial`);
   } catch (err) {
-    res.status(500).send('Error adding historial: ' + err.message);
+    res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -67,9 +68,10 @@ router.get('/inPac', async (req, res) => {
 
   res.render('inPac', { paciente: pacienteData, camas, Habits });
   } catch (err) {
-    res.status(500).send('Error fetching pacientes');
+    res.redirect('/Error', {err: err.message});
   }
 });
+
 router.get(`/inPac/:id/internar`, async (req, res) => {
   try {
     const pacS = await Paciente.findByPk(req.params.id);
@@ -92,13 +94,14 @@ router.get(`/inPac/:id/internar`, async (req, res) => {
       });
     res.render('Inter', { pacT, pacS, Habits, camas, camasDisponibles });
   } catch (err) {
-    res.status(500).send('Error fetching data for internar');
+    res.redirect('/Error', {err: err.message});
   }
 });
+
 router.post('/inPac/:id/internar', async (req, res) => {
-  await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
-  const pac = await Paciente.findByPk(req.params.id);
   try {
+    await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
+    const pac = await Paciente.findByPk(req.params.id);
     await Camas.update(
       { Paciente: null },
       { where: { Paciente: pac.IDPaciente } }
@@ -114,7 +117,7 @@ router.post('/inPac/:id/internar', async (req, res) => {
     );
     res.redirect('/inPac');
   } catch (err) {
-    res.status(500).send('Error with Internation: ' + err.message);
+    res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -125,9 +128,10 @@ router.get('/Habitaciones', async (req, res) => {
     const camas = await Camas.findAll();
     res.render('Habit', { Habits, camas, pacientes});
   } catch (err) {
-    res.status(500).send('Error fetching habitaciones');
+    res.redirect('/Error', {err: err.message});
   }
 });
+
 router.get('/Habit/anadir', async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
@@ -135,17 +139,19 @@ router.get('/Habit/anadir', async (req, res) => {
     const camas = await Camas.findAll();
     res.render('AnadirHab', { Habits, camas, pacientes});
   } catch (err) {
-    res.status(500).send('Error fetching habitaciones');
+    res.redirect('/Error', {err: err.message});
   }
 });
+
 router.post('/Habit/anadir', async (req, res) => {
   try {
     await Habitacion.create({...req.body, GeneroHab: "Vacio" });
     res.redirect('/Habitaciones');
   } catch (err) {
-    res.status(500).send('Error adding Habitacion: ' + err.message);
+    res.redirect('/Error', {err: err.message});
   }
 });
+
 router.get('/Habit/anadirCam', async (req, res) => {
   try {
     const habits = await Habitacion.findAll();
@@ -157,15 +163,16 @@ router.get('/Habit/anadirCam', async (req, res) => {
 
     res.render('AnadirCam', { HabitsDisp, camas }); 
   } catch (err) {
-    res.status(500).send('Error fetching habitaciones');
+    res.redirect('/Error', {err: err.message});
   }
 });
+
 router.post('/Habit/anadirCam', async (req, res) => {
   try {
     await Camas.create(req.body);
     res.redirect('/Habitaciones');
   } catch (err) {
-    res.status(500).send('Error adding cama: ' + err.message);
+    res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -174,7 +181,7 @@ router.get('/inPac/:id/AltaPac', async (req, res) => {
     const pac = await Paciente.findByPk(req.params.id);
     res.render('AltaPac', {pac});
  } catch (err) {
-    res.status(500).send('Error: ' + err.message);
+    res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -196,7 +203,7 @@ router.post('/inPac/:id/AltaPac', async (req, res) => {
   }
   res.redirect('/inPac');
  } catch (err) {
-    res.status(500).send('Error: ' + err.message);
+    res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -231,7 +238,7 @@ router.get('/Cama/:id/eliminar', async (req, res) => {
   }
    res.redirect('/Habitaciones');
   } catch (err) {
-    res.status(500).send('Error deleting cama: ' + err.message);
+    res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -242,23 +249,34 @@ router.get('/Habit/:id/editar', async (req, res) => {
     const camas = await Camas.findAll();
     res.render('EditHab', { hab, camas, pacientes});
   } catch (err) {
-    res.status(500).send('Error fetching habitaciones');
+   res.redirect('/Error', {err: err.message});
   }
 });
+
 router.post('/Habit/:id/editar', async (req, res) => {
-  await Habitacion.update(req.body, { where: { IDHab: req.params.id } });
+  try {
+   await Habitacion.update(req.body, { where: { IDHab: req.params.id } });
    const camasDeHab = await Camas.findAll({ where: { Habitacion: req.params.id } });
     for (const cama of camasDeHab) {
       const higenizadoValue = req.body[`Higenizado_${cama.IDCamas}`] === "true";
       await cama.update({ Higenizado: higenizadoValue });
     }
-  res.redirect('/Habitaciones');
+   res.redirect('/Habitaciones');
+  } catch (err){
+   res.redirect('/Error', {err: err.message});
+  }
 });
+
 router.get('/Habit/:id/eliminar', async (req, res) => {
+ try{
   await Camas.destroy({ where: { Habitacion: req.params.id }})
   await Habitacion.destroy({ where: { IDHab: req.params.id } });
   res.redirect('/Habitaciones');
+ } catch (err) {
+  res.redirect('/Error', {err: err.message});
+ }
 });
+
 router.get('/Emergencias', async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
@@ -267,7 +285,7 @@ router.get('/Emergencias', async (req, res) => {
     const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
     res.render('emerg', { Habits, camas, pacientes, dnis});
   } catch (err) {
-    res.status(500).send('Error fetching');
+   res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -276,18 +294,23 @@ router.post('/Emergencias', async (req, res) => {
     let pac = await Paciente.create(req.body);
     res.redirect(`/inPac/${pac.IDPaciente}/internar`);
   } catch (err) {
-    res.status(500).send('Error adding paciente: ' + err.message);
+   res.redirect('/Error', {err: err.message});
   }
 });
 
 router.get('/inPac/:id/editar', async (req, res) => {
+ try {
   const pac = await Paciente.findByPk(req.params.id);
   const pacientes = await Paciente.findAll(); 
   const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null && dni != pac.DNI);
   res.render('EditPac', { pac, dnis });
+ } catch (err) {
+    res.redirect('/Error', {err: err.message});
+ }
 });
 
 router.post('/inPac/:id/editar', async (req, res) => {
+ try {
   await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
   const pac = await Paciente.findByPk(req.params.id);
   const cam = await Camas.findAll({ where: { Paciente: pac.IDPaciente } });
@@ -323,9 +346,13 @@ router.post('/inPac/:id/editar', async (req, res) => {
    }
   }
   res.redirect('/inPac');
+ } catch (err) {
+    res.redirect('/Error', {err: err.message});
+ }
 });
 
 router.get('/inPac/:id/excluir', async (req, res) => {
+ try {
   const pac = await Paciente.findByPk(req.params.id);
   const cam = await Camas.findAll({ where: { Paciente: pac.IDPaciente } });
   for (const cama of cam) {
@@ -341,6 +368,9 @@ router.get('/inPac/:id/excluir', async (req, res) => {
   }
   await Paciente.destroy({ where: { IDPaciente: req.params.id } });
   res.redirect('/inPac');
+ } catch (err) {
+   res.redirect('/Error', {err: err.message});
+ }
 });
 
 router.get('/inPac/anadir', async (req, res) => {
@@ -349,7 +379,7 @@ router.get('/inPac/anadir', async (req, res) => {
     const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
     res.render('AnadirPac' , { dnis });
   } catch (err) {
-    res.status(500).send('Error fetching pacientes: ' + err.message);
+   res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -358,7 +388,69 @@ router.post('/inPac/anadir', async (req, res) => {
     await Paciente.create(req.body);
     res.redirect('/inPac');
   } catch (err) {
-    res.status(500).send('Error adding paciente: ' + err.message);
+   res.redirect('/Error', {err: err.message});
+  }
+});
+
+router.get('/Login', async (req, res) => {
+  try {
+  const tUSERS = await User.findAll();
+  const USERS = tUSERS.map(u => u.Usuario);
+  res.render('login', {USERS, tUSERS});
+  } catch (err) {
+    res.status(500).send('Error fetching users: ' + err.message);
+  }
+});
+
+router.post('/Login', async (req, res) => { //tengo que continuarlo
+  try {
+    const user = await User.findOne({ where: { Usuario: req.body.Usuario, Pass: req.body.Pass } });
+  } catch (err) {
+    res.status(500).send('Error during login: ' + err.message);
+  }
+});
+
+router.get('/Logout', async (req, res) => { //tambien este 
+  try {
+
+  } catch(err){
+    res.redirect('/Error', {err: err.message});
+  }
+});
+
+router.get('/Users', async (req, res) => {
+  try {
+    const USERS = await User.findAll();
+    res.render('Users', { USERS });
+  } catch (err){
+   res.redirect('/Error', {err: err.message});
+  }
+});
+
+router.get('/Users/:id/Eliminar', async (req, res) => {
+  try {
+    await User.destroy({ where: { IDUser: req.params.id } })
+  } catch (err){
+   res.redirect('/Error', {err: err.message});
+  }
+});
+
+router.get('/Users/Register', async (req, res) => {
+  try {
+    const tUSERS = await User.findAll();
+    const USERS = tUSERS.map(u => u.Usuario);
+    res.render('Register', {USERS});
+  } catch (err) {
+   res.redirect('/Error', {err: err.message});
+  }
+});
+
+router.post('/User/Register', async (req, res) => {
+  try {
+    await User.create({ Usuario: req.body.User, Pass: req.body.Pass, Rol: req.body.Rol });
+    res.redirect('/Users');
+  } catch (err) {
+   res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -372,7 +464,7 @@ sequelize.authenticate()
     return sequelize.sync(); 
   })
   .catch(err => {
-    console.error('DB connection error:', err);
+    res.redirect('/Error', {err: err.message});
   });
 
 

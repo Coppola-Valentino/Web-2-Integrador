@@ -27,6 +27,20 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `camas`
 --
 
+CREATE TABLE `user` (
+  `IDUser` int(11) NOT NULL PRIMARY KEY,
+  `Usuario` char(100) DEFAULT NULL,
+  `Pass` char(100) DEFAULT NULL,
+  `Rol` char(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `user` (`IDUser`, `Usuario`, `Pass`, `Rol`) VALUES
+(1, 'John Admin', 'John #1', 'Admin'),
+(2, 'John Doctor', 'John #2', 'Doctor'),
+(3, 'John Enfermero', 'John #3', 'Enfermero'),
+(4, 'John Recepcionista', 'John #4', 'Recepcionista');
+
+
 CREATE TABLE `camas` (
   `IDCamas` int(11) NOT NULL PRIMARY KEY,
   `Paciente` int(11) DEFAULT NULL,
@@ -111,6 +125,20 @@ INSERT INTO `paciente` (`IDPaciente`, `Nombre`, `DNI`, `Edad`, `Genero`, `Histor
 (6, 'Elena García', 0, 1983, 'Masculino', 'Paciente oncológico. Seguimiento desde 2019.', 'Ninguno', NULL, '', '', '', '', '','','',''),
 (211, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL, '', '', '', '', '','','',''),
 (212, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL, '', '', '', '', '','','','');
+
+
+CREATE TABLE `user` (
+  `IDUser` int(11) NOT NULL PRIMARY KEY,
+  `Usuario` char(100) DEFAULT NULL,
+  `Pass` char(100) DEFAULT NULL,
+  `Rol` char(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `user` (`IDUser`, `Usuario`, `Pass`, `Rol`) VALUES
+(1, 'John Admin', 'John #1', 'Admin'),
+(2, 'John Doctor', 'John #2', 'Doctor'),
+(3, 'John Enfermero', 'John #3', 'Enfermero'),
+(4, 'John Recepcionista', 'John #4', 'Recepcionista');
 
 --
 -- Índices para tablas volcadas

@@ -60,11 +60,15 @@ html(lang="en")
                 const DNIs = !{JSON.stringify(dnis)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
                  const dniInp = document.getElementById('DNI');
+                 const nomImp = document.getElementById('Nombre');
+                 const edImp = document.getElementById('Edad');
+                 const hoy = new Date().getFullYear();
+                 const dirImp = document.getElementById('Direccion');
+                 const telInp = document.getElementById('Telefono');
                  if (!dniInp.disabled && dniInp.value && DNIs.includes(Number(dniInp.value))) {
                   alert('El DNI ya está registrado.');
                   event.preventDefault();
                  }
-                 const telInp = document.getElementById('Telefono');
                  if (telInp.value.length > 10) {
                   alert('El número de teléfono no puede tener más de 10 dígitos.');
                   event.preventDefault();
@@ -73,8 +77,6 @@ html(lang="en")
                   alert('El número de teléfono debe tener 10 dígitos o estar vacío.');
                   event.preventDefault();
                  }
-                 const edImp = document.getElementById('Edad');
-                 const hoy = new Date().getFullYear();
                  if (edImp.value < 1900 || edImp.value > hoy) {
                    alert('El año de nacimiento debe estar entre 1900 y ' + hoy + '.');
                    event.preventDefault();
@@ -84,8 +86,19 @@ html(lang="en")
                   dniInp.value = '';
                   dniInp.disabled = true;
                   event.preventDefault();
-                }
-                const dirImp = document.getElementById('Direccion');
+                 }
+                 if (nomImp.value.trim().length === 0) {
+                   alert('El nombre no puede estar vacío.');
+                   event.preventDefault();
+                 }
+                 if (nomImp.value.length > 100) {
+                   alert('El nombre no puede tener más de 100 caracteres.');
+                   event.preventDefault();
+                 }
+                 if (nomImp.value.search(/\d/) !== -1 || nomImp.value.search(/[^a-zA-Z\s]/) !== -1) {
+                   alert('El nombre no puede contener números o simbolos');
+                   event.preventDefault();
+                 }
                 if (dirImp.value.length > 250) {
                   alert('La dirección no puede tener más de 250 caracteres.');
                   event.preventDefault();

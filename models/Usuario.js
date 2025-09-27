@@ -9,7 +9,7 @@ port: process.env.port,
 class User extends Model {}
 
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('User', {
+  return sequelize.define('user', {
     IDUser: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     }
   }, {
-    tableName: 'User',
+    tableName: 'user',
     timestamps: false
   });
 };
@@ -56,5 +56,5 @@ allowNull: true
 
 sequelize,
 modelName: 'User',
-tableName: 'User',
+tableName: 'user',
 });

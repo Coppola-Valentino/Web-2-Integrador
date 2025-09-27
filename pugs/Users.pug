@@ -15,7 +15,7 @@ html(lang="en")
                 th Contraseña
                 th Rol
                 th Acciones
-                 each user in users
+                 each user in USERS
                      tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
                       td= user.Usuario
                       td= user.Pass
@@ -26,4 +26,4 @@ html(lang="en")
                        a(href=`/Users/${user.IDUser}/Eliminar`) Eliminar
             div(class="Container-fluid text-center justify-content-center")
              div(class="col btn btn-link" style="Padding-bottom: 40px;")
-              a.btn.btn-primary(href=`/Register`) Añadir Usuario
+              a.btn.btn-primary(href=`/Users/Register`) Añadir Usuario
