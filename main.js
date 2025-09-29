@@ -5,7 +5,7 @@ const app = express();
 const router = express.Router();
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config()
-const { getUser, Logout, Auther, reqAuther, reqLv1, reqLv2, reqLv3 } = require('../authent')
+const { getUser, Logout, Auther, reqAuther, reqLv1, reqLv2, reqLv3 } = require('./authent')
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'mysql',
