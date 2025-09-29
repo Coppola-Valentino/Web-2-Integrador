@@ -50,7 +50,7 @@ router.get('/inPac/:id/Historial', reqLv1 , async (req, res) => {
     const pac = await Paciente.findByPk(req.params.id);
     res.render('histo', { pac });
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -59,7 +59,7 @@ router.post('/inPac/:id/Historial', reqLv1, async (req, res) => {
    await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
    res.redirect(`/inPac/${req.params.id}/Historial`);
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -80,7 +80,7 @@ router.get('/inPac', reqAuther , async (req, res) => {
 
   res.render('inPac', { paciente: pacienteData, camas, Habits });
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -106,7 +106,7 @@ router.get(`/inPac/:id/internar`, reqLv2 , async (req, res) => {
       });
     res.render('Inter', { pacT, pacS, Habits, camas, camasDisponibles });
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -129,7 +129,7 @@ router.post('/inPac/:id/internar', reqLv2 , async (req, res) => {
     );
     res.redirect('/inPac');
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -140,7 +140,7 @@ router.get('/Habitaciones', reqAuther , async (req, res) => {
     const camas = await Camas.findAll();
     res.render('Habit', { Habits, camas, pacientes});
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -151,7 +151,7 @@ router.get('/Habit/anadir', reqLv3 , async (req, res) => {
     const camas = await Camas.findAll();
     res.render('AnadirHab', { Habits, camas, pacientes});
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -160,7 +160,7 @@ router.post('/Habit/anadir', reqLv3, async (req, res) => {
     await Habitacion.create({...req.body, GeneroHab: "Vacio" });
     res.redirect('/Habitaciones');
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -175,7 +175,7 @@ router.get('/Habit/anadirCam', reqLv3, async (req, res) => {
 
     res.render('AnadirCam', { HabitsDisp, camas }); 
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -184,7 +184,7 @@ router.post('/Habit/anadirCam', reqLv3, async (req, res) => {
     await Camas.create(req.body);
     res.redirect('/Habitaciones');
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -193,7 +193,7 @@ router.get('/inPac/:id/AltaPac', reqLv2 , async (req, res) => {
     const pac = await Paciente.findByPk(req.params.id);
     res.render('AltaPac', {pac});
  } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -215,7 +215,7 @@ router.post('/inPac/:id/AltaPac', reqLv2, async (req, res) => {
   }
   res.redirect('/inPac');
  } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -250,7 +250,7 @@ router.get('/Cama/:id/eliminar', reqLv3,async (req, res) => {
   }
    res.redirect('/Habitaciones');
   } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
   }
 });
 
@@ -261,7 +261,7 @@ router.get('/Habit/:id/editar', reqLv3,async (req, res) => {
     const camas = await Camas.findAll();
     res.render('EditHab', { hab, camas, pacientes});
   } catch (err) {
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
@@ -275,7 +275,7 @@ router.post('/Habit/:id/editar', reqLv3,async (req, res) => {
     }
    res.redirect('/Habitaciones');
   } catch (err){
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
@@ -285,7 +285,7 @@ router.get('/Habit/:id/eliminar', reqLv3, async (req, res) => {
   await Habitacion.destroy({ where: { IDHab: req.params.id } });
   res.redirect('/Habitaciones');
  } catch (err) {
-  res.redirect('/Error', {err});
+  res.redirect('/Error');
  }
 });
 
@@ -297,7 +297,7 @@ router.get('/Emergencias', reqLv3, async (req, res) => {
     const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
     res.render('emerg', { Habits, camas, pacientes, dnis});
   } catch (err) {
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
@@ -306,7 +306,7 @@ router.post('/Emergencias', reqAuther, async (req, res) => {
     let pac = await Paciente.create(req.body);
     res.redirect(`/inPac/${pac.IDPaciente}/internar`);
   } catch (err) {
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
@@ -317,7 +317,7 @@ router.get('/inPac/:id/editar', reqAuther,async (req, res) => {
   const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null && dni != pac.DNI);
   res.render('EditPac', { pac, dnis });
  } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
  }
 });
 
@@ -359,7 +359,7 @@ router.post('/inPac/:id/editar', reqAuther, async (req, res) => {
   }
   res.redirect('/inPac');
  } catch (err) {
-    res.redirect('/Error', {err});
+    res.redirect('/Error');
  }
 });
 
@@ -381,7 +381,7 @@ router.get('/inPac/:id/excluir', reqLv3, async (req, res) => {
   await Paciente.destroy({ where: { IDPaciente: req.params.id } });
   res.redirect('/inPac');
  } catch (err) {
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
  }
 });
 
@@ -391,7 +391,7 @@ router.get('/inPac/anadir', reqAuther, async (req, res) => {
     const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
     res.render('AnadirPac' , { dnis });
   } catch (err) {
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
@@ -400,7 +400,7 @@ router.post('/inPac/anadir', reqAuther, async (req, res) => {
     await Paciente.create(req.body);
     res.redirect('/inPac');
   } catch (err) {
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
@@ -420,7 +420,7 @@ router.post('/Login', async (req, res) => {
       res.redirect('/Home');
     });
   } catch (err) {
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
@@ -433,7 +433,7 @@ router.get('/Users', reqLv3, async (req, res) => {
     const USERS = await User.findAll();
     res.render('Users', { USERS });
   } catch (err){
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
@@ -442,7 +442,7 @@ router.get('/Users/:id/Eliminar', reqLv3, async (req, res) => {
     await User.destroy({ where: { IDUser: req.params.id } })
     res.redirect('/Users');
   } catch (err){
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
@@ -452,7 +452,7 @@ router.get('/Users/Register', reqLv3, async (req, res) => {
     const USERS = tUSERS.map(u => u.Usuario);
     res.render('Register', {USERS});
   } catch (err) {
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
@@ -461,12 +461,12 @@ router.post('/User/Register', reqLv3, async (req, res) => {
     await User.create({ Usuario: req.body.User, Pass: req.body.Pass, Rol: req.body.Rol });
     res.redirect('/Users');
   } catch (err) {
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
 router.get('/Error', async (req, res) => {
-  res.render('Error', { err});
+  res.render('Error');
 });
 
 app.use('/', router);
