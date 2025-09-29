@@ -30,7 +30,7 @@ class User extends Model {
 
 }
 
-module.exports = (sequelize, DataTypes) => {
+/*module.exports = (sequelize, DataTypes) => {
   return sequelize.define('user', {
     IDUser: {
       type: DataTypes.INTEGER,
@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'user',
     timestamps: false
   });
-};
+};*/
 
 User.init({
 
@@ -94,3 +94,5 @@ hooks: {
   }
 }
 });
+
+module.exports = User;
