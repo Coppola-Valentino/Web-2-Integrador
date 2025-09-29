@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
+const bcrypt = require('bcrypt');
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'mysql',
   dialectModule: require('mysql2'),
