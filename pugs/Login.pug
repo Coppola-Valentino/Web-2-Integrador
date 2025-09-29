@@ -12,16 +12,16 @@ html(lang="en")
          h1 Iniciar Sesion
          form(action=`/Login` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
            label(for="Usuario") Usuario:
-            input(type="text" name="Usuario" id="Usuario" required autocompleteoff)
+            input(type="text" name="Usuario" id="Usuario" required autocomplete="off")
            br
            label(for="pass") Contraseña:
-            input(type="text" name="pass" id="pass" required autocompleteoff)
+            input(type="text" name="pass" id="pass" required autocomplete="off")
            br
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
            a.btn.btn-warning(href="/Home") Cancelar
            script.
-                const USERS = !{JSON.stringify(Nusuarios)};
+                /*const USERS = !{JSON.stringify(Nusuarios)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
                   const userImp = document.getElementById('Usuario');
                   if (userImp.value.length > 20) {
@@ -37,14 +37,14 @@ html(lang="en")
                     alert('La contraseña no puede tener menos de 6 digitos.');
                     event.preventDefault();
                   }
-                  if (userImp.value && !USERS.includes((UserImp.value))) {
+                  /*if (userImp.value && !USERS.includes((UserImp.value))) {
                    alert('El usuario no está registrado.');
                    event.preventDefault();
-                  }
-                  for (us in tUSERS) {
+                  }*/
+                  /*for (us in tUSERS) {
                    if (userImp.value === us.Usuario && passImp.value !== us.Pass) {
                     alert('Contraseña incorrecta.');
                     event.preventDefault();
                    }
                   }
-                 });
+                 });*/
