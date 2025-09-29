@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "ajax": "^0.0.4",
+    "bcrypt": "^6.0.0",
     "bootstrap": "^5.3.6",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "express-session": "^1.18.2",
     "http": "^0.0.1-security",
     "mysql2": "^3.14.1",
     "node": "^20.19.2",

@@ -6,7 +6,29 @@ logging: false,
 port: process.env.port,
 });
 
-class User extends Model {}
+class User extends Model {
+
+ async validar(pass) {
+  return await bcrypt.compare(pass, this.Pass);
+ }
+
+ verAdmin(){
+  return this.Rol === 'Admin'
+ }
+
+ verMedico(){
+  return this.Rol === 'Medico'
+ }
+
+ verEnfermero(){
+  return this.Rol === 'Enfermero'
+ }
+
+ verRecep(){
+  return this.Rol === 'Recepcionista'
+ }
+
+}
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('user', {
@@ -57,4 +79,18 @@ allowNull: true
 sequelize,
 modelName: 'User',
 tableName: 'user',
+hooks: {
+  beforeCreate: async (User) => {
+    if (User.Pass) {
+      const sal = await bcrypt.genSalt(10);
+      User.Pass = await bcrypt.hash(User.Pass, sal);
+    }
+  },
+  afterUpdate: async (User) => {
+    if (User.changed('Pass')) {
+      const sal = await bcrypt.genSalt(10);
+      User.Pass = await bcrypt.hash(User.Pass, sal);
+    }
+  }
+}
 });

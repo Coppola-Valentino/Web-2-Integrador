@@ -46,12 +46,14 @@ html(lang="en")
                 th Genero
                 th Numero Telefonico 
                 th Domicilio
-                th Datos Medicos
+                if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'
+                 th Datos Medicos
                 th Seguro
                 th Prioridad
                 th Cama asignada 
                 th Habitacion
-                th(style="min-width: 60px;") Acciones
+                if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'
+                 th(style="min-width: 60px;") Acciones
                  each pac in paciente
                      tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
                       td= pac.Nombre
@@ -60,8 +62,9 @@ html(lang="en")
                       td(style="min-width: 110px;")= pac.Genero
                       td= pac.Telefono
                       td= pac.Direccion
-                      td
-                       a(href=`/inPac/${pac.IDPaciente}/Historial`) Historial y Datos de Internacion
+                      if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'
+                       td
+                        a(href=`/inPac/${pac.IDPaciente}/Historial`) Historial y Datos de Internacion
                       td= pac.Seguro
                       td 
                         if pac.Prioridad === 'Alta'
@@ -82,15 +85,18 @@ html(lang="en")
                           span Habitación #{pac.habitacion.IDHab} - #{pac.habitacion.Tipo}
                         else
                           span(style="color: Blue;") No asignada 
-                        td
+                        if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'  
+                         td
                           a(href=`/inPac/${pac.IDPaciente}/editar`) Editar
                           br
-                          a(href=`/inPac/${pac.IDPaciente}/excluir`) Eliminar
-                          br
-                          if (!pac.cama)
+                          if activeUser.Rol === 'Admin'
+                           a(href=`/inPac/${pac.IDPaciente}/excluir`) Eliminar
+                           br
+                          if activeUser.Rol === 'Admin' || activeUser.Rol === 'Doctor'
+                           if (!pac.cama)
                             a(href=`/inPac/${pac.IDPaciente}/internar`) Internar
-                            br
-                          if (pac.cama)
+                            br  
+                           if (pac.cama)
                             a(href=`/inPac/${pac.IDPaciente}/AltaPac`) Dar de Alta
                             br
             div(class="Container-fluid text-center justify-content-center")

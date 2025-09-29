@@ -6,11 +6,15 @@ mixin bar()
              img(src="/Imagenes/Icons/Icono.png", alt="Logo")
             div(class="col-2 btn btn-success")
              a.btn.btn-success(href="/") Sistemas Hospitalarios Sudamericanos
-            div(class="col btn btn-link")
-             a.btn.btn-primary(href="/inPac") Pacientes
-            div(class="col btn btn-link")
-             a.btn.btn-primary(href="/Emergencias") Emergencias
-            div(class="col btn btn-link")
-             a.btn.btn-primary(href="/Habitaciones") Habitaciones
-            div(class="col btn btn-link")
-             a.btn.btn-primary(href="/Login") Log In
+            if activeUser
+             div(class="col btn btn-link")
+              a.btn.btn-primary(href="/inPac") Pacientes
+             div(class="col btn btn-link")
+              a.btn.btn-primary(href="/Emergencias") Emergencias
+             div(class="col btn btn-link")
+              a.btn.btn-primary(href="/Habitaciones") Habitaciones
+             div(class="col btn btn-link")
+              a.btn.btn-primary(href="/Logout") Log Out
+            if !activeUser  
+             div(class="col btn btn-link")
+              a.btn.btn-primary(href="/Login") Log In

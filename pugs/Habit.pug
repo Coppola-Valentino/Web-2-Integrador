@@ -60,11 +60,12 @@ html(lang="en")
                    br
                    -var otrasCamas = camas.filter(c => c.Habitacion === camas.Habitacion && c.IDCama !== camas.IDCama);
                    -var todasLibres = camasDeHab.every(c => c.Paciente === null || c.Paciente === undefined)
-                   if todasLibres
+                   if todasLibres && activeUser && activeUser.Rol === 'Admin'
                     a(href=`/Habit/${hab.IDHab}/eliminar`) Eliminar     
           br
-          div(class="Container-fluid text-center justify-content-center")
-           div(class="col btn btn-link")
-            a.btn.btn-primary(href=`/Habit/anadir`) Añadir Habitaciones 
-           div(class="col btn btn-link")
-            a.btn.btn-primary(href=`/Habit/anadirCam`) Añadir Camas
+          if activeUser && (activeUser.Rol === 'Admin' || activeUser.Rol === 'Doctor')
+           div(class="Container-fluid text-center justify-content-center")
+            div(class="col btn btn-link")
+             a.btn.btn-primary(href=`/Habit/anadir`) Añadir Habitaciones 
+            div(class="col btn btn-link")
+             a.btn.btn-primary(href=`/Habit/anadirCam`) Añadir Camas

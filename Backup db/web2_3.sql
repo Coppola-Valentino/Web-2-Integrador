@@ -135,10 +135,10 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `user` (`IDUser`, `Usuario`, `Pass`, `Rol`) VALUES
-(1, 'John Admin', 'John #1', 'Admin'),
-(2, 'John Doctor', 'John #2', 'Doctor'),
-(3, 'John Enfermero', 'John #3', 'Enfermero'),
-(4, 'John Recepcionista', 'John #4', 'Recepcionista');
+(1, 'John Admin', 'John-n1', 'Admin'),
+(2, 'John Doctor', 'John-n2', 'Doctor'),
+(3, 'John Enfermero', 'John-n3', 'Enfermero'),
+(4, 'John Recepcionista', 'John-n4', 'Recepcionista');
 
 --
 -- Índices para tablas volcadas

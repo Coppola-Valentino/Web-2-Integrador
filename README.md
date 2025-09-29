@@ -9,6 +9,8 @@ Pug
 Node
 mysql2
 express
+express-session
+bcrypt
 dotenv
 bootstrap
 
