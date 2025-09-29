@@ -25,6 +25,7 @@ const auther = async (req, res, next) => {
 
         next();
     } catch (err) {
+        console.log(err.message);
         res.redirect('/Error');
     }
 }
