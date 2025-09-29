@@ -13,14 +13,14 @@ const auther = async (req, res, next) => {
 
         const user = await User.findOne({where: {Usuario}});
         if (!user) {
-            console.error('No se encontro el usuario')
+            console.error('Contraseña o usuario incorrecto')
             return res.render('Login');
         }
 
         const valido = await user.validar(Pass);
 
         if (!valido) {
-            console.error('Contraseña incorrecta');
+            console.error('Contraseña o usuario incorrecto');
             return res.render('Login');
         }
 

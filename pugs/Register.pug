@@ -27,17 +27,17 @@ html(lang="en")
            br
            a.btn.btn-warning(href="/inPac") Cancelar
            script.
-                const USERS = !{JSON.stringify(Nusuarios)};
+                //const USERS = !{JSON.stringify(Nusuarios)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
                   const userImp = document.getElementById('Usuario');
                   if (userImp.value.length > 20) {
                     alert('El usuario no puede tener más de 20 caracteres.');
                     event.preventDefault();
                   }
-                  if (userImp.value && USERS.includes((UserImp.value))) {
+                  /*if (userImp.value && USERS.includes((UserImp.value))) {
                    alert('El usuario ya está registrado.');
                    event.preventDefault();
-                  }
+                  }*/
                   const passImp = document.getElementById('Pass');
                   if (passImp.value.length > 30) {
                     alert('La contraseña no puede tener más de 30 digitos.');

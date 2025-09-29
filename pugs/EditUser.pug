@@ -28,7 +28,7 @@ html(lang="en")
             br
             a.btn.btn-warning(href="/Users") Cancelar
             script.
-                const USERS = !{JSON.stringify(Nusuarios)};
+                //const USERS = !{JSON.stringify(Nusuarios)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
                   const userImp = document.getElementById('User');
                   if (userImp.value.length > 20) {
@@ -44,8 +44,8 @@ html(lang="en")
                     alert('La contraseña no puede tener menos de 6 digitos.');
                     event.preventDefault();
                   }
-                  if (userImp.value && USERS.includes((UserImp.value))) {
+                  /*if (userImp.value && USERS.includes((UserImp.value))) {
                    alert('El nombre de usuario ya esta ocupado.');
                    event.preventDefault();
-                  }
+                  }*/
                 });
