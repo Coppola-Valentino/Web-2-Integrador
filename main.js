@@ -414,7 +414,7 @@ router.get('/Login', async (req, res) => {
   }
 });
 
-router.post('/Login', async (req, res) => { //tengo que continuarlo
+router.post('/Login', async (req, res) => {
   try {
     await auther(req, res, () => {
       res.redirect('/Home');

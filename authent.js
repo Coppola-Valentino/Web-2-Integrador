@@ -5,7 +5,7 @@ const auther = async (req, res, next) => {
     try {
         const {Pass, Usuario} = req.body;
         if (!Pass || !Usuario) {
-            return res.render('/Login', {err: 'Faltan datos'});
+            return res.render('Login', {err: 'Faltan datos'});
         }
 
         const user = await User.findOne({where: {Usuario}});
