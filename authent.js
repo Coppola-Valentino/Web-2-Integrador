@@ -30,9 +30,9 @@ const auther = async (req, res, next) => {
 }
 
 const getUser = async (req, res, next) => {
-    if (req.session.userId) {
+    if (req.session.IDUser) {
         try {
-            const user = await User.findByPk(req.session.userId);
+            const user = await User.findByPk(req.session.IDUser);
             res.activeUser = user;
             res.locals.activeUser = user;
         } catch (err) {
@@ -53,7 +53,7 @@ const logout = (req, res) => {
 };
 
 const reqAuther = async (req, res, next) => {
-    if (!req.session.userId) {
+    if (!req.session.IDUser) {
         return res.redirect('/Login');
     }
     next();

@@ -11,11 +11,11 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
          h1 Registrar Usuario al sistema
          form(action=`/User/Register` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
-           label(for="User") Usuario:
-            input(type="text" name="User" id="User" required)
+           label(for="Usuario") Usuario:
+            input(type="text" name="Usuario" id="Usuario" required)
            br
-           label(for="pass") Contraseña:
-            input(type="text" name="pass" id="pass" required)
+           label(for="Pass") Contraseña:
+            input(type="text" name="Pass" id="Pass" required)
            br
            label(for="Rol") Rol de usuario:
             select(name="Rol" required)
@@ -29,7 +29,7 @@ html(lang="en")
            script.
                 const USERS = !{JSON.stringify(Nusuarios)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
-                  const userImp = document.getElementById('User');
+                  const userImp = document.getElementById('Usuario');
                   if (userImp.value.length > 20) {
                     alert('El usuario no puede tener más de 20 caracteres.');
                     event.preventDefault();
@@ -38,7 +38,7 @@ html(lang="en")
                    alert('El usuario ya está registrado.');
                    event.preventDefault();
                   }
-                  const passImp = document.getElementById('pass');
+                  const passImp = document.getElementById('Pass');
                   if (passImp.value.length > 30) {
                     alert('La contraseña no puede tener más de 30 digitos.');
                     event.preventDefault();

@@ -14,8 +14,8 @@ html(lang="en")
            label(for="Usuario") Usuario:
             input(type="text" name="Usuario" id="Usuario" required autocomplete="off")
            br
-           label(for="pass") Contraseña:
-            input(type="text" name="pass" id="pass" required autocomplete="off")
+           label(for="Pass") Contraseña:
+            input(type="text" name="Pass" id="Pass" required autocomplete="off")
            br
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
@@ -28,7 +28,7 @@ html(lang="en")
                     alert('El usuario no puede tener más de 20 caracteres.');
                     event.preventDefault();
                   }
-                  const passImp = document.getElementById('pass');
+                  const passImp = document.getElementById('Pass');
                   if (passImp.value.length > 30) {
                     alert('La contraseña no puede tener más de 30 digitos.');
                     event.preventDefault();

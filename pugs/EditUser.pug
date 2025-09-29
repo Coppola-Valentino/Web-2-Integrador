@@ -11,11 +11,11 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
          h1 Editar Usuario
          form(action=`/Users/${user.IDUser}/Editar` id="formi" method="POST" style="display: flex; flex-direction: column; gap: 1px;")
-            label(for="User") Usuario:
-            input(type="text" name="User" id="User" style="width: 100%;" value=user.Usuario required)
+            label(for="Usuario") Usuario:
+            input(type="text" name="Usuario" id="Usuario" style="width: 100%;" value=user.Usuario required)
             br
-            label(for="pass") Contraseña:
-            input(type="text" name="pass" id="pass" style="width: 100%;" value=user.Pass required)
+            label(for="Pass") Contraseña:
+            input(type="text" name="Pass" id="Pass" style="width: 100%;" value=user.Pass required)
             br
             label(for="Rol") Rol de usuario:
             select(name="Rol" required)
@@ -35,7 +35,7 @@ html(lang="en")
                     alert('El usuario no puede tener más de 20 caracteres.');
                     event.preventDefault();
                   }
-                  const passImp = document.getElementById('pass');
+                  const passImp = document.getElementById('Pass');
                   if (passImp.value.length > 20) {
                     alert('La contraseña no puede tener más de 20 caracteres.');
                     event.preventDefault();
