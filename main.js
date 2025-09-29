@@ -440,6 +440,7 @@ router.get('/Users', reqLv3, async (req, res) => {
 router.get('/Users/:id/Eliminar', reqLv3, async (req, res) => {
   try {
     await User.destroy({ where: { IDUser: req.params.id } })
+    res.redirect('/Users');
   } catch (err){
    res.redirect('/Error', {err: err.message});
   }
@@ -478,7 +479,7 @@ sequelize.authenticate()
     return sequelize.sync(); 
   })
   .catch(err => {
-    res.redirect('/Error', {err: err.message});
+    console.error('DB connection error:', err.message);
   });
 
 
