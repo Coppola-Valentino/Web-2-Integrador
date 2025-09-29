@@ -424,7 +424,9 @@ router.post('/Login', async (req, res) => { //tengo que continuarlo
   }
 });
 
-router.get('/Logout', reqAuther, Logout);
+router.get('/Logout', reqAuther, Logout, (req, res) => {
+  res.redirect('/Login');
+});
 
 router.get('/Users', reqLv3, async (req, res) => {
   try {
