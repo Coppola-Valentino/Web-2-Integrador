@@ -421,6 +421,7 @@ router.post('/Login', async (req, res) => {
     });
   } catch (err) {
    res.redirect('/Error');
+   console.log(err.message);
   }
 });
 
