@@ -408,7 +408,7 @@ router.get('/Login', async (req, res) => {
   try {
   const tUSERS = await User.findAll();
   const USERS = tUSERS.map(u => u.Usuario);
-  res.render('login', {USERS, tUSERS});
+  res.render('Login', {USERS, tUSERS});
   } catch (err) {
     res.status(500).send('Error fetching users: ' + err.message);
   }

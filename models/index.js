@@ -33,9 +33,6 @@ router.get('/inPac', (req, res) => {
 router.get('/Emergencias', (req, res) => {
     res.render('emerg'); 
 });
-router.get('/Login', (req, res) => {
-    res.render('login'); 
-});
 router.get('/Adm', (req, res) => {
     res.render('Adm'); 
 });
