@@ -5,18 +5,18 @@ const auther = async (req, res, next) => {
     try {
         const {Pass, Usuario} = req.body;
         if (!Pass || !Usuario) {
-            return res.render('Login', {err: 'Faltan datos'});
+            return res.render('Login');
         }
 
         const user = await User.findOne({where: {Usuario}});
         if (!user) {
-            return res.render('Login', {err: 'Usuario o Contraseña incorrectas'});
+            return res.render('Login');
         }
 
         const valido = await User.Validar(Pass);
 
         if (!valido) {
-            return res.render('Login', {err: 'Usuario o Contraseña incorrectas'});
+            return res.render('Login');
         }
 
         req.session.IDUser = user.IDUser;
@@ -25,7 +25,7 @@ const auther = async (req, res, next) => {
 
         next();
     } catch (err) {
-        res.redirect('/Error', {err: err.message});
+        res.redirect('/Error');
     }
 }
 
@@ -36,7 +36,7 @@ const getUser = async (req, res, next) => {
             res.activeUser = user;
             res.locals.activeUser = user;
         } catch (err) {
-            return res.redirect('/Error', {err: err.message});
+            return res.redirect('/Error');
         }
     }
     next();
@@ -45,7 +45,7 @@ const getUser = async (req, res, next) => {
 const logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
-            return res.redirect('/Error', {err: err.message});
+            return res.redirect('/Error');
         }
         res.clearCookie('connect.sid');
         res.redirect('/Login');
@@ -61,21 +61,21 @@ const reqAuther = async (req, res, next) => {
 
 const reqLv1 = (req, res, next) => {
     if (req.session.Rol !== 'Enfermero' && req.session.Rol !== 'Doctor' && req.session.Rol !== 'Admin') {
-        return res.redirect('/Error', {err: 'No tienes permiso para acceder a esta pagina'});
+        return res.redirect('/Error');
     }
     next();
 }
 
 const reqLv2 = (req, res, next) => {
     if (req.session.Rol !== 'Doctor' && req.session.Rol !== 'Admin') {
-        return res.redirect('/Error', {err: 'No tienes permiso para acceder a esta pagina'});
+        return res.redirect('/Error');
     }
     next();
 }
 
 const reqLv3 = (req, res, next) => {
     if (req.session.Rol !== 'Admin') {
-        return res.redirect('/Error', {err: 'No tienes permiso para acceder a esta pagina'});
+        return res.redirect('/Error');
     }
     next();
 }
