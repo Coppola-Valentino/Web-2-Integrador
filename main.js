@@ -42,7 +42,7 @@ router.get('/Home', (req, res) => {
 const Paciente = require('./models/Paciente')(sequelize, DataTypes);
 const Habitacion = require('./models/Habitaciones')(sequelize, DataTypes);
 const Camas = require('./models/Cama')(sequelize, DataTypes);
-const User = require('./models/Usuario')(sequelize, DataTypes);
+const User = require('./models/Usuario');
 
 
 router.get('/inPac/:id/Historial', reqLv1 , async (req, res) => {
