@@ -1,4 +1,11 @@
 const bcrypt = require('bcrypt');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'mysql',
+  dialectModule: require('mysql2'),
+  logging: false,
+});
+
 const User = require('./models/Usuario')(sequelize, DataTypes);
 
 const auther = async (req, res, next) => {
