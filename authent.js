@@ -1,10 +1,5 @@
 const bcrypt = require('bcrypt');
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'mysql',
-  dialectModule: require('mysql2'),
-  logging: false,
-});
 
 const User = require('./models/Usuario');
 
@@ -12,17 +7,20 @@ const auther = async (req, res, next) => {
     try {
         const {Pass, Usuario} = req.body;
         if (!Pass || !Usuario) {
+            console.error('Faltan datos');
             return res.render('Login');
         }
 
         const user = await User.findOne({where: {Usuario}});
         if (!user) {
+            console.error('No se encontro el usuario')
             return res.render('Login');
         }
 
         const valido = await user.validar(Pass);
 
         if (!valido) {
+            console.error('Contraseña incorrecta');
             return res.render('Login');
         }
 
