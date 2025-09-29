@@ -11,11 +11,11 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
          h1 Iniciar Sesion
          form(action=`/Login` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
-           label(for="User") Usuario:
-            input(type="text" name="User" id="User" required)
+           label(for="Usuario") Usuario:
+            input(type="text" name="Usuario" id="Usuario" required autocompleteoff)
            br
            label(for="pass") Contraseña:
-            input(type="text" name="pass" id="pass" required)
+            input(type="text" name="pass" id="pass" required autocompleteoff)
            br
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
@@ -23,7 +23,7 @@ html(lang="en")
            script.
                 const USERS = !{JSON.stringify(Nusuarios)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
-                  const userImp = document.getElementById('User');
+                  const userImp = document.getElementById('Usuario');
                   if (userImp.value.length > 20) {
                     alert('El usuario no puede tener más de 20 caracteres.');
                     event.preventDefault();
