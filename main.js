@@ -410,7 +410,7 @@ router.get('/Login', async (req, res) => {
   const USERS = tUSERS.map(u => u.Usuario);
   res.render('Login', {USERS, tUSERS});
   } catch (err) {
-   res.redirect('/Error', {err});
+   res.redirect('/Error');
   }
 });
 
