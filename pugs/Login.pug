@@ -15,11 +15,11 @@ html(lang="en")
             input(type="text" name="User" id="User" required)
            br
            label(for="pass") Contraseña:
-            input(type="number" name="pass" id="pass" required)
+            input(type="text" name="pass" id="pass" required)
            br
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
-           a.btn.btn-warning(href="/inPac") Cancelar
+           a.btn.btn-warning(href="/Home") Cancelar
            script.
                 const USERS = !{JSON.stringify(Nusuarios)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
