@@ -20,7 +20,7 @@ const auther = async (req, res, next) => {
             return res.render('Login');
         }
 
-        const valido = await User.Validar(Pass);
+        const valido = await User.validar(Pass);
 
         if (!valido) {
             return res.render('Login');
