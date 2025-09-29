@@ -463,7 +463,7 @@ router.post('/User/Register', reqLv3, async (req, res) => {
 });
 
 router.get('/Error', async (req, res) => {
-  res.render('Error', { err: req.err || 'Error desconocido' });
+  res.render('/Error', { err: req.err || 'Error desconocido' });
 });
 
 app.use('/', router);
