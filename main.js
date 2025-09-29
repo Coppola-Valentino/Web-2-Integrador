@@ -410,7 +410,7 @@ router.get('/Login', async (req, res) => {
   const USERS = tUSERS.map(u => u.Usuario);
   res.render('Login', {USERS, tUSERS});
   } catch (err) {
-    res.status(500).send('Error fetching users: ' + err.message);
+   res.redirect('/Error', {err: err.message});
   }
 });
 
@@ -420,7 +420,7 @@ router.post('/Login', async (req, res) => {
       res.redirect('/Home');
     });
   } catch (err) {
-    res.status(500).send('Error during login: ' + err.message);
+   res.redirect('/Error', {err: err.message});
   }
 });
 
