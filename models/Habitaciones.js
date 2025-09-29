@@ -54,4 +54,5 @@ allowNull: true,
 sequelize,
 modelName: 'habitacion',
 tableName: 'habitacion',
+timestamps: false
 });

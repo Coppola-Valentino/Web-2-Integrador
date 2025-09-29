@@ -137,4 +137,5 @@ type: DataTypes.STRING,
 sequelize,
 modelName: 'Paciente',
 tableName: 'paciente',
+timestamps: false
 });

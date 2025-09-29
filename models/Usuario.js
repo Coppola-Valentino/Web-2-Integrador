@@ -78,6 +78,7 @@ allowNull: true
 sequelize,
 modelName: 'User',
 tableName: 'user',
+timestamps: false,
 hooks: {
   beforeCreate: async (User) => {
     if (User.Pass) {

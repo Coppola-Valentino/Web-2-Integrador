@@ -55,4 +55,5 @@ allowNull: false,
 sequelize,
 modelName: 'camas',
 tableName: 'camas',
+timestamps: false
 });
