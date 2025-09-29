@@ -6,7 +6,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
   logging: false,
 });
 
-const User = require('./models/Usuario')(sequelize, DataTypes);
+const User = require('./models/Usuario');
 
 const auther = async (req, res, next) => {
     try {
