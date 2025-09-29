@@ -1,9 +1,8 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = new Sequelize(process.env.name, process.env.user, process.env.pass, {
-host: process.env.host,
-dialect: 'mysql',
-logging: false,
-port: process.env.port,
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'mysql',
+  dialectModule: require('mysql2'),
+  logging: false,
 });
 
 class User extends Model {
