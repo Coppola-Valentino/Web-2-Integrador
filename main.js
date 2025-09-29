@@ -5,7 +5,7 @@ const app = express();
 const router = express.Router();
 const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config()
-const { getUser, Logout, Auther, reqAuther, reqLv1, reqLv2, reqLv3 } = require('./authent')
+const { getUser, logout, auther, reqAuther, reqLv1, reqLv2, reqLv3 } = require('./authent')
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'mysql',
@@ -416,7 +416,7 @@ router.get('/Login', async (req, res) => {
 
 router.post('/Login', async (req, res) => { //tengo que continuarlo
   try {
-    await Auther(req, res, () => {
+    await auther(req, res, () => {
       res.redirect('/Home');
     });
   } catch (err) {
@@ -424,7 +424,7 @@ router.post('/Login', async (req, res) => { //tengo que continuarlo
   }
 });
 
-router.get('/Logout', reqAuther, Logout, (req, res) => {
+router.get('/Logout', reqAuther, logout, (req, res) => {
   res.redirect('/Login');
 });
 
