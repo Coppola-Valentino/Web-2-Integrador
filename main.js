@@ -23,8 +23,9 @@ app.set('views', path.join(__dirname, 'pugs'));
 app.use(session({
   resave: false,
   saveUninitialized: false,
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'secret session',
   cookie: { 
+    secure: true,
     maxAge: 24 * 60 * 60 * 1000 
   } 
 }))
