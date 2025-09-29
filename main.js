@@ -1,10 +1,10 @@
+require('dotenv').config()
 const session = require('express-session');
 const express = require('express');
 const path = require('path');
 const app = express();
 const router = express.Router();
 const { Sequelize, DataTypes } = require('sequelize');
-require('dotenv').config()
 const { getUser, logout, auther, reqAuther, reqLv1, reqLv2, reqLv3 } = require('./authent')
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {

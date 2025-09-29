@@ -18,7 +18,8 @@ const auther = async (req, res, next) => {
         }
 
         const valido = await user.validar(Pass);
-
+        console.log('Comparing:', Pass, 'with hash:', user.Pass);
+        console.log('Result:', valido);
         if (!valido) {
             console.error('Contraseña o usuario incorrecto');
             return res.render('Login');

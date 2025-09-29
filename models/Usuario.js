@@ -87,7 +87,7 @@ hooks: {
       User.Pass = await bcrypt.hash(User.Pass, sal);
     }
   },
-  afterUpdate: async (User) => {
+  beforeUpdate: async (User) => {
     if (User.changed('Pass')) {
       const sal = await bcrypt.genSalt(10);
       User.Pass = await bcrypt.hash(User.Pass, sal);

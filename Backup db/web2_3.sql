@@ -35,10 +35,10 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `user` (`IDUser`, `Usuario`, `Pass`, `Rol`) VALUES
-(1, 'John Admin', 'John-n1', 'Admin'),
-(2, 'John Doctor', 'John-n2', 'Doctor'),
-(3, 'John Enfermero', 'John-n3', 'Enfermero'),
-(4, 'John Recepcionista', 'John-n4', 'Recepcionista');
+(1, 'John Admin', '$2a$10$NkurSaMpU4MIgo32YEElEOJz49yPKVGIuhuI73xvLapzmuEkx5d8u', 'Admin'),
+(2, 'John Doctor', '$2a$10$qIKQ8My8Lsp.Q8zxbskVCusWIpCX6.aqra8lipX9qUwv3Zb0nOReK', 'Doctor'),
+(3, 'John Enfermero', '$2a$10$dRFdKy0B6HzOnnV/CJ9oReHWcCQObLHqEhMszxne1imp.CObhRz1K', 'Enfermero'),
+(4, 'John Recepcionista', '$2a$10$0Tap4a5hZ.sqcFAW89hateqZF0K3zzCpdfHmzkljTJrQlio2XT1Ni', 'Recepcionista');
 
 
 CREATE TABLE `camas` (
@@ -127,18 +127,18 @@ INSERT INTO `paciente` (`IDPaciente`, `Nombre`, `DNI`, `Edad`, `Genero`, `Histor
 (212, 'John Doe', NULL, 0, 'Desconocido', NULL, 'Desconocido', NULL, '', '', '', '', '','','','');
 
 
-CREATE TABLE `user` (
-  `IDUser` int(11) NOT NULL PRIMARY KEY,
-  `Usuario` char(100) DEFAULT NULL,
-  `Pass` char(100) DEFAULT NULL,
-  `Rol` char(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--CREATE TABLE `user` (
+--  `IDUser` int(11) NOT NULL PRIMARY KEY,
+--  `Usuario` char(100) DEFAULT NULL,
+--  `Pass` char(100) DEFAULT NULL,
+--  `Rol` char(100) DEFAULT NULL
+--) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `user` (`IDUser`, `Usuario`, `Pass`, `Rol`) VALUES
-(1, 'John Admin', 'John-n1', 'Admin'),
-(2, 'John Doctor', 'John-n2', 'Doctor'),
-(3, 'John Enfermero', 'John-n3', 'Enfermero'),
-(4, 'John Recepcionista', 'John-n4', 'Recepcionista');
+--INSERT INTO `user` (`IDUser`, `Usuario`, `Pass`, `Rol`) VALUES
+--(1, 'John Admin', 'John-#1', 'Admin'),
+--(2, 'John Doctor', 'John-#2', 'Doctor'),
+--(3, 'John Enfermero', 'John-#3', 'Enfermero'),
+(--4, 'John Recepcionista', 'John-#4', 'Recepcionista');
 
 --
 -- Índices para tablas volcadas
