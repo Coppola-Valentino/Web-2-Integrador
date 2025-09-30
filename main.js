@@ -406,9 +406,9 @@ router.post('/inPac/anadir', reqAuther, async (req, res) => {
 
 router.get('/Login', async (req, res) => {
   try {
-  const tUSERS = await User.findAll();
-  const USERS = tUSERS.map(u => u.Usuario);
-  res.render('Login', {USERS, tUSERS});
+  //const tUSERS = await User.findAll();
+  //const USERS = tUSERS.map(u => u.Usuario);
+  res.render('Login');
   } catch (err) {
    console.error(err.message);
    res.redirect('/Error');
