@@ -15,6 +15,9 @@ mixin bar()
               a.btn.btn-primary(href="/Habitaciones") Habitaciones
              div(class="col btn btn-link")
               a.btn.btn-primary(href="/Logout") Log Out
+             if activeUser.Rol === 'Admin'
+              div(class="col btn btn-link")
+               a.btn.btn-primary(href="/Users") Usuarios
             if !activeUser  
              div(class="col btn btn-link")
               a.btn.btn-primary(href="/Login") Log In

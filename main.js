@@ -289,7 +289,7 @@ router.get('/Habit/:id/eliminar', reqLv3, async (req, res) => {
  }
 });
 
-router.get('/Emergencias', reqLv3, async (req, res) => {
+router.get('/Emergencias', reqAuther, async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
