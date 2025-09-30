@@ -88,7 +88,7 @@ hooks: {
     }
   },
   beforeUpdate: async (User) => {
-    if (User.changed('Pass')) {
+    if (User.changed('Pass') && !User.Pass.contains('$2b$')) {
       const sal = await bcrypt.genSalt(10);
       User.Pass = await bcrypt.hash(User.Pass, sal);
     }

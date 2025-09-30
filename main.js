@@ -461,7 +461,8 @@ router.get('/Users/:id/Editar', reqLv3, async (req, res) => {
 
 router.post('/Users/:id/Editar', reqLv3, async (req, res) => {
   try {
-    await User.update(req.body, { where: { IDUser: req.params.id } });
+    const user = await User.findByPk(req.params.id);
+    await user.update(req.body);
     res.redirect('/Users');
   } catch (err) {
     console.error(err.message);
