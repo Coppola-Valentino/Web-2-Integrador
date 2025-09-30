@@ -54,7 +54,7 @@ html(lang="en")
                 th Habitacion
                 if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'
                  th(style="min-width: 60px;") Acciones
-                 each pac in paciente
+                each pac in paciente
                      tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
                       td= pac.Nombre
                       td= pac.Edad
