@@ -81,13 +81,13 @@ modelName: 'User',
 tableName: 'user',
 timestamps: false,
 hooks: {
-  beforeCreate: async (User) => {
+  afterCreate: async (User) => {
     if (User.Pass) {
       const sal = await bcrypt.genSalt(10);
       User.Pass = await bcrypt.hash(User.Pass, sal);
     }
   },
-  beforeUpdate: async (User) => {
+  afterUpdate: async (User) => {
     if (User.changed('Pass')) {
       const sal = await bcrypt.genSalt(10);
       User.Pass = await bcrypt.hash(User.Pass, sal);
