@@ -434,6 +434,7 @@ router.get('/Users', reqLv3, async (req, res) => {
     const USERS = await User.findAll();
     res.render('Users', { USERS });
   } catch (err){
+   console.error(err.message); 
    res.redirect('/Error');
   }
 });
@@ -443,6 +444,7 @@ router.get('/Users/:id/Eliminar', reqLv3, async (req, res) => {
     await User.destroy({ where: { IDUser: req.params.id } })
     res.redirect('/Users');
   } catch (err){
+   console.error(err.message);
    res.redirect('/Error');
   }
 });
@@ -452,6 +454,7 @@ router.get('/Users/:id/Editar', reqLv3, async (req, res) => {
     const user = await User.findByPk(req.params.id);
     res.render('EditUser', { user });
   } catch (err) {
+    console.error(err.message);
     res.redirect('/Error');
   }
 });
@@ -461,16 +464,18 @@ router.post('/Users/:id/Editar', reqLv3, async (req, res) => {
     await User.update(req.body, { where: { IDUser: req.params.id } });
     res.redirect('/Users');
   } catch (err) {
+    console.error(err.message);
     res.redirect('/Error');
   }
 });
 
 router.get('/Users/Register', reqLv3, async (req, res) => {
   try {
-    const tUSERS = await User.findAll();
-    const USERS = tUSERS.map(u => u.Usuario);
-    res.render('Register', {USERS});
+    //const tUSERS = await User.findAll();
+    //const USERS = tUSERS.map(u => u.Usuario);
+    res.render('Register');
   } catch (err) {
+   console.error(err.message);
    res.redirect('/Error');
   }
 });
@@ -480,6 +485,7 @@ router.post('/Users/Register', reqLv3, async (req, res) => {
     await User.create(req.body);
     res.redirect('/Users');
   } catch (err) {
+   console.error(err.message);
    res.redirect('/Error');
   }
 });
