@@ -32,18 +32,17 @@ app.use(session({
 
 app.use(getUser);
 
+const Paciente = require('./models/Paciente')(sequelize, DataTypes);
+const Habitacion = require('./models/Habitaciones')(sequelize, DataTypes);
+const Camas = require('./models/Cama')(sequelize, DataTypes);
+const User = require('./models/Usuario');
+
 router.get('/', (req, res) => {
     res.render('Home'); 
 });
 router.get('/Home', (req, res) => {
     res.render('Home'); 
 });
-
-const Paciente = require('./models/Paciente')(sequelize, DataTypes);
-const Habitacion = require('./models/Habitaciones')(sequelize, DataTypes);
-const Camas = require('./models/Cama')(sequelize, DataTypes);
-const User = require('./models/Usuario');
-
 
 router.get('/inPac/:id/Historial', reqLv1 , async (req, res) => {
   try {
@@ -445,6 +444,24 @@ router.get('/Users/:id/Eliminar', reqLv3, async (req, res) => {
     res.redirect('/Users');
   } catch (err){
    res.redirect('/Error');
+  }
+});
+
+router.get('/Users/:id/Editar', reqLv3, async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    res.render('EditUser', { user });
+  } catch (err) {
+    res.redirect('/Error');
+  }
+});
+
+router.post('/Users/:id/Editar', reqLv3, async (req, res) => {
+  try {
+    await User.update(req.body, { where: { IDUser: req.params.id } });
+    res.redirect('/Users');
+  } catch (err) {
+    res.redirect('/Error');
   }
 });
 
