@@ -10,13 +10,13 @@ html(lang="en")
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
          h1 Registrar Usuario al sistema
-         form(action=`/User/Register` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
+         form(action=`/Users/Register` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
            br
            label(for="Usuario") Usuario:
-            input(type="text" name="Usuario" id="Usuario" required)
+            input(type="text" name="Usuario" id="Usuario" required autocomplete="off")
            br
            label(for="Pass") Contraseña:
-            input(type="text" name="Pass" id="Pass" required)
+            input(type="text" name="Pass" id="Pass" required autocomplete="off")
            br
            label(for="Rol") Rol de usuario:
             select(name="Rol" required)

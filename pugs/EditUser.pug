@@ -12,10 +12,10 @@ html(lang="en")
          h1 Editar Usuario
          form(action=`/Users/${user.IDUser}/Editar` id="formi" method="POST" style="display: flex; flex-direction: column; gap: 1px;")
             label(for="Usuario") Usuario:
-            input(type="text" name="Usuario" id="Usuario" style="width: 100%;" value=user.Usuario required)
+            input(type="text" name="Usuario" id="Usuario" style="width: 100%;" value=user.Usuario required autocomplete="off")
             br
             label(for="Pass") Contraseña:
-            input(type="text" name="Pass" id="Pass" style="width: 100%;" value=user.Pass required)
+            input(type="text" name="Pass" id="Pass" style="width: 100%;" value=user.Pass required autocomplete="off")
             br
             label(for="Rol") Rol de usuario:
             select(name="Rol" required)
@@ -30,7 +30,7 @@ html(lang="en")
             script.
                 //const USERS = !{JSON.stringify(Nusuarios)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
-                  const userImp = document.getElementById('User');
+                  const userImp = document.getElementById('Usuario');
                   if (userImp.value.length > 20 || userImp.value.length < 6) {
                     alert('El usuario debe tener entre 6 y 20 caracteres');
                     event.preventDefault();

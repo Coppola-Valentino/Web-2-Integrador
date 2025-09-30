@@ -475,9 +475,9 @@ router.get('/Users/Register', reqLv3, async (req, res) => {
   }
 });
 
-router.post('/User/Register', reqLv3, async (req, res) => {
+router.post('/Users/Register', reqLv3, async (req, res) => {
   try {
-    await User.create({ Usuario: req.body.Usuario, Pass: req.body.Pass, Rol: req.body.Rol });
+    await User.create(req.body);
     res.redirect('/Users');
   } catch (err) {
    res.redirect('/Error');
