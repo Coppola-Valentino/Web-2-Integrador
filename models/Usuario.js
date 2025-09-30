@@ -60,7 +60,7 @@ User.init({
 IDUser: {
 type: DataTypes.INTEGER,
 primaryKey: true,
-allowNull: false,
+autoIncrement: true
 },
 Usuario: {
 type: DataTypes.STRING,

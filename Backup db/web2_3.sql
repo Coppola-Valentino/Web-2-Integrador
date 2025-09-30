@@ -181,6 +181,9 @@ ALTER TABLE `habitacion`
 ALTER TABLE `paciente`
   MODIFY `IDPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=213;
 
+ALTER TABLE `user`
+  MODIFY `IDUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- Restricciones para tablas volcadas
 --
