@@ -68,21 +68,21 @@ const reqAuther = async (req, res, next) => {
 
 const reqLv1 = (req, res, next) => {
     if (req.session.Rol !== 'Enfermero' && req.session.Rol !== 'Doctor' && req.session.Rol !== 'Admin') {
-        return res.redirect('/Error');
+        return res.redirect('/Permiso');
     }
     next();
 }
 
 const reqLv2 = (req, res, next) => {
     if (req.session.Rol !== 'Doctor' && req.session.Rol !== 'Admin') {
-        return res.redirect('/Error');
+        return res.redirect('/Permiso');
     }
     next();
 }
 
 const reqLv3 = (req, res, next) => {
     if (req.session.Rol !== 'Admin') {
-        return res.redirect('/Error');
+        return res.redirect('/Permiso');
     }
     next();
 }
