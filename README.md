@@ -38,8 +38,6 @@ get /inPac/:id/Historial (lleva a una vista donde uno puede ver y cambiar el his
 
 post /inPac/:id/Historial (cambia el historial medico del paciente y vuelve a cargar la vista (accesible por administradores, medicos y enfermeros))
 
-get /inPac/:id/excluir (elimina el paciente del sistema y si tenia una cama asignada la desocupa (solo accesible por administradores))
-
 get /inPac/:id/Alta (lleva a una vista para dar los motivos y tratamientos posteriores para el paciente (solo accesible por administradores y medicos))
  
 post /inPac/:id/Alta (desocupa la cama que el paciente estaba usando y actualiza sus valores (solo accesible por administradores y medicos))

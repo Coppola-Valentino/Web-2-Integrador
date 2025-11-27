@@ -89,9 +89,6 @@ html(lang="en")
                          td
                           a(href=`/inPac/${pac.IDPaciente}/editar`) Editar
                           br
-                          if activeUser.Rol === 'Admin'
-                           a(href=`/inPac/${pac.IDPaciente}/excluir`) Eliminar
-                           br
                           if activeUser.Rol === 'Admin' || activeUser.Rol === 'Doctor'
                            if (!pac.cama)
                             a(href=`/inPac/${pac.IDPaciente}/internar`) Internar

@@ -21,55 +21,6 @@ if (config.use_env_variable) {
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'pugs'));
 
-router.get('/', (req, res) => {
-    res.render('Home'); 
-});
-router.get('/Home', (req, res) => {
-    res.render('Home'); 
-});
-router.get('/inPac', (req, res) => {
-    res.render('inPac'); 
-});
-router.get('/Emergencias', (req, res) => {
-    res.render('emerg'); 
-});
-router.get('/Adm', (req, res) => {
-    res.render('Adm'); 
-});
-router.get('/Register', (req, res) => {
-    res.render('Regis'); 
-});
-router.get('/Turnos', (req, res) => {
-    res.render('turn'); 
-});
-
-app.use('/', router);
-
-router.get('/inPac/:id/editar', async (req, res) => {
-  const pac = await Paciente.findByPk(req.params.id);
-  res.render('EditPac', { pac });
-});
-
-router.post('/inPac/:id/editar', async (req, res) => {
-  await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
-  res.redirect('/inPac');
-});
-
-router.get('/inPac/:id/excluir', async (req, res) => {
-  await Paciente.destroy({ where: { IDPaciente: req.params.id } });
-  res.redirect('/inPac');
-});
-
-router.get('/inPac/añadir', (req, res) => {
-  res.render('Añadirpac');
-});
-
-router.post('/inPac/añadir', async (req, res) => {
-  await Paciente.create(req.body);
-  res.redirect('/inPac');
-});
-app.use('/Imagenes', express.static(path.join(__dirname, 'Imagenes')));
-
 fs
   .readdirSync(__dirname)
   .filter(file => {

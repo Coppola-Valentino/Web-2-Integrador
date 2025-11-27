@@ -37,10 +37,10 @@ const Habitacion = require('./models/Habitaciones')(sequelize, DataTypes);
 const Camas = require('./models/Cama')(sequelize, DataTypes);
 const User = require('./models/Usuario');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     res.render('Home'); 
 });
-router.get('/Home', (req, res) => {
+router.get('/Home', async (req, res) => {
     res.render('Home'); 
 });
 
@@ -319,6 +319,9 @@ router.get('/Emergencias', reqAuther, async (req, res) => {
 
 router.post('/Emergencias', reqAuther, async (req, res) => {
   try {
+    if (req.body.Telefono === '') {
+      delete req.body.Telefono;
+    }
     let pac = await Paciente.create(req.body);
     res.redirect(`/inPac/${pac.IDPaciente}/internar`);
   } catch (err) {
@@ -382,7 +385,7 @@ router.post('/inPac/:id/editar', reqAuther, async (req, res) => {
  }
 });
 
-router.get('/inPac/:id/excluir', reqLv3, async (req, res) => {
+/*router.get('/inPac/:id/excluir', reqLv3, async (req, res) => {
  try {
   const pac = await Paciente.findByPk(req.params.id);
   const cam = await Camas.findAll({ where: { Paciente: pac.IDPaciente } });
@@ -404,7 +407,7 @@ router.get('/inPac/:id/excluir', reqLv3, async (req, res) => {
    res.redirect('/Error');
  }
 });
-
+*/
 router.get('/inPac/anadir', reqAuther, async (req, res) => {
   try{
     const pacientes = await Paciente.findAll();
@@ -418,6 +421,9 @@ router.get('/inPac/anadir', reqAuther, async (req, res) => {
 
 router.post('/inPac/anadir', reqAuther, async (req, res) => {
   try {
+    if (req.body.Telefono === '') {
+      delete req.body.Telefono;
+    }
     await Paciente.create(req.body);
     res.redirect('/inPac');
   } catch (err) {
