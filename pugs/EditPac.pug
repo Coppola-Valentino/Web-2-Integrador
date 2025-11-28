@@ -15,7 +15,7 @@ html(lang="en")
            input(type="text" name="Nombre" id="Nombre" value=pac.Nombre required)
            br
            label(for="Edad") Fecha de Nacimiento:
-           input(type="number" name="Edad" id="Edad" value=pac.Edad required)
+           input(type="date" name="Edad" id="Edad" value=pac.Edad required)
            br
            label(for="DNI") DNI:
            input(type="number" name="DNI" id="DNI" value=pac.DNI required)
@@ -58,7 +58,7 @@ html(lang="en")
                 document.getElementById('formi').addEventListener('submit', function(event) {
                  const dniInp = document.getElementById('DNI');
                  const telInp = document.getElementById('Telefono');
-                 const edImp = document.getElementById('Edad');
+                 //const edImp = document.getElementById('Edad');
                  const hoy = new Date().getFullYear();
                  const nomImp = document.getElementById('Nombre');
                  const planImp = document.getElementById('PlanAtencion');
@@ -75,10 +75,10 @@ html(lang="en")
                   alert('El número de teléfono debe tener 10 dígitos o estar vacío.');
                   event.preventDefault();
                  }
-                 if (edImp.value < 1900 || edImp.value > hoy) {
+                 /*if (edImp.value < 1900 || edImp.value > hoy) {
                    alert('El año de nacimiento debe estar entre 1900 y ' + hoy + '.');
                    event.preventDefault();
-                 }
+                 }*/
                  if (nomImp.value.trim().length === 0) {
                    alert('El nombre no puede estar vacío.');
                    event.preventDefault();

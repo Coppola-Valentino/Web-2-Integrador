@@ -170,7 +170,7 @@ CREATE TABLE `paciente` (
   `IDPaciente` int(11) NOT NULL,
   `Nombre` char(100) NOT NULL,
   `DNI` int(11) DEFAULT NULL,
-  `Edad` int(3) DEFAULT NULL,
+  `Edad` date(255) DEFAULT NULL,
   `Genero` char(100) NOT NULL,
   `Seguro` char(100) DEFAULT NULL,
   `Cita` int(11) DEFAULT NULL,
@@ -185,13 +185,12 @@ CREATE TABLE `paciente` (
 --
 
 INSERT INTO `paciente` (`IDPaciente`, `Nombre`, `DNI`, `Edad`, `Genero`, `Seguro`, `Cita`, `Telefono`, `Direccion`, `PadreID`, `MadreID`) VALUES
-(1, 'Ana María López', 1245678, 1945, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
-(3, 'Lucía Torres', 3759372, 2001, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
-(4, 'Miguel Ángel Ruiz', 9573821, 1988, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
-(5, 'Sam Rivera', 57391052, 1992, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
-(6, 'Elena García', 0, 1983, 'Masculino', 'Ninguno', NULL, NULL, NULL, 0, 0),
-(211, 'John Doe', NULL, 0, 'Desconocido', 'Desconocido', NULL, NULL, NULL, 0, 0),
-(212, 'John Doe', NULL, 0, 'Desconocido', 'Desconocido', NULL, NULL, NULL, 0, 0);
+(1, 'Ana María López', 1245678, 2008-11-11, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
+(3, 'Lucía Torres', 3759372, 2008-11-11, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
+(4, 'Miguel Ángel Ruiz', 9573821, 2008-11-11, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
+(5, 'Sam Rivera', 57391052, 2008-11-11, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
+(6, 'Elena García', 0, 2008-11-11, 'Masculino', 'Ninguno', NULL, NULL, NULL, 0, 0),
+(211, 'John Doe', NULL, 0000-00-00, 'Desconocido', 'Desconocido', NULL, NULL, NULL, 0, 0),
 
 -- --------------------------------------------------------
 
@@ -231,10 +230,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`IDUser`, `Usuario`, `Pass`, `Rol`) VALUES
-(1, 'John Admin', 'John #1', 'Admin'),
-(2, 'John Doctor', 'John #2', 'Doctor'),
-(3, 'John Enfermero', 'John #3', 'Enfermero'),
-(4, 'John Recepcionista', 'John #4', 'Recepcionista');
+(1, 'John Admin', '$2a$10$4MTCX3/7ajTgzkzKWjmUhuQI1Qlzjk.8sJkTzCQRDk5rDmpkTvrse', 'Admin'),
+(2, 'John Doctor', '$2a$10$h0HRXdz2A1hjHBmJhc9vGOgmdwZ3b2o2Oo58aSkKhDFiCy3umwhIq', 'Doctor'),
+(3, 'John Enfermero', '$2a$10$Lthy0xpxtA8Zg1LuXUwYROJdrS4BR.U1MRdJL9Mnj3ExMmoWUTyvm', 'Enfermero'),
+(4, 'John Recepcionista', '$2a$10$1Q6gsYMY2.TYp0MFu/5rmu/s6tJfFQhuXE6ipowymwlqBnapr44xy', 'Recepcionista');
 
 --
 -- Índices para tablas volcadas

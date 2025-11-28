@@ -7,10 +7,11 @@ const router = express.Router();
 const { Sequelize, DataTypes } = require('sequelize');
 const { getUser, logout, auther, reqAuther, reqLv1, reqLv2, reqLv3 } = require('./authent')
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'mysql',
-  dialectModule: require('mysql2'),
-  logging: false,
+const sequelize = new Sequelize('web2.3', 'bingus', 'merequetenge', {
+host: 'localhost',
+dialect: 'mysql',
+logging: false,
+port: 3306,
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -35,6 +36,12 @@ app.use(getUser);
 const Paciente = require('./models/Paciente')(sequelize, DataTypes);
 const Habitacion = require('./models/Habitaciones')(sequelize, DataTypes);
 const Camas = require('./models/Cama')(sequelize, DataTypes);
+const PlanAtencion = require('./models/PlanAtencion')(sequelize, DataTypes);
+const HistInternacion = require('./models/HistInternacion')(sequelize, DataTypes);
+const AltasMedicas = require('./models/AltasMedicas')(sequelize, DataTypes);
+const HistEvalFisica = require('./models/HistEvalFisica')(sequelize, DataTypes);
+const Citas = require('./models/Citas')(sequelize, DataTypes);
+const HistCirujias = require('./models/HistCirujias')(sequelize, DataTypes);
 const User = require('./models/Usuario');
 
 router.get('/', async (req, res) => {
@@ -532,51 +539,51 @@ router.get('/About', async (req, res) => {
   res.render('About');
 });
 
-router.get('/VistaMedica', reqLv2, async (req, res) => {
+router.get('/inPac/:id/VistaMedica', reqLv2, async (req, res) => {
   res.render('VistaMedica');
 });
 
-router.get('/PlanAtencionPac', reqLv1, async (req, res) => {
+router.get('/inPac/:id/PlanAtencionPac', reqLv1, async (req, res) => {
   res.render('PlanAtencionPac');
 });
 
-router.get('/PlanAtencion', reqLv1, async (req, res) => {
+router.get('/inPac/:id/PlanAtencion', reqLv1, async (req, res) => {
   res.render('PlanAtencion');
 });
 
-router.get('/Internaciones', reqLv1, async (req, res) => {
+router.get('/inPac/:id/Internaciones', reqLv1, async (req, res) => {
   res.render('Internaciones');
 });
 
-router.get('/InternacionPac', reqLv1, async (req, res) => {
+router.get('/inPac/:id/InternacionPac', reqLv1, async (req, res) => {
   res.render('InternacionPac');
 });
 
-router.get('/HistAltas', reqLv1, async (req, res) => {
+router.get('/inPac/:id/HistAltas', reqLv1, async (req, res) => {
   res.render('HistAltas');
 });
 
-router.get('/HistAltasPac', reqLv1, async (req, res) => {
+router.get('/inPac/:id/HistAltasPac', reqLv1, async (req, res) => {
   res.render('HistAltasPac');
 });
 
-router.get('/EvalFisica', reqLv1, async (req, res) => {
+router.get('/inPac/:id/EvalFisica', reqLv1, async (req, res) => {
   res.render('EvalFisica');
 });
 
-router.get('/EvalFisicasPac', reqLv1, async (req, res) => {
+router.get('/inPac/:id/EvalFisicasPac', reqLv1, async (req, res) => {
   res.render('EvalFisicasPac');
 });
 
-router.get('/CitasPac', reqAuther, async (req, res) => {
+router.get('/inPac/:id/CitasPac', reqAuther, async (req, res) => {
   res.render('CitasPac');
 });
 
-router.get('/Cirujia', reqLv1, async (req, res) => {
+router.get('/inPac/:id/Cirujia', reqLv1, async (req, res) => {
   res.render('Cirujia');
 });
 
-router.get('/CirujiasPac', reqLv1, async (req, res) => {
+router.get('/inPac/:id/CirujiasPac', reqLv1, async (req, res) => {
   res.render('CirujiasPac');
 });
 
@@ -596,7 +603,7 @@ sequelize.authenticate()
 
 module.exports = app;
 
-//const PORT = 3000;
-//app.listen(PORT, () => {
-//  console.log(`Server running at http://localhost:${PORT}`);
-//});
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});

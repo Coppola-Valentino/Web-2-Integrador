@@ -1,9 +1,10 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcrypt');
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'mysql',
-  dialectModule: require('mysql2'),
-  logging: false,
+const sequelize = new Sequelize('web2.3', 'bingus', 'merequetenge', {
+host: 'localhost',
+dialect: 'mysql',
+logging: false,
+port: 3306,
 });
 
 class User extends Model {

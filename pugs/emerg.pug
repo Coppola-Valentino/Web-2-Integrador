@@ -17,7 +17,7 @@ html(lang="en")
                input(type="text" name="Nombre" id="Nombre" value="John Doe" required)
                br
                label(for="Edad") Fecha de Nacimiento:
-               input(type="number" name="Edad" id="Edad" value="0" required)
+               input(type="date" name="Edad" id="Edad" value="0" required)
                br
                label(for="DNI") DNI:
                input(type="number" name="DNI" id="DNI" value="0")
@@ -61,7 +61,7 @@ html(lang="en")
                 document.getElementById('formi').addEventListener('submit', function(event) {
                  const dniInp = document.getElementById('DNI');
                  const nomImp = document.getElementById('Nombre');
-                 const edImp = document.getElementById('Edad');
+                 //const edImp = document.getElementById('Edad');
                  const hoy = new Date().getFullYear();
                  const dirImp = document.getElementById('Direccion');
                  const telInp = document.getElementById('Telefono');
@@ -77,10 +77,10 @@ html(lang="en")
                   alert('El número de teléfono debe tener 10 dígitos o estar vacío.');
                   event.preventDefault();
                  }
-                 if (edImp.value < 1900 || edImp.value > hoy) {
+                 /*if (edImp.value < 1900 || edImp.value > hoy) {
                    alert('El año de nacimiento debe estar entre 1900 y ' + hoy + '.');
                    event.preventDefault();
-                 }
+                 }*/
                  if(dniInp.value.length === 0 && !dniInp.disabled) {
                   alert('introduzca un DNI o marque "Sin DNI".');
                   dniInp.value = '';
