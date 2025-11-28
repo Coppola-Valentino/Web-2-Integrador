@@ -528,6 +528,58 @@ router.get('/Permiso', async (req, res) => {
   res.render('Permiso');
 });
 
+router.get('/About', async (req, res) => {
+  res.render('About');
+});
+
+router.get('/VistaMedica', reqLv2, async (req, res) => {
+  res.render('VistaMedica');
+});
+
+router.get('/PlanAtencionPac', reqLv1, async (req, res) => {
+  res.render('PlanAtencionPac');
+});
+
+router.get('/PlanAtencion', reqLv1, async (req, res) => {
+  res.render('PlanAtencion');
+});
+
+router.get('/Internaciones', reqLv1, async (req, res) => {
+  res.render('Internaciones');
+});
+
+router.get('/InternacionPac', reqLv1, async (req, res) => {
+  res.render('InternacionPac');
+});
+
+router.get('/HistAltas', reqLv1, async (req, res) => {
+  res.render('HistAltas');
+});
+
+router.get('/HistAltasPac', reqLv1, async (req, res) => {
+  res.render('HistAltasPac');
+});
+
+router.get('/EvalFisica', reqLv1, async (req, res) => {
+  res.render('EvalFisica');
+});
+
+router.get('/EvalFisicasPac', reqLv1, async (req, res) => {
+  res.render('EvalFisicasPac');
+});
+
+router.get('/CitasPac', reqAuther, async (req, res) => {
+  res.render('CitasPac');
+});
+
+router.get('/Cirujia', reqLv1, async (req, res) => {
+  res.render('Cirujia');
+});
+
+router.get('/CirujiasPac', reqLv1, async (req, res) => {
+  res.render('CirujiasPac');
+});
+
 app.use('/', router);
 
 app.use('/Imagenes', express.static(path.join(__dirname, 'Imagenes')));

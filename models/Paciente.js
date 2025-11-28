@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     Edad: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DATE,
       allowNull: true
     },
     DNI: {
@@ -31,36 +31,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    Historial: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
     Seguro: {
       type: DataTypes.STRING,
       allowNull: true
     },
     Cita: {
       type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    Motivo: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    Sintoma: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    Prioridad: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    EvaluacionFisica: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    PlanAtencion: {
-      type: DataTypes.STRING,
       allowNull: true
     },
     Telefono: {
@@ -71,8 +47,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    AnteFamiliar: {
-      type: DataTypes.STRING,
+    PadreID: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    MadreID: {
+      type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {
