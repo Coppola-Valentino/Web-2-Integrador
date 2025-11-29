@@ -7,12 +7,7 @@ const router = express.Router();
 const { Sequelize, DataTypes } = require('sequelize');
 const { getUser, logout, auther, reqAuther, reqLv1, reqLv2, reqLv3 } = require('./authent')
 
-const sequelize = new Sequelize('web2.3', 'bingus', 'merequetenge', {
-host: 'localhost',
-dialect: 'mysql',
-logging: false,
-port: 3306,
-});
+const { sequelize } = require('./db');
 
 app.use(express.urlencoded({ extended: true }));
 app.use('/css', express.static(path.join(__dirname, 'css')));
@@ -33,15 +28,22 @@ app.use(session({
 
 app.use(getUser);
 
-const Paciente = require('./models/Paciente')(sequelize, DataTypes);
-const Habitacion = require('./models/Habitaciones')(sequelize, DataTypes);
-const Camas = require('./models/Cama')(sequelize, DataTypes);
-const PlanAtencion = require('./models/PlanAtencion')(sequelize, DataTypes);
-const HistInternacion = require('./models/HistInternacion')(sequelize, DataTypes);
-const AltasMedicas = require('./models/AltasMedicas')(sequelize, DataTypes);
-const HistEvalFisica = require('./models/HistEvalFisica')(sequelize, DataTypes);
-const Citas = require('./models/Citas')(sequelize, DataTypes);
-const HistCirujias = require('./models/HistCirujias')(sequelize, DataTypes);
+(async () => {
+  try {
+    // Authenticate DB first
+    await sequelize.authenticate();
+    console.log('DB connected');
+    await sequelize.sync();
+
+const Paciente = require('./models/Paciente');
+const Habitacion = require('./models/Habitaciones');
+const Camas = require('./models/Cama');
+const PlanAtencion = require('./models/PlanAtencion');
+const HistInternacion = require('./models/HistInternacion');
+const AltasMedicas = require('./models/AltasMedicas');
+const HistEvalFisica = require('./models/HistEvalFisica');
+const Citas = require('./models/Citas');
+const HistCirujias = require('./models/HistCirujias');
 const User = require('./models/Usuario');
 
 router.get('/', async (req, res) => {
@@ -591,19 +593,13 @@ app.use('/', router);
 
 app.use('/Imagenes', express.static(path.join(__dirname, 'Imagenes')));
 
-sequelize.authenticate()
-  .then(() => {
-    console.log('DB connected');
-    return sequelize.sync(); 
-  })
-  .catch(err => {
-    console.error('DB connection error:', err.message);
-  });
-
-
-module.exports = app;
-
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
+  
 });
+  } catch (err) {
+    console.error('Fatal error:', err.message);
+    process.exit(1);
+  }
+})();

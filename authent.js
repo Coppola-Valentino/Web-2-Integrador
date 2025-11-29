@@ -1,6 +1,4 @@
 const bcrypt = require('bcrypt');
-const { Sequelize, DataTypes } = require('sequelize');
-
 const User = require('./models/Usuario');
 
 const auther = async (req, res, next) => {
@@ -13,13 +11,17 @@ const auther = async (req, res, next) => {
 
         const user = await User.findOne({where: {Usuario}});
         if (!user) {
-            console.error('Contraseña o usuario incorrecto')
+            console.error('Usuario no encontrado');
             return res.render('Login');
         }
 
+        console.log('User found:', user.Usuario);
+        console.log('user.Pass from DB:', user.Pass);
+        console.log('Pass from form:', Pass);
+
         const valido = await user.validar(Pass);
-        console.log('Comparing:', Pass, 'with hash:', user.Pass);
-        console.log('Result:', valido);
+        console.log('bcrypt.compare result:', valido);
+        
         if (!valido) {
             console.error('Contraseña o usuario incorrecto');
             return res.render('Login');
@@ -31,7 +33,7 @@ const auther = async (req, res, next) => {
 
         next();
     } catch (err) {
-        console.log(err.message);
+        console.error('Auth error:', err.message);
         res.redirect('/Error');
     }
 }
@@ -40,9 +42,9 @@ const getUser = async (req, res, next) => {
     if (req.session.IDUser) {
         try {
             const user = await User.findByPk(req.session.IDUser);
-            res.activeUser = user;
             res.locals.activeUser = user;
         } catch (err) {
+            console.error('getUser error:', err.message);
             return res.redirect('/Error');
         }
     }

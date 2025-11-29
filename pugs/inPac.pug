@@ -49,7 +49,6 @@ html(lang="en")
                 if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'
                  th Datos Medicos
                 th Seguro
-                th Prioridad
                 th Cama asignada 
                 th Habitacion
                 if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'
@@ -64,17 +63,8 @@ html(lang="en")
                       td= pac.Direccion
                       if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'
                        td
-                        a(href=`/inPac/${pac.IDPaciente}/Historial`) Historial y Datos de Internacion
+                        a(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Vista Medica
                       td= pac.Seguro
-                      td 
-                        if pac.Prioridad === 'Alta'
-                          span(style="color: Red;") Alta
-                        else if pac.Prioridad === 'Media'
-                          span(style="color: Orange;") Media
-                        else if pac.Prioridad === 'Baja'
-                          span(style="color: Green;") Baja
-                        else 
-                          span No Internado
                       td
                         if (pac.cama) 
                           span Cama #{pac.cama.IDCamas}

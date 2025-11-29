@@ -1,16 +1,11 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcrypt');
-const sequelize = new Sequelize('web2.3', 'bingus', 'merequetenge', {
-host: 'localhost',
-dialect: 'mysql',
-logging: false,
-port: 3306,
-});
+const { sequelize } = require('../db.js');
 
 class User extends Model {
 
- async validar(pass) {
-  return await bcrypt.compare(pass, this.Pass);
+ async validar(Pass) {
+  return await bcrypt.compare(Pass, this.Pass);
  }
 
  verAdmin(){
