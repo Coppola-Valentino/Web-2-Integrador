@@ -20,6 +20,10 @@ Citas.init({
     MedicID: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    PacID: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
 }, {
 

@@ -29,10 +29,6 @@ Paciente.init({
     type: DataTypes.STRING,
     allowNull: true
   },
-  Cita: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
   Telefono: {
     type: DataTypes.INTEGER,
     allowNull: true

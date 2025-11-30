@@ -1,0 +1,27 @@
+//lista de medicamentos del plan seleccionado
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Medicamentos
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+        div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
+        h1 Medicamentos Asignados al Plan
+         table 
+          tr
+           th Nombre
+           th Dosis
+           th Tiempo entre Dosis (hrs)
+           th Cantidad Total de Dosis
+           each medi in medis
+            tr
+             td #{medi.Nombre}
+             td #{medi.Dosis}
+             td #{medi.Tiempo}
+             td #{medi.Cantidad} 
+        a.btn.btn-warning(href=`/inPac/${pac.ID}/VistaMedica`) Volver
+        //luego un boton pa añadir

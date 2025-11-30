@@ -1,4 +1,4 @@
-//aca van todos los botones que llevan a plan atencion, historial de internaciones, eval fisica, cirujia, etc del paciente seleccionado
+//aca van todos los botones que llevan a plan atencion, historial de internaciones, eva. fisica, cirujia, etc del paciente seleccionado
 doctype html
 html(lang="en")
     head
@@ -10,12 +10,13 @@ html(lang="en")
         +bar()
         block content
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
-        h1 Dar de Alta al Paciente: #{pac.Nombre} - DNI: #{pac.DNI}
-        div(style="display: flex; flex-direction: column; gap: 10px;")
-          a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/InternacionPac`) Ver Historial y Datos de Internacion
-          a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/PlanAtencionPac`) Ver Plan de Atencion
-          a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/EvalFisicasPac`) Ver Evaluaciones Fisicas
-          a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/CirujiasPac`) Ver Historial de Cirujias
-          a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/HistAltaPac`) Dar de Alta al Paciente
+         h1 Vista Medica del Paciente: #{pac.Nombre} - DNI: #{pac.DNI}
+         div(style="display: flex; flex-direction: column; gap: 10px; width: 300px; margin-top: 20px; margin-left: auto; margin-right: auto;")
+          if activeUser.Rol === 'Doctor' || activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero'
+           a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/InternacionPac`) Historial y Datos de Internaciones
+           a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/PlanAtencionPac`) Ver Planes de Atencion
+           a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/EvalFisicasPac`) Ver Evaluaciones Fisicas
+           a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/CirujiasPac`) Ver Historial de Cirujias
+           a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/HistAltasPac`) Historial de Altas del Paciente
           a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/CitasPac`) Citas del Paciente
           a.btn.btn-warning(href="/inPac") Volver

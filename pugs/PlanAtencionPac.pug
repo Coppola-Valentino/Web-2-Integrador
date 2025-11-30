@@ -10,3 +10,23 @@ html(lang="en")
         +bar()
         block content
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
+         h1 Historial de los Planes de Atencion Medica de: #{pac.Nombre}
+         table 
+          tr
+           th Medico
+           th Fecha de Inicio
+           th Fecha de Finalizacion
+           th Medicamentos Prescritos
+           th Tipo De Plan
+           th Acciones
+           each plan in plans
+            tr
+             td #{plan.med.Usuario}
+             td #{plan.FechaInicio.toDateString()}
+             td #{plan.FechaFin ? inter.FechaFin.toDateString() : 'N/A'}
+             td #{plan.TipoDePlan}
+             td 
+              a.btn.btn-info(href=`/inPac/${pac.ID}/Medicamentos/${plan.ID}`) Ver Medicamentos
+             td 
+              a.btn.btn-danger(href=`/inPac/${pac.ID}/Internaciones/${plan.ID}`) Ver Detalles
+        a.btn.btn-warning(href=`/inPac/${pac.ID}/VistaMedica`) Volver

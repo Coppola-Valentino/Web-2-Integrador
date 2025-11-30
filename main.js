@@ -44,6 +44,7 @@ const AltasMedicas = require('./models/AltasMedicas');
 const HistEvalFisica = require('./models/HistEvalFisica');
 const Citas = require('./models/Citas');
 const HistCirujias = require('./models/HistCirujias');
+const Medicamento = require('./models/Medicamento')
 const User = require('./models/Usuario');
 
 router.get('/', async (req, res) => {
@@ -541,52 +542,188 @@ router.get('/About', async (req, res) => {
   res.render('About');
 });
 
-router.get('/inPac/:id/VistaMedica', reqLv2, async (req, res) => {
-  res.render('VistaMedica');
+router.get('/inPac/:id/VistaMedica', reqAuther, async (req, res) => {
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  res.render('VistaMedica', { pac });
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
 });
 
 router.get('/inPac/:id/PlanAtencionPac', reqLv1, async (req, res) => {
-  res.render('PlanAtencionPac');
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const plans = await PlanAtencion.findAll({ where: { PacID: pac.IDPaciente } });
+  const PlanData = plans.map(plan => {
+   const med = User.find(c => c.IDUser === plan.MedicID);
+   return {
+    ...plan.toJSON(),
+    med
+   };
+   });
+  res.render('PlanAtencionPac', {plans: PlanData, pac});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+//quizas /inPac/:id/:idd/PlanAtencion? id por paciente y idd por plan
+router.get('/inPac/:id/PlanAtencion/:idd', reqLv1, async (req, res) => {
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const plan = await PlanAtencion.findByPk(req.params.idd);
+  const med = await User.findOne({ where: { IDUser: plan.MedicID } });
+  res.render('PlanAtencion', {pac, plan, med} );
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
 });
 
-router.get('/inPac/:id/PlanAtencion', reqLv1, async (req, res) => {
-  res.render('PlanAtencion');
-});
-
-router.get('/inPac/:id/Internaciones', reqLv1, async (req, res) => {
-  res.render('Internaciones');
+router.get('/inPac/:id/Internaciones/:idd', reqLv1, async (req, res) => {
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const intern = await HistInternacion.findByPk({ where: { PacID: req.params.idd } });
+  const med = await User.findOne({ where: { IDUser: intern.MedicID } });
+  const plan = await PlanAtencion.findOne({ where: { IDPlan: intern.PlanID } });
+  const alt = await AltasMedicas.findOne({ where: { IDAlta: intern.AltaID } });
+  res.render('Internaciones', {pac, intern, med, plan, alt} );
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
 });
 
 router.get('/inPac/:id/InternacionPac', reqLv1, async (req, res) => {
-  res.render('InternacionPac');
-});
-
-router.get('/inPac/:id/HistAltas', reqLv1, async (req, res) => {
-  res.render('HistAltas');
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const interns = await HistInternacion.findAll({ where: { PacID: req.params.id } });
+  const interData = interns.map(intern => {
+   const med = User.find(c => c.IDUser === interns.MedicID);
+   const plan = PlanAtencion.find(p => p.IDPlan === interns.PlanID);
+   const alt = AltasMedicas.find(a => a.IDAlta === interns.AltaID);
+   return {
+    ...intern.toJSON(),
+    med,
+    plan,
+    alt
+   };
+   });
+  res.render('InternacionPac', {pac, interns: interData} );
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
 });
 
 router.get('/inPac/:id/HistAltasPac', reqLv1, async (req, res) => {
-  res.render('HistAltasPac');
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const alts = await AltasMedicas.findAll({ where: { PacID: pac.IDPaciente } });
+  const AltaData = alts.map(alts => {
+   const med = User.find(c => c.IDUser === alts.MedicID);
+   return {
+    ...alts.toJSON(),
+    med
+   };
+   });
+  res.render('HistAltasPac', {alts: AltaData, pac});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
 });
 
-router.get('/inPac/:id/EvalFisica', reqLv1, async (req, res) => {
-  res.render('EvalFisica');
+router.get('/inPac/:id/EvalFisica/:idd', reqLv1, async (req, res) => {
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const eva = await HistEvalFisica.findByPk(req.params.idd);
+  const med = await User.findOne({ where: { IDUser: eva.MedicID } });
+  res.render('EvalFisica', {pac, eva, med});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
 });
 
 router.get('/inPac/:id/EvalFisicasPac', reqLv1, async (req, res) => {
-  res.render('EvalFisicasPac');
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const evals = await HistEvalFisica.findAll({ where: { PacID: pac.IDPaciente } });
+  const evalData = evals.map(evals => {
+   const med = User.find(c => c.IDUser === evals.MedicID);
+   return {
+    ...evals.toJSON(),
+    med
+   };
+   });
+  res.render('EvalFisicasPac', {evals: evalData, pac});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
 });
 
 router.get('/inPac/:id/CitasPac', reqAuther, async (req, res) => {
-  res.render('CitasPac');
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const citas = await Citas.findAll({ where: { PacID: pac.IDPaciente } });
+  const citData = citas.map(citas => {
+   const med = User.find(c => c.IDUser === citas.MedicID);
+   return {
+    ...citas.toJSON(),
+    med
+   };
+   });
+  res.render('CitasPac', {citas: citData, pac});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
 });
 
 router.get('/inPac/:id/Cirujia', reqLv1, async (req, res) => {
-  res.render('Cirujia');
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const ciru = await HistCirujias.findByPk(req.params.idd);
+  const med = await User.findOne({ where: { IDUser: ciru.MedicID } });
+  res.render('Cirujia', {pac, ciru, med});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
 });
 
 router.get('/inPac/:id/CirujiasPac', reqLv1, async (req, res) => {
-  res.render('CirujiasPac');
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const cirus = await HistCirujias.findAll({ where: { PacID: pac.IDPaciente } });
+  const ciruData = cirus.map(cirus => {
+   const med = User.find(c => c.IDUser === cirus.MedicID);
+   return {
+    ...cirus.toJSON(),
+    med
+   };
+   });
+  res.render('CirujiasPac', {cirus: ciruData, pac});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.get('/inPac/:id/Medicamentos/:idd', reqLv1, async (req, res) => {
+  try {
+  const pac = await Paciente.findByPk(req.params.id);  
+  const plan = await PlanAtencion.findByPk(req.params.idd);
+  const medis = await Medicamento.findAll({ where: { PlanID: plan.IDPlan } });
+  res.render('Medicamentos', {medis, pac});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
 });
 
 app.use('/', router);

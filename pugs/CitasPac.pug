@@ -10,3 +10,16 @@ html(lang="en")
         +bar()
         block content
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
+         table 
+          tr
+           th Medico
+           th Paciente
+           th Fecha 
+           th Tipo de Cita
+           each cita in citas
+            tr
+             td #{cita.med.Usuario}
+             td #{cita.pac.Nombre}
+             td #{cita.Fecha.toDateString()}
+             td #{cita.Tipo}
+        a.btn.btn-warning(href=`/inPac/${pac.ID}/VistaMedica`) Volver

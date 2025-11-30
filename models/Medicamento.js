@@ -1,35 +1,39 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../db.js');
-class AltasMedicas extends Model {}
+class Medicamento extends Model {}
 
-AltasMedicas.init({
-    IDAlta: {
+Medicamento.init({
+    IDMedicamento: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
-    },
-    PacID: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    Fecha: {
-      type: DataTypes.DATE,
-      allowNull: true
     },
     PlanID: {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    MedicID: {
+    Nombre: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    Dosis: {
+      type: DataTypes.DOUBLE,
+      allowNull: true
+    },
+    Tiempo: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    Cantidad: {
       type: DataTypes.INTEGER,
       allowNull: true
     }
 }, {
 
 sequelize,
-modelName: 'AltasMedicas',
-tableName: 'altasmedicas',
+modelName: 'Medicamento',
+tableName: 'medicamento',
 timestamps: false
 });
 
-module.exports = AltasMedicas;
+module.exports = Medicamento;

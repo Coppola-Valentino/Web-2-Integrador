@@ -13,10 +13,6 @@ PacID: {
 type: DataTypes.INTEGER,
 allowNull: true
 },
-Medicamento: {
-type: DataTypes.STRING,
-allowNull: true
-},
 FechaInicio: {
 type: DataTypes.DATE,
 allowNull: true
@@ -33,16 +29,8 @@ Terapia: {
 type: DataTypes.STRING,
 allowNull: true
 },
-CantMedicamento: {
-type: DataTypes.INTEGER,
-allowNull: true
-},
-DosisMedicamento: {
-type: DataTypes.DOUBLE,
-allowNull: true
-},
-TiempoMedicamento: {
-type: DataTypes.INTEGER,
+TipoDePlan:{
+type: DataTypes.STRING,
 allowNull: true
 },
 MedicID: {

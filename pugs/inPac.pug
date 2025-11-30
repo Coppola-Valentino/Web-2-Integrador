@@ -46,8 +46,7 @@ html(lang="en")
                 th Genero
                 th Numero Telefonico 
                 th Domicilio
-                if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'
-                 th Datos Medicos
+                th Datos Medicos
                 th Seguro
                 th Cama asignada 
                 th Habitacion
@@ -61,9 +60,8 @@ html(lang="en")
                       td(style="min-width: 110px;")= pac.Genero
                       td= pac.Telefono
                       td= pac.Direccion
-                      if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'
-                       td
-                        a(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Vista Medica
+                      td
+                       a(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Vista Medica
                       td= pac.Seguro
                       td
                         if (pac.cama) 

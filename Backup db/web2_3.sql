@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-11-2025 a las 10:38:24
+-- Tiempo de generación: 30-11-2025 a las 00:03:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -31,11 +31,7 @@ CREATE TABLE `altasmedicas` (
   `IDAlta` int(11) NOT NULL,
   `PacID` int(11) NOT NULL,
   `Fecha` date NOT NULL,
-  `Medicamento` varchar(255) NOT NULL,
   `PlanID` int(11) NOT NULL,
-  `CantMedicamento` int(11) DEFAULT NULL,
-  `DosisMedicamento` double DEFAULT NULL,
-  `TiempoMedicamento` int(11) DEFAULT NULL,
   `MedicID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -163,6 +159,21 @@ CREATE TABLE `histinternacion` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `medicamento`
+--
+
+CREATE TABLE `medicamento` (
+  `IDMedicamento` int(255) NOT NULL,
+  `PlanID` int(11) NOT NULL,
+  `Nombre` varchar(255) NOT NULL,
+  `Dosis` double NOT NULL,
+  `Tiempo` int(11) NOT NULL,
+  `Cantidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `paciente`
 --
 
@@ -170,7 +181,7 @@ CREATE TABLE `paciente` (
   `IDPaciente` int(11) NOT NULL,
   `Nombre` char(100) NOT NULL,
   `DNI` int(11) DEFAULT NULL,
-  `Edad` date(255) DEFAULT NULL,
+  `Edad` date DEFAULT NULL,
   `Genero` char(100) NOT NULL,
   `Seguro` char(100) DEFAULT NULL,
   `Cita` int(11) DEFAULT NULL,
@@ -185,12 +196,13 @@ CREATE TABLE `paciente` (
 --
 
 INSERT INTO `paciente` (`IDPaciente`, `Nombre`, `DNI`, `Edad`, `Genero`, `Seguro`, `Cita`, `Telefono`, `Direccion`, `PadreID`, `MadreID`) VALUES
-(1, 'Ana María López', 1245678, 2008-11-11, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
-(3, 'Lucía Torres', 3759372, 2008-11-11, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
-(4, 'Miguel Ángel Ruiz', 9573821, 2008-11-11, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
-(5, 'Sam Rivera', 57391052, 2008-11-11, 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
-(6, 'Elena García', 0, 2008-11-11, 'Masculino', 'Ninguno', NULL, NULL, NULL, 0, 0),
-(211, 'John Doe', NULL, 0000-00-00, 'Desconocido', 'Desconocido', NULL, NULL, NULL, 0, 0),
+(1, 'Ana María López', 1245678, '0000-00-00', 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
+(3, 'Lucía Torres', 3759372, '0000-00-00', 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
+(4, 'Miguel Ángel Ruiz', 9573821, '0000-00-00', 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
+(5, 'Sam Rivera', 57391052, '0000-00-00', 'Femenino', 'Ninguno', NULL, NULL, NULL, 0, 0),
+(6, 'Elena García', 0, '0000-00-00', 'Masculino', 'Ninguno', NULL, NULL, NULL, 0, 0),
+(211, 'John Doe', NULL, '0000-00-00', 'Desconocido', 'Desconocido', NULL, NULL, NULL, 0, 0),
+(212, 'John Doe', NULL, '0000-00-00', 'Desconocido', 'Desconocido', NULL, NULL, NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -201,14 +213,10 @@ INSERT INTO `paciente` (`IDPaciente`, `Nombre`, `DNI`, `Edad`, `Genero`, `Seguro
 CREATE TABLE `planatencion` (
   `IDPlan` int(11) NOT NULL,
   `PacID` int(11) NOT NULL,
-  `Medicamento` varchar(255) NOT NULL,
   `FechaInicio` date NOT NULL,
   `FechaFin` date NOT NULL,
   `Tratamiento` varchar(255) NOT NULL,
   `Terapia` varchar(255) NOT NULL,
-  `CantMedicamento` int(11) DEFAULT NULL,
-  `DosisMedicamento` double DEFAULT NULL,
-  `TiempoMedicamento` int(11) DEFAULT NULL,
   `MedicID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -230,10 +238,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`IDUser`, `Usuario`, `Pass`, `Rol`) VALUES
-(1, 'John Admin', '$2a$10$4MTCX3/7ajTgzkzKWjmUhuQI1Qlzjk.8sJkTzCQRDk5rDmpkTvrse', 'Admin'),
-(2, 'John Doctor', '$2a$10$h0HRXdz2A1hjHBmJhc9vGOgmdwZ3b2o2Oo58aSkKhDFiCy3umwhIq', 'Doctor'),
-(3, 'John Enfermero', '$2a$10$Lthy0xpxtA8Zg1LuXUwYROJdrS4BR.U1MRdJL9Mnj3ExMmoWUTyvm', 'Enfermero'),
-(4, 'John Recepcionista', '$2a$10$1Q6gsYMY2.TYp0MFu/5rmu/s6tJfFQhuXE6ipowymwlqBnapr44xy', 'Recepcionista');
+(1, 'John Admin', '$2a$10$6NegiagTBmKReoHjsisrS.zdSIvM9wb/RU9MHXUGsj9mQH.8bQ7.y', 'Admin'),
+(2, 'John Doctor', '$2a$10$MEoTOVRS7WHUBzcmLjqrG.MlgxWw13eR3h5Kk0F/JYghRVVvwMhz6', 'Doctor'),
+(3, 'John Enfermero', '$2a$10$ozGmueVsBh5jx/F8wp6QOeh6u7I3170rnK2/dAoDPFv3SDmN8I.hS', 'Enfermero'),
+(4, 'John Recepcionista', '$2a$10$VaM6fCbpfyD6BUyyD1nPdejJu0Z1U6zCUe.Ujj8uvhvnsVWnS8b2i', 'Recepcionista');
 
 --
 -- Índices para tablas volcadas
@@ -244,7 +252,6 @@ INSERT INTO `user` (`IDUser`, `Usuario`, `Pass`, `Rol`) VALUES
 --
 ALTER TABLE `altasmedicas`
   ADD PRIMARY KEY (`IDAlta`),
-  ADD KEY `MedicamentoID` (`Medicamento`),
   ADD KEY `PlanID` (`PlanID`),
   ADD KEY `PacID` (`PacID`),
   ADD KEY `MedicID` (`MedicID`);
@@ -298,6 +305,13 @@ ALTER TABLE `histinternacion`
   ADD KEY `PlanID` (`PlanID`);
 
 --
+-- Indices de la tabla `medicamento`
+--
+ALTER TABLE `medicamento`
+  ADD PRIMARY KEY (`IDMedicamento`),
+  ADD KEY `PlanID` (`PlanID`);
+
+--
 -- Indices de la tabla `paciente`
 --
 ALTER TABLE `paciente`
@@ -313,7 +327,6 @@ ALTER TABLE `paciente`
 ALTER TABLE `planatencion`
   ADD PRIMARY KEY (`IDPlan`),
   ADD KEY `PacID` (`PacID`),
-  ADD KEY `MedicamentoID` (`Medicamento`),
   ADD KEY `MedicID` (`MedicID`);
 
 --
@@ -369,6 +382,12 @@ ALTER TABLE `histinternacion`
   MODIFY `IDIntern` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `medicamento`
+--
+ALTER TABLE `medicamento`
+  MODIFY `IDMedicamento` int(255) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
@@ -389,7 +408,8 @@ ALTER TABLE `planatencion`
 --
 ALTER TABLE `altasmedicas`
   ADD CONSTRAINT `altasmedicas_ibfk_1` FOREIGN KEY (`PacID`) REFERENCES `paciente` (`IDPaciente`),
-  ADD CONSTRAINT `altasmedicas_ibfk_2` FOREIGN KEY (`MedicID`) REFERENCES `user` (`IDUser`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `altasmedicas_ibfk_2` FOREIGN KEY (`MedicID`) REFERENCES `user` (`IDUser`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `altasmedicas_ibfk_3` FOREIGN KEY (`PlanID`) REFERENCES `planatencion` (`IDPlan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `camas`
@@ -427,6 +447,12 @@ ALTER TABLE `histinternacion`
   ADD CONSTRAINT `histinternacion_ibfk_2` FOREIGN KEY (`PlanID`) REFERENCES `planatencion` (`IDPlan`) ON UPDATE CASCADE,
   ADD CONSTRAINT `histinternacion_ibfk_3` FOREIGN KEY (`AltaID`) REFERENCES `altasmedicas` (`IDAlta`) ON UPDATE CASCADE,
   ADD CONSTRAINT `histinternacion_ibfk_4` FOREIGN KEY (`MedicID`) REFERENCES `user` (`IDUser`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `medicamento`
+--
+ALTER TABLE `medicamento`
+  ADD CONSTRAINT `medicamento_ibfk_1` FOREIGN KEY (`PlanID`) REFERENCES `planatencion` (`IDPlan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `planatencion`

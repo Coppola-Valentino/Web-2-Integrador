@@ -4,9 +4,26 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Cirujia
+        title Cirujias
     body(style="background: rgb(184, 253, 219);")
         include bar.pug
         +bar()
         block content
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
+        h1 Historial de Cirujias de: #{pac.Nombre}
+         table 
+          tr
+           th Medico
+           th Fecha de la Cirujia
+           th Estado 
+           th Tipo
+           th Acciones
+           each ciru in cirus
+            tr
+             td #{ciru.med.Usuario}
+             td #{ciru.Fecha.toDateString()}
+             td #{ciru.Estado}
+             td #{ciru.Tipo}
+             th 
+              a.btn.btn-danger(href=`/inPac/${pac.ID}/Cirujia/${ciru.ID}`) Ver Detalles
+        a.btn.btn-warning(href=`/inPac/${pac.ID}/VistaMedica`) Volver

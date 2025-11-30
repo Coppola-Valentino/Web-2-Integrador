@@ -10,3 +10,15 @@ html(lang="en")
         +bar()
         block content
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
+         h1 Detalles de Internacion
+         p Medico a cargo: #{med.Usuario}
+         p Paciente Internado: #{pac.Nombre}
+         p Fecha de ingreso: #{intern.FechaInicio.toDateString()}
+         p Fecha de egreso: #{intern.FechaFin.toDateString()}
+         p Motivo de internacion: #{intern.Motivo}
+         p Sintomas presentados: #{intern.Sintomas}
+         P Prioridad de la internacion: #{intern.Prioridad} 
+         a.(href=`/inPac/${pac.IDPaciente}/PlanAtencion/${plan.IDPlan}`) Plan de Atencion 
+         a.(href=`/inPac/${pac.IDPaciente}/HistAltas/${alt.IDAlta}`) Alta Medica
+        
+        a.btn.btn-warning(href=`/inPac/${pac.ID}/VistaMedica`) Volver          

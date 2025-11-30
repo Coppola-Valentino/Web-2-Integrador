@@ -10,3 +10,25 @@ html(lang="en")
         +bar()
         block content
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
+         h1 Historial de Internaciones de: #{pac.Nombre}
+         table 
+          tr
+           th Medico
+           th Plan de Atencion
+           th Fecha de Ingreso
+           th Fecha de Egreso
+           th Alta Medica
+           th Acciones
+           each inter in interns
+            tr
+             td #{inter.med.Usuario}
+             td 
+              a.btn.btn-info(href=`/inPac/${pac.ID}/PlanAtencion/${inter.PlanAtencionID}`) Ver Plan
+             td #{inter.FechaInicio.toDateString()}
+             td #{inter.FechaFin ? inter.FechaFin.toDateString() : 'N/A'}
+             td 
+              //toca hacer el check de si tiene alta primero
+              a.btn.btn-info(href=`/inPac/${pac.ID}/HistAltas/${inter.AltaID}`) Ver Alta
+             td 
+              a.btn.btn-danger(href=`/inPac/${pac.ID}/Internaciones/${inter.ID}`) Ver Detalles
+         a.btn.btn-warning(href=`/inPac/${pac.ID}/VistaMedica`) Volver
