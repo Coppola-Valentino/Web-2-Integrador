@@ -13,10 +13,10 @@ html(lang="en")
          h1 Detalles del Plan
          p Medico a cargo: #{med.Usuario}
          p Paciente Internado: #{pac.Nombre}
-         p Fecha de inicio: #{plan.FechaInicio.toDateString()}
-         p Fecha fin: #{plan.FechaFin.toDateString()}
+         p Fecha de inicio: #{plan.FechaInicio}
+         p Fecha fin: #{plan.FechaFin}
          p Tratamiento asignado: #{plan.Tratamiento}
          p Terapia asignada: #{plan.Terapia}
          P Tipo de Plan de Atencion: #{plan.TipoDePlan} 
-         a.btn.btn-info(href=`/inPac/${pac.ID}/Medicamentos/${plan.ID}`) Ver Medicamentos     
-        a.btn.btn-warning(href=`/inPac/${pac.ID}/VistaMedica`) Volver
+         a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/Medicamentos/${plan.IDPlan}`) Ver Medicamentos     
+        a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/PlanAtencionPac`) Volver

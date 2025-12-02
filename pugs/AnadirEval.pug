@@ -1,0 +1,40 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Evaluacion Fisica
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
+         h1 Evaluacion Fisica de: #{pac.Nombre}
+         form(action=`/InPac/${pac.IDPaciente}/AnadirEval` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
+          label(for="TipoDeSangre") Tipo de Sangre:
+           input(type="text" name="TipoDeSangre" id="TipoDeSangre")
+          br
+          label(for="Fisionomia") Fisionomia: 
+           input(type="text" name="Fisionomia" id="Fisionomia")
+          br
+          label(for="SignosVitales") Signos Vitales:
+           input(type="text" name="SignosVitales" id="SignosVitales" )
+          br
+          label(for="Mediciones") Mediciones: 
+           input(type="text" name="Mediciones" id="Mediciones" )
+          br
+          label(for="Palpacion") Palpacion: 
+           input(type="text" name="Palpacion" id="Palpacion" )
+          br
+          label(for="Auscultacion") Auscultacion: 
+           input(type="text" name="Auscultacion" id="Auscultacion" )
+          br
+          label(for="Percusion") Percusion: 
+           input(type="text" name="Percusion" id="Percusion" )
+          br
+          label(for="Etnicidad") Etnicidad: 
+           input(type="text" name="Etnicidad" id="Etnicidad" )
+          br
+          button(class="btn btn-primary" type="submit") Guardar
+          br
+          a.btn.btn-warning(href="/inPac") Cancelar

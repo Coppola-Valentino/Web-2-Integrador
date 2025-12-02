@@ -10,11 +10,11 @@ html(lang="en")
         +bar()
         block content
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
-        h1 Medicamentos Asignados al Plan
+         h1 Medicamentos Asignados al Plan
          table 
           tr
            th Nombre
-           th Dosis
+           th Dosis (gr/ml)
            th Tiempo entre Dosis (hrs)
            th Cantidad Total de Dosis
            each medi in medis
@@ -23,5 +23,6 @@ html(lang="en")
              td #{medi.Dosis}
              td #{medi.Tiempo}
              td #{medi.Cantidad} 
-        a.btn.btn-warning(href=`/inPac/${pac.ID}/VistaMedica`) Volver
-        //luego un boton pa añadir
+        a.btn.btn-success(href=`/inPac/${pac.IDPaciente}/AnadirMedicamento/${plan.IDPlan}`) Prescribir Medicamento
+        br 
+        a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver

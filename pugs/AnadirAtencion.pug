@@ -1,0 +1,29 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Plan Atencion
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
+         h1 Añadir Plan de Atencion
+         form(action=`/InPac/${pac.IDPaciente}/AnadirAtencion/${int.IDIntern}` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
+          label(for="FechaInicio") Fecha de Inicio:
+           input(type="date" name="FechaInicio" id="FechaInicio" required)
+          br
+          label(for="FechaFin") Fecha de Fin
+           input(type="date" name="FechaFin" id="FechaFin" required)
+          br
+          label(for="Tratamiento") Tratamiento:
+           input(type="text" name="Tratamiento" id="Tratamiento" required)
+          br
+          label(for="Terapia") Terapia: 
+           input(type="text" name="Terapia" id="Terapia" required)
+          br
+          input(type="hidden" name="tipo" id="tipo" value=tipo)
+          button(class="btn btn-primary" type="submit") Guardar
+          br
+          a.btn.btn-warning(href="/inPac") Cancelar

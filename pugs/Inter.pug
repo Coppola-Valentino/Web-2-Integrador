@@ -22,17 +22,14 @@ html(lang="en")
            label(for="Sintoma") Sintomas Medicos: 
             input(type="text" name="Sintoma" id="Sintoma" style="width: 100%;" required)
            br
+           //label(for="FechaFin") Fecha Estimada de Alta:
+            input(type="date" name="FechaFin" id="FechaFin" required)
+           //br
            label(for="Prioridad") Prioridad:
             select(name="Prioridad" required)
              option(value="Baja" selected=(pacS.Prioridad==='Baja')) Baja
              option(value="Media" selected=(pacS.Prioridad==='Media')) Media
              option(value="Alta" selected=(pacS.Prioridad==='Alta')) Alta
-           br
-           label(for="PlanAtencion") Plan de Atencion
-            input(type="text" name="PlanAtencion" id="PlanAtencion" style="width: 100%;" required)
-           br
-           label(for="EvaluacionFisica") Evaluacion Fisica: 
-            input(type="text" name="EvaluacionFisica" id="EvualuacionFIsica" style="width: 100%;" required)
            br
            button(class="btn btn-primary" type="submit") Guardar
            br

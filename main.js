@@ -30,7 +30,6 @@ app.use(getUser);
 
 (async () => {
   try {
-    // Authenticate DB first
     await sequelize.authenticate();
     console.log('DB connected');
     await sequelize.sync();
@@ -127,6 +126,17 @@ router.post('/inPac/:id/internar', reqLv2 , async (req, res) => {
   try {
     await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
     const pac = await Paciente.findByPk(req.params.id);
+    const int = await HistInternacion.create({
+      PacID: pac.IDPaciente,
+      FechaInicio: Sequelize.literal('CURRENT_DATE'),
+      FechaFin: new Date(),
+      Motivo: req.body.Motivo,
+      Sintomas: req.body.Sintoma,
+      Prioridad: req.body.Prioridad,
+      MedicID: req.session.IDUser,
+      AltaID: null,
+      PlanID: null
+    })
     await Camas.update(
       { Paciente: null },
       { where: { Paciente: pac.IDPaciente } }
@@ -140,10 +150,107 @@ router.post('/inPac/:id/internar', reqLv2 , async (req, res) => {
       { GeneroHab: pac.Genero},
       { where: { IDHab: cama.Habitacion} }
     );
-    res.redirect('/inPac');
+    res.redirect(`/inPac/${pac.IDPaciente}/AnadirAtencion/${int.IDIntern}?tipo=Anterior`);
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
+  }
+});
+
+router.get('/inPac/:id/AnadirAtencion/:idd', reqLv2, async (req, res) => {
+  try {
+  const pac = await Paciente.findByPk(req.params.id);  
+  const int = await HistInternacion.findByPk(req.params.idd);
+  const tipo = req.query.tipo || 'Anterior';
+  res.render('AnadirAtencion', {int, pac, tipo});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.post('/inPac/:id/AnadirAtencion/:idd', reqLv2, async (req, res) => {
+  try {
+  const Tipo = req.body.tipo || req.query.tipo || 'Posterior';
+  const plan = await PlanAtencion.create({
+    PacID: req.params.id,
+    FechaInicio: req.body.FechaInicio,
+    FechaFin: req.body.FechaFin,
+    Tratamiento: req.body.Tratamiento,
+    Terapia: req.body.Terapia,
+    TipoDePlan: Tipo,
+    MedicID: req.session.IDUser
+  });
+
+  if (Tipo === 'Posterior') {
+      const al = await AltasMedicas.create({
+        PacID: req.params.id,
+        Fecha: Sequelize.literal('CURRENT_DATE'),
+        MedicID: req.session.IDUser,
+        PlanID: plan.IDPlan
+      });
+      await HistInternacion.update({
+        FechaFin: Sequelize.literal('CURRENT_DATE'),
+        AltaID: al.IDAlta
+      } , { where: { IDIntern: req.params.idd }
+      })
+      const cama = await Camas.findOne({ where: {Paciente: req.params.id} });
+      const hab = await Habitacion.findByPk(cama.Habitacion)
+      const camasDeHab = await Camas.findAll({ where: { Habitacion: hab.IDHab } });
+      await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
+      await Camas.update(
+       { Paciente: null },
+       { where: { Paciente: req.params.id } }
+  );
+  if (camasDeHab.every(c => c.Paciente === null)) {
+    await Habitacion.update(
+      { GeneroHab: "Vacio" },
+      { where: { IDHab: hab.IDHab } }
+    );
+    }
+  }
+  console.log(plan);
+  console.log(plan.IDPlan);
+  console.log(req.params.idd);
+  await HistInternacion.update({
+    PlanID: plan.IDPlan
+  } , { where: { IDIntern: req.params.idd } });
+  res.redirect("/inPac");
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.get('/inPac/:id/AnadirEval', reqLv2, async (req, res) => {
+  try {
+  const pac = await Paciente.findByPk(req.params.id);
+  res.render('AnadirEval', { pac});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.post('/inPac/:id/AnadirEval', reqLv2, async (req, res) => {
+  try {
+  await HistEvalFisica.create({
+    PacID: req.params.id,
+    TipoSangre: req.body.TipoSangre,
+    Fisionomia: req.body.Fisionomia,
+    SignoVital: req.body.SignoVital,
+    Mediciones: req.body.Mediciones,
+    Palpacion: req.body.Palpacion,
+    Auscultacion: req.body.Auscultacion,
+    Percusion: req.body.Percusion,
+    Etnicidad: req.body.Etnicidad,
+    Fecha: Sequelize.literal('CURRENT_DATE'),
+    MedicID: req.session.IDUser
+  });
+  res.redirect("/inPac");
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
   }
 });
 
@@ -210,14 +317,16 @@ router.post('/Habit/anadirCam', reqLv3, async (req, res) => {
 router.get('/inPac/:id/AltaPac', reqLv2 , async (req, res) => {
  try {
     const pac = await Paciente.findByPk(req.params.id);
-    res.render('AltaPac', {pac});
+    const int = await HistInternacion.findOne({where : { PacID: pac.IDPaciente }});
+    console.log(int);
+    res.render('AnadirAtencion', {pac, int, Tipo: 'Posterior'});
  } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
   }
 });
 
-router.post('/inPac/:id/AltaPac', reqLv2, async (req, res) => {
+/*router.post('/inPac/:id/AltaPac', reqLv2, async (req, res) => {
  try {
   const cama = await Camas.findOne({ where: {Paciente: req.params.id} });
   const hab = await Habitacion.findByPk(cama.Habitacion)
@@ -238,7 +347,7 @@ router.post('/inPac/:id/AltaPac', reqLv2, async (req, res) => {
     console.error(err.message);
     res.redirect('/Error');
   }
-});
+});*/
 
 /*router.get('/Cama/:id/desocupar', async (req, res) => {
   await Camas.update(
@@ -345,7 +454,7 @@ router.get('/inPac/:id/editar', reqAuther,async (req, res) => {
   const pac = await Paciente.findByPk(req.params.id);
   const pacientes = await Paciente.findAll(); 
   const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null && dni != pac.DNI);
-  res.render('EditPac', { pac, dnis });
+  res.render('EditPac', { pac, dnis, pacientes });
  } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -422,7 +531,7 @@ router.get('/inPac/anadir', reqAuther, async (req, res) => {
   try{
     const pacientes = await Paciente.findAll();
     const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
-    res.render('AnadirPac' , { dnis });
+    res.render('AnadirPac' , { dnis, pacientes });
   } catch (err) {
    console.error(err.message); 
    res.redirect('/Error');
@@ -556,13 +665,15 @@ router.get('/inPac/:id/PlanAtencionPac', reqLv1, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const plans = await PlanAtencion.findAll({ where: { PacID: pac.IDPaciente } });
+  const medicIDs = [...new Set(plans.map(p => p.MedicID).filter(Boolean))];
+  const meds = medicIDs.length ? await User.findAll({ where: { IDUser: medicIDs } }) : [];
   const PlanData = plans.map(plan => {
-   const med = User.find(c => c.IDUser === plan.MedicID);
-   return {
-    ...plan.toJSON(),
-    med
-   };
-   });
+    const med = meds.find(m => m.IDUser === plan.MedicID) || null;
+    return {
+      ...plan.toJSON(),
+      med
+      };
+    });
   res.render('PlanAtencionPac', {plans: PlanData, pac});
     } catch (err) {
    console.error(err.message);
@@ -585,7 +696,7 @@ router.get('/inPac/:id/PlanAtencion/:idd', reqLv1, async (req, res) => {
 router.get('/inPac/:id/Internaciones/:idd', reqLv1, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
-  const intern = await HistInternacion.findByPk({ where: { PacID: req.params.idd } });
+  const intern = await HistInternacion.findByPk(req.params.idd);
   const med = await User.findOne({ where: { IDUser: intern.MedicID } });
   const plan = await PlanAtencion.findOne({ where: { IDPlan: intern.PlanID } });
   const alt = await AltasMedicas.findOne({ where: { IDAlta: intern.AltaID } });
@@ -600,10 +711,14 @@ router.get('/inPac/:id/InternacionPac', reqLv1, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const interns = await HistInternacion.findAll({ where: { PacID: req.params.id } });
+  const medicIDs = [...new Set(interns.map(p => p.MedicID).filter(Boolean))];
+  const meds = medicIDs.length ? await User.findAll({ where: { IDUser: medicIDs } }) : [];
+  const plans = await PlanAtencion.findAll();
+  const alts = await AltasMedicas.findAll();
   const interData = interns.map(intern => {
-   const med = User.find(c => c.IDUser === interns.MedicID);
-   const plan = PlanAtencion.find(p => p.IDPlan === interns.PlanID);
-   const alt = AltasMedicas.find(a => a.IDAlta === interns.AltaID);
+   const plan = plans.find(p => p.IDPlan === intern.PlanID);
+   const med = meds.find(m => m.IDUser === plan.MedicID) || null;
+   const alt = alts.find(a => a.IDAlta === intern.AltaID);
    return {
     ...intern.toJSON(),
     med,
@@ -621,9 +736,10 @@ router.get('/inPac/:id/InternacionPac', reqLv1, async (req, res) => {
 router.get('/inPac/:id/HistAltasPac', reqLv1, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
+  const users = await User.findAll();
   const alts = await AltasMedicas.findAll({ where: { PacID: pac.IDPaciente } });
   const AltaData = alts.map(alts => {
-   const med = User.find(c => c.IDUser === alts.MedicID);
+   const med = users.find(c => c.IDUser === alts.MedicID);
    return {
     ...alts.toJSON(),
     med
@@ -652,8 +768,9 @@ router.get('/inPac/:id/EvalFisicasPac', reqLv1, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const evals = await HistEvalFisica.findAll({ where: { PacID: pac.IDPaciente } });
+  const users = await User.findAll()
   const evalData = evals.map(evals => {
-   const med = User.find(c => c.IDUser === evals.MedicID);
+   const med = users.find(c => c.IDUser === evals.MedicID);
    return {
     ...evals.toJSON(),
     med
@@ -670,8 +787,9 @@ router.get('/inPac/:id/CitasPac', reqAuther, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const citas = await Citas.findAll({ where: { PacID: pac.IDPaciente } });
+  const users = await User.findAll()
   const citData = citas.map(citas => {
-   const med = User.find(c => c.IDUser === citas.MedicID);
+   const med = users.find(c => c.IDUser === citas.MedicID);
    return {
     ...citas.toJSON(),
     med
@@ -684,7 +802,7 @@ router.get('/inPac/:id/CitasPac', reqAuther, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/Cirujia', reqLv1, async (req, res) => {
+router.get('/inPac/:id/Cirujia/:idd', reqLv1, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const ciru = await HistCirujias.findByPk(req.params.idd);
@@ -700,8 +818,9 @@ router.get('/inPac/:id/CirujiasPac', reqLv1, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const cirus = await HistCirujias.findAll({ where: { PacID: pac.IDPaciente } });
+  const users = await User.findAll()
   const ciruData = cirus.map(cirus => {
-   const med = User.find(c => c.IDUser === cirus.MedicID);
+   const med = users.find(c => c.IDUser === cirus.MedicID);
    return {
     ...cirus.toJSON(),
     med
@@ -719,8 +838,93 @@ router.get('/inPac/:id/Medicamentos/:idd', reqLv1, async (req, res) => {
   const pac = await Paciente.findByPk(req.params.id);  
   const plan = await PlanAtencion.findByPk(req.params.idd);
   const medis = await Medicamento.findAll({ where: { PlanID: plan.IDPlan } });
-  res.render('Medicamentos', {medis, pac});
+  res.render('Medicamentos', {medis, pac, plan});
     } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.get('/inPac/:id/AnadirMedicamento/:idd', reqLv1, async (req, res) => {
+  try {
+    const pac = await Paciente.findByPk(req.params.id);
+    const plan = await PlanAtencion.findByPk(req.params.idd);
+    res.render('AnadirMedica', {pac, plan})
+  } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.post('/inPac/:id/AnadirMedicamento/:idd', reqLv1, async (req, res) => {
+try {
+  const pac = await Paciente.findByPk(req.params.id);
+  const plan = await PlanAtencion.findByPk(req.params.idd);
+  await Medicamento.create({
+    PlanID: plan.IDPlan,
+    Nombre: req.body.Nombre,
+    Dosis: req.body.Dosis,
+    Tiempo: req.body.Tiempo,
+    Cantidad: req.body.Cantidad
+  })
+  res.redirect(`/inPac/${pac.IDPaciente}/Medicamentos/${plan.IDPlan}`);
+  } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.get('/inPac/:id/AnadirCirujia', reqLv1, async (req, res) =>{
+try {
+  const pac = await Paciente.findByPk(req.params.id)
+  res.render('AnadirCirujia', {pac})
+  } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.post('/inPac/:id/AnadirCirujia', reqLv1, async (req, res) => {
+try {
+  const pac = await Paciente.findByPk(req.params.id);
+  await HistCirujias.create({
+    PacID: pac.IDPaciente,
+    MedicID: req.session.IDUser,
+    Fecha: req.body.Fecha,
+    Tipo: req.body.Tipo,
+    Estado: req.body.Estado,
+    Diagnostico: req.body.Diagnostico,
+    Resumen: req.body.Resumen
+  });
+  res.redirect(`/inPac/${pac.IDPaciente}/CirujiasPac`);
+  } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.get('/inPac/:id/AnadirCita', reqAuther, async (req, res) =>{
+try {
+  const pac = await Paciente.findByPk(req.params.id)
+  const meds = await User.findAll({where: {Rol : "Doctor"}})
+  res.render('AnadirCita', {pac, meds})
+  } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.post('/inPac/:id/AnadirCita', reqAuther, async (req, res) => {
+try {
+  const pac = await Paciente.findByPk(req.params.id);
+  await Citas.create({
+    PacID: pac.IDPaciente,
+    MedicID: req.body.Medic,
+    Fecha: req.body.Fecha,
+    Tipo: req.body.Tipo
+  });
+  res.redirect(`/inPac/${pac.IDPaciente}/CitasPac`);
+  } catch (err) {
    console.error(err.message);
    res.redirect('/Error');
   }

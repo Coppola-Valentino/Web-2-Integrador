@@ -18,5 +18,9 @@ html(lang="en")
            a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/EvalFisicasPac`) Ver Evaluaciones Fisicas
            a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/CirujiasPac`) Ver Historial de Cirujias
            a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/HistAltasPac`) Historial de Altas del Paciente
+           if pac.MadreID != null && pac.MadreID != undefined && pac.MadreID != 0
+            a.btn.btn-primary(href=`/inPac/${pac.MadreID}/VistaMedica`) Historial y Datos Maternos
+           if pac.PadreID != null && pac.PadreID != undefined && pac.PadreID != 0
+            a.btn.btn-primary(href=`/inPac/${pac.PadreID}/VistaMedica`) Historial y Datos Paternos
           a.btn.btn-primary(href=`/inPac/${pac.IDPaciente}/CitasPac`) Citas del Paciente
           a.btn.btn-warning(href="/inPac") Volver

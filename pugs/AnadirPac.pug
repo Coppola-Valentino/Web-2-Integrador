@@ -26,9 +26,6 @@ html(lang="en")
                  option(value="Femenino") Femenino
                  option(value="Otro") Otro
            br
-           label(for="Historial") Historial:
-           input(type="text" name="Historial" id="Historial")
-           br
            label(for="Seguro") Seguro Medico:
               select(for="Seguro" name="Seguro" required)
                 option(value="Ninguno") Ninguno
@@ -37,9 +34,41 @@ html(lang="en")
            br
            label(for="Telefono") Numero de Telefono: 
             input(Type="number" name="Telefono" id="Telefono" maxlength="10")
+            button(type="button" onclick="dehab1()") Sin Telefono
+               script.
+                 function dehab1() {
+                  const tel = document.getElementById('Telefono');
+                  if (tel.disabled) {
+                    tel.value = '0';
+                    tel.disabled = false;
+                  } else {
+                    tel.value = '';
+                    tel.disabled = true;
+                  }}
            br
            label(for="Direccion") Direccion de Domicilio: 
             input(Type="text" name="Direccion" id="Direccion")
+            button(type="button" onclick="dehab2()") Sin Direccion
+              script.
+                  function dehab2() {
+                    const dir = document.getElementById('Direccion');
+                    if (dir.disabled) {
+                      dir.value = 'Desconocida';
+                      dir.disabled = false;
+                    } else {
+                      dir.value = '';
+                      dir.disabled = true;
+                    }}
+           br
+           label(for="MadreID") Madre:
+                 select(name="MadreID" )
+                   for paci in pacientes
+                    option(value=paci.IDPaciente) #{paci.Nombre}
+           br
+           label(for="PadreID") Padre:
+                 select(name="PadreID" )
+                   for paci in pacientes 
+                    option(value=paci.IDPaciente) #{paci.Nombre}
            br
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
@@ -58,12 +87,12 @@ html(lang="en")
                   alert('El DNI ya está registrado.');
                   event.preventDefault();
                  }
-                 if (telInp.value.length > 10) {
+                 if (telInp.value.length > 10 && !telInp.disabled) {
                   alert('El número de teléfono no puede tener más de 10 dígitos.');
                   event.preventDefault();
                  }
-                 if (telInp.value.length > 0 && telInp.value.length < 10) {
-                  alert('El número de teléfono debe tener 10 dígitos o estar vacío.');
+                 if (telInp.value.length < 10 && !telInp.disabled) {
+                  alert('El número de teléfono debe tener 10 dígitos');
                   event.preventDefault();
                  }
                  /*if (edImp.value < 1900 || edImp.value > hoy) {
@@ -86,7 +115,7 @@ html(lang="en")
                    alert('El historial no puede tener más de 250 caracteres.');
                    event.preventDefault();
                  }
-                 if (dirImp.value.length > 250) {
+                 if (dirImp.value.length > 250 && !dirInp.disabled) {
                    alert('La dirección no puede tener más de 250 caracteres.');
                    event.preventDefault();
                  }

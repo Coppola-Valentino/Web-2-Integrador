@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Medicamento
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
+         h1 Prescribir Medicamento a: #{pac.Nombre}
+         form(action=`/InPac/${pac.IDPaciente}/AnadirMedicamento/${plan.IDPlan}` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
+          label(for="Nombre") Nombre del Medicamento:
+           input(type="text" name="Nombre" id="Nombre")
+          br
+          label(for="Dosis") Dosis (gr/ml): 
+           input(type="double" name="Dosis" id="Dosis")
+          br
+          label(for="Tiempo") Tiempo entre Dosis (hrs):
+           input(type="number" name="Tiempo" id="Tiempo" )
+          br
+          label(for="Cantidad") Cantidad Total de Dosis: 
+           input(type="number" name="Cantidad" id="Cantidad" )
+          br
+          button(class="btn btn-primary" type="submit") Guardar
+          br
+          a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/Medicamentos/${plan.IDPlan}`) Cancelar

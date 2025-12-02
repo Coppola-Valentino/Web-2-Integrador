@@ -8,6 +8,7 @@ IDCamas: {
 type: DataTypes.INTEGER,
 primaryKey: true,
 allowNull: false,
+autoIncrement: true
 },
 Paciente: {
 type: DataTypes.INTEGER,

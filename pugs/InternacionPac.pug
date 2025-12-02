@@ -17,18 +17,17 @@ html(lang="en")
            th Plan de Atencion
            th Fecha de Ingreso
            th Fecha de Egreso
-           th Alta Medica
            th Acciones
            each inter in interns
             tr
              td #{inter.med.Usuario}
              td 
-              a.btn.btn-info(href=`/inPac/${pac.ID}/PlanAtencion/${inter.PlanAtencionID}`) Ver Plan
-             td #{inter.FechaInicio.toDateString()}
-             td #{inter.FechaFin ? inter.FechaFin.toDateString() : 'N/A'}
+              a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/PlanAtencion/${inter.PlanID}`) Ver Plan
+             td #{inter.FechaInicio}
+             td #{inter.FechaFin}
              td 
-              //toca hacer el check de si tiene alta primero
-              a.btn.btn-info(href=`/inPac/${pac.ID}/HistAltas/${inter.AltaID}`) Ver Alta
-             td 
-              a.btn.btn-danger(href=`/inPac/${pac.ID}/Internaciones/${inter.ID}`) Ver Detalles
-         a.btn.btn-warning(href=`/inPac/${pac.ID}/VistaMedica`) Volver
+              a.btn.btn-danger(href=`/inPac/${pac.IDPaciente}/Internaciones/${inter.IDIntern}`) Ver Detalles
+         br     
+         a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/HistAltasPac`) Ver Altas
+         br
+         a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver
