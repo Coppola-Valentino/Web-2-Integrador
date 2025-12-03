@@ -24,6 +24,15 @@ html(lang="en")
              option(value="Enfermero" selected=(user.Rol==='Enfermero') ) Enfermero
              option(value="Recepcionista" selected=(user.Rol==='Recepcionista') ) Recepcionista
             br
+            label(for="Especialidad") Especialidad 
+            select(name="Especialidad" required)
+             option(value="Odontologo" selected=(user.Especialidad==='Odontologo') ) Odontologo
+             option(value="Pediatra" selected=(user.Especialidad==='Pediatra') ) Pediatra
+             option(value="Oculista" selected=(user.Especialidad==='Oculista') ) Oculista
+             option(value="FisioTerapeuta" selected=(user.Especialidad==='FisioTerapeuta') ) FisioTerapeuta
+             option(value="Podologo" selected=(user.Especialidad==='Podologo') ) Podologo
+             option(value="Ortopeda" selected=(user.Especialidad==='Ortopeda') ) Ortopeda
+            br
             button(class="btn btn-primary" type="submit") Guardar cambios
             br
             a.btn.btn-warning(href="/Users") Cancelar

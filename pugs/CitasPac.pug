@@ -12,15 +12,18 @@ html(lang="en")
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
          h1 Citas Medicas de: #{pac.Nombre}
          table 
-          tr
+          tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
            th Medico
            th Fecha 
            th Tipo de Cita
            each cita in citas
-            tr
-             td #{cita.med.Usuario}
+            tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
+             td #{cita.med.Especialidad} #{cita.med.Usuario}
              td #{cita.Fecha}
              td #{cita.Tipo}
-        a.btn.btn-success(href=`/inPac/${pac.IDPaciente}/AnadirCita`) Programar Cita Medica
-        br
-        a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver
+        div(class="Container-fluid text-center justify-content-center")      
+         div(class="col btn btn-link" style="Padding-bottom: 40px;")
+          a.btn.btn-success(href=`/inPac/${pac.IDPaciente}/AnadirCita`) Programar Cita Medica
+          br
+         div(class="col btn btn-link" style="Padding-bottom: 40px;")
+          a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver

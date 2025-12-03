@@ -9,11 +9,12 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-        div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
+        div(style="max-width: 1500px; border: 5px solid #000000ff; margin: 0 auto; padding-left: 10px; padding-right: 10px; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; margin-top: 80px; background: rgba(255, 255, 255, 1)")
          h1 Detalles de la Evaluacion Fisica de: #{pac.Nombre}
          p Medico a cargo: #{med.Usuario}
          p Fecha de la Evaluacion: #{eva.Fecha}
          p Tipo de Sangre: #{eva.TipoSangre}
+         p Resonancia: #{eva.Resonancia}
          p Fisionomia: #{eva.Fisionomia}
          p Signos Vitales: #{eva.SignosVitales} 
          p Mediciones: #{eva.Mediciones}
@@ -21,4 +22,6 @@ html(lang="en")
          p Auscultacion: #{eva.Auscultacion}
          p Percusion: #{eva.Percusion}
          p Etnicidad: #{eva.Etnicidad}
-        a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/EvalFisicasPac`) Volver
+        div(class="Container-fluid text-center justify-content-center")      
+         div(class="col btn btn-link" style="Padding-bottom: 40px;")
+          a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/EvalFisicasPac`) Volver

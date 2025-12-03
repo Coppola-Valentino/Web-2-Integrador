@@ -9,7 +9,7 @@ html(lang="en")
         include bar.pug
         +bar()
         block content
-        div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
+        div(style="max-width: 1500px; border: 5px solid #000000ff; margin: 0 auto; padding-left: 10px; padding-right: 10px; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; margin-top: 80px; background: rgba(255, 255, 255, 1)")
          h1 Detalles del Plan
          p Medico a cargo: #{med.Usuario}
          p Paciente Internado: #{pac.Nombre}
@@ -17,6 +17,15 @@ html(lang="en")
          p Fecha fin: #{plan.FechaFin}
          p Tratamiento asignado: #{plan.Tratamiento}
          p Terapia asignada: #{plan.Terapia}
+         p Intervenciones: #{plan.Intervenciones}
+         p Cuidados: #{plan.Cuidados}
          P Tipo de Plan de Atencion: #{plan.TipoDePlan} 
-         a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/Medicamentos/${plan.IDPlan}`) Ver Medicamentos     
-        a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/PlanAtencionPac`) Volver
+        div(class="Container-fluid text-center justify-content-center")
+         div(class="col btn btn-link" style="Padding-bottom: 40px;")
+          a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/Medicamentos/${plan.IDPlan}`) Ver Medicamentos   
+          br
+         div(class="col btn btn-link" style="Padding-bottom: 40px;") 
+          a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/EditAtencion/${plan.IDPlan}`) Editar Plan
+          br
+         div(class="col btn btn-link" style="Padding-bottom: 40px;")
+          a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/PlanAtencionPac`) Volver

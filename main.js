@@ -150,7 +150,7 @@ router.post('/inPac/:id/internar', reqLv2 , async (req, res) => {
       { GeneroHab: pac.Genero},
       { where: { IDHab: cama.Habitacion} }
     );
-    res.redirect(`/inPac/${pac.IDPaciente}/AnadirAtencion/${int.IDIntern}?tipo=Anterior`);
+    res.redirect(`/inPac/${pac.IDPaciente}/AnadirAtencion/${int.IDIntern}?tipo=Preliminar`);
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -161,7 +161,7 @@ router.get('/inPac/:id/AnadirAtencion/:idd', reqLv2, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);  
   const int = await HistInternacion.findByPk(req.params.idd);
-  const tipo = req.query.tipo || 'Anterior';
+  const tipo = req.query.tipo || 'Preliminar';
   res.render('AnadirAtencion', {int, pac, tipo});
     } catch (err) {
    console.error(err.message);
@@ -179,6 +179,8 @@ router.post('/inPac/:id/AnadirAtencion/:idd', reqLv2, async (req, res) => {
     Tratamiento: req.body.Tratamiento,
     Terapia: req.body.Terapia,
     TipoDePlan: Tipo,
+    Cuidados: req.body.Cuidados,
+    Intervenciones: req.body.Intervenciones,
     MedicID: req.session.IDUser
   });
 
@@ -241,6 +243,7 @@ router.post('/inPac/:id/AnadirEval', reqLv2, async (req, res) => {
     SignoVital: req.body.SignoVital,
     Mediciones: req.body.Mediciones,
     Palpacion: req.body.Palpacion,
+    Resonancia: req.body.REsonancia,
     Auscultacion: req.body.Auscultacion,
     Percusion: req.body.Percusion,
     Etnicidad: req.body.Etnicidad,
@@ -845,7 +848,7 @@ router.get('/inPac/:id/Medicamentos/:idd', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/AnadirMedicamento/:idd', reqLv1, async (req, res) => {
+router.get('/inPac/:id/AnadirMedicamento/:idd', reqLv2, async (req, res) => {
   try {
     const pac = await Paciente.findByPk(req.params.id);
     const plan = await PlanAtencion.findByPk(req.params.idd);
@@ -856,7 +859,7 @@ router.get('/inPac/:id/AnadirMedicamento/:idd', reqLv1, async (req, res) => {
   }
 });
 
-router.post('/inPac/:id/AnadirMedicamento/:idd', reqLv1, async (req, res) => {
+router.post('/inPac/:id/AnadirMedicamento/:idd', reqLv2, async (req, res) => {
 try {
   const pac = await Paciente.findByPk(req.params.id);
   const plan = await PlanAtencion.findByPk(req.params.idd);
@@ -874,7 +877,7 @@ try {
   }
 });
 
-router.get('/inPac/:id/AnadirCirujia', reqLv1, async (req, res) =>{
+router.get('/inPac/:id/AnadirCirujia', reqLv2, async (req, res) =>{
 try {
   const pac = await Paciente.findByPk(req.params.id)
   res.render('AnadirCirujia', {pac})
@@ -884,7 +887,7 @@ try {
   }
 });
 
-router.post('/inPac/:id/AnadirCirujia', reqLv1, async (req, res) => {
+router.post('/inPac/:id/AnadirCirujia', reqLv2, async (req, res) => {
 try {
   const pac = await Paciente.findByPk(req.params.id);
   await HistCirujias.create({
@@ -930,6 +933,76 @@ try {
   }
 });
 
+router.get('/inPac/:id/EditAtencion/:idd', reqLv2, async (req, res) => {
+  try {
+    const pac = await Paciente.findByPk(req.params.id);
+    const plan = await PlanAtencion.findByPk(req.params.idd);
+    res.render('EditAtencion', {pac, plan});
+  } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.post('/inPac/:id/EditAtencion/:idd', reqLv2, async (req, res) => {
+  try {
+   await PlanAtencion.update({
+    FechaInicio: req.body.FechaInicio,
+    FechaFin: req.body.FechaFin,
+    Tratamiento: req.body.Tratamiento,
+    Terapia: req.body.Terapia,
+    Intervenciones: req.body.Intervenciones,
+    Cuidados: req.body.Cuidados 
+  },{ where: { IDPlan: req.params.idd } });
+   const pac = await Paciente.findByPk(req.params.id);
+   res.redirect(`/inPac/${pac.IDPaciente}/PlanAtencionPac`);
+  } catch (err){
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.get('/inPac/:id/EditMedicamento/:idd/:iddd', reqLv1, async (req, res) => {
+  try {
+    const pac = await Paciente.findByPk(req.params.id);
+    const plan = await PlanAtencion.findByPk(req.params.idd);
+    const medi = await Medicamento.findByPk(req.params.iddd);
+    res.render('EditMedicamento', {pac, plan, medi});
+  } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.post('/inPac/:id/EditMedicamento/:idd/:iddd', reqLv1, async (req, res) => {
+  try {
+   await Medicamento.update({
+    Nombre: req.body.Nombre,
+    Dosis: req.body.Dosis,
+    Tiempo: req.body.Tiempo,
+    Cantidad: req.body.Cantidad 
+  },{ where: { IDMedicamento: req.params.iddd } });
+   const pac = await Paciente.findByPk(req.params.id);
+   const plan = await PlanAtencion.findByPk(req.params.idd);
+   res.redirect(`/inPac/${pac.IDPaciente}/Medicamentos/${plan.IDPlan}`);
+  } catch (err){
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.get('/inPac/:id/ElimMedicamento/:idd/:iddd', reqLv1, async (req, res) => {
+  try {
+    await Medicamento.destroy({where: {IDMedicamento: req.params.iddd}});
+   const pac = await Paciente.findByPk(req.params.id);
+   const plan = await PlanAtencion.findByPk(req.params.idd);
+    res.redirect(`/inPac/${pac.IDPaciente}/Medicamentos/${plan.IDPlan}`);
+  } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
 app.use('/', router);
 
 app.use('/Imagenes', express.static(path.join(__dirname, 'Imagenes')));
@@ -944,3 +1017,5 @@ app.listen(PORT, () => {
     process.exit(1);
   }
 })();
+
+//please website project please work

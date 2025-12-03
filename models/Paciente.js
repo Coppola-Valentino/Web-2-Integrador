@@ -37,6 +37,10 @@ Paciente.init({
     type: DataTypes.STRING,
     allowNull: true
   },
+  Alergias: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   PadreID: {
     type: DataTypes.INTEGER,
     allowNull: true

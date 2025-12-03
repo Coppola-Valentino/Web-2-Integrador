@@ -12,17 +12,20 @@ html(lang="en")
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
          h1 Evaluaciones Fisicas de: #{pac.Nombre}
          table 
-          tr
+          tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
            th Medico
            th Fecha de la Evaluacion
            th Acciones
            each eva in evals
-            tr
+            tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
              td #{eva.med.Usuario}
              td #{eva.Fecha}
              td 
               a.btn.btn-danger(href=`/inPac/${pac.IDPaciente}/EvalFisica/${eva.IDEval}`) Ver Detalles
-        br
-        a.btn.btn-success(href=`/inPac/${pac.IDPaciente}/AnadirEval`) Añadir Evaluacion
-        br
-        a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver
+        div(class="Container-fluid text-center justify-content-center")      
+         div(class="col btn btn-link" style="Padding-bottom: 40px;")
+          br
+          a.btn.btn-success(href=`/inPac/${pac.IDPaciente}/AnadirEval`) Añadir Evaluacion
+         div(class="col btn btn-link" style="Padding-bottom: 40px;") 
+          br
+          a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver

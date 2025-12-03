@@ -62,15 +62,20 @@ html(lang="en")
            br
            label(for="MadreID") Madre:
                  select(name="MadreID" )
+                   option(value=0) Desconocido/Ninguno
                    for paci in pacientes
                     option(value=paci.IDPaciente) #{paci.Nombre}
            br
            label(for="PadreID") Padre:
                  select(name="PadreID" )
+                   option(value=0) Desconocido/Ninguno
                    for paci in pacientes 
                     option(value=paci.IDPaciente) #{paci.Nombre}
            br
-           button(class="btn btn-primary" type="submit") Guardar cambios
+           label(for="Alergias") Alergias: 
+            input(type="text" name="Alergias" id="Alergias")
+           br
+           button(class="btn btn-primary" type="submit") Guardar
            br
            a.btn.btn-warning(href="/inPac") Cancelar
            script.
@@ -79,10 +84,12 @@ html(lang="en")
                  const dniInp = document.getElementById('DNI');
                  const dirImp = document.getElementById('Direccion');
                  const telInp = document.getElementById('Telefono');
-                 //const edImp = document.getElementById('Edad');
-                 const hoy = new Date().getFullYear();
+                 const edImp = document.getElementById('Edad');
+                 const Eda = new Date(edImp.value);
+                 const hoy = new Date();;
                  const nomImp = document.getElementById('Nombre');
                  const histImp = document.getElementById('Historial');
+                 const Aler = document.getElementById('Alergias');
                  if (!dniInp.disabled && dniInp.value && DNIs.includes(Number(dniInp.value))) {
                   alert('El DNI ya está registrado.');
                   event.preventDefault();
@@ -95,12 +102,12 @@ html(lang="en")
                   alert('El número de teléfono debe tener 10 dígitos');
                   event.preventDefault();
                  }
-                 /*if (edImp.value < 1900 || edImp.value > hoy) {
+                 if (Eda.getFullYear() < 1900 || Eda > hoy) {
                    alert('El año de nacimiento debe estar entre 1900 y ' + hoy + '.');
                    event.preventDefault();
-                 }*/
-                 if (nomImp.value.trim().length === 0) {
-                   alert('El nombre no puede estar vacío.');
+                 }
+                 if (nomImp.value.trim().length < 3) {
+                   alert('El nombre debe tener almenos 3 letras');
                    event.preventDefault();
                  }
                  if (nomImp.value.search(/\d/) !== -1 || nomImp.value.search(/[^a-zA-Z\s]/) !== -1) {
@@ -117,6 +124,10 @@ html(lang="en")
                  }
                  if (dirImp.value.length > 250 && !dirInp.disabled) {
                    alert('La dirección no puede tener más de 250 caracteres.');
+                   event.preventDefault();
+                 }
+                 if (Aler.value.length > 250) {
+                   alert('Las Alergias no pueden tener más de 250 caracteres.');
                    event.preventDefault();
                  }
                  });

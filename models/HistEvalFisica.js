@@ -21,6 +21,10 @@ HistEvalFisica.init({
       type: DataTypes.STRING,
       allowNull: true
     },
+    Resonancia: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     SignoVital: {
       type: DataTypes.STRING,
       allowNull: true

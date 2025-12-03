@@ -12,7 +12,7 @@ html(lang="en")
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
          h1 Historial de los Planes de Atencion Medica de: #{pac.Nombre}
          table 
-          tr
+          tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
            th Medico
            th Fecha de Inicio
            th Fecha de Finalizacion
@@ -20,7 +20,7 @@ html(lang="en")
            th Medicamentos Prescritos
            th Acciones
            each plan in plans
-            tr
+            tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
              td #{plan.med.Usuario}
              td #{plan.FechaInicio}
              td #{plan.FechaFin}
@@ -29,4 +29,6 @@ html(lang="en")
               a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/Medicamentos/${plan.IDPlan}`) Ver Medicamentos
              td 
               a.btn.btn-danger(href=`/inPac/${pac.IDPaciente}/PlanAtencion/${plan.IDPlan}`) Ver Detalles
-        a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver
+        div(class="Container-fluid text-center justify-content-center")      
+         div(class="col btn btn-link" style="Padding-bottom: 40px;")
+          a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver

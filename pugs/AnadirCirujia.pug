@@ -12,10 +12,10 @@ html(lang="en")
          h1 Añadir Cirujia al Historial de: #{pac.Nombre}
          form(action=`/InPac/${pac.IDPaciente}/AnadirCirujia` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
           label(for="Tipo") Tipo de Cirujia:
-           input(type="text" name="Tipo" id="Tipo")
+           input(type="text" name="Tipo" id="Tipo" required)
           br
           label(for="Fecha") Fecha de la Cirujia: 
-           input(type="date" name="Fecha" id="Fecha")
+           input(type="date" name="Fecha" id="Fecha" required)
           br
           label(for="Estado") Estado:
            select(name="Estado")
@@ -24,11 +24,43 @@ html(lang="en")
             option(value="Cancelado") Cancelado 
           br
           label(for="Diagnostico") Diagnostico: 
-           input(type="text" name="Diagnostico" id="Diagnostico" )
+           input(type="text" name="Diagnostico" id="Diagnostico" required )
           br
           label(for="Resumen") Resumen: 
-           input(type="text" name="Resumen" id="Resumen" )
+           input(type="text" name="Resumen" id="Resumen" required)
           br
           button(class="btn btn-primary" type="submit") Guardar
           br
           a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/CirujiasPac`) Cancela
+          script.
+                document.getElementById('formi').addEventListener('submit', function(event) {
+                 const Tipo = document.getElementById('Tipo');
+                 const Fecha = document.getElementById('Fecha');
+                 const hoy = new Date().getFullYear();
+                 const Diag = document.getElementById('Diagnostico');
+                 const Res = document.getElementById('Resumen');
+                 if (Tipo.value.trim().length === 0) {
+                   alert('El Tipo de cirujia no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (Tipo.value.length > 250) {
+                   alert('El Tipo de cirujia no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 if (Diag.value.trim().length === 0) {
+                   alert('El Diagnostico no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (Diag.value.length > 250) {
+                   alert('El Diagnostico no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 if (Res.value.trim().length === 0) {
+                   alert('El Resumen no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (Res.value.length > 250) {
+                   alert('El Resumen no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 });

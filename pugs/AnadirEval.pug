@@ -12,29 +12,107 @@ html(lang="en")
          h1 Evaluacion Fisica de: #{pac.Nombre}
          form(action=`/InPac/${pac.IDPaciente}/AnadirEval` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
           label(for="TipoDeSangre") Tipo de Sangre:
-           input(type="text" name="TipoDeSangre" id="TipoDeSangre")
+           input(type="text" name="TipoDeSangre" id="TipoDeSangre" required)
           br
           label(for="Fisionomia") Fisionomia: 
-           input(type="text" name="Fisionomia" id="Fisionomia")
+           input(type="text" name="Fisionomia" id="Fisionomia" required)
           br
           label(for="SignosVitales") Signos Vitales:
-           input(type="text" name="SignosVitales" id="SignosVitales" )
+           input(type="text" name="SignosVitales" id="SignosVitales" required)
           br
           label(for="Mediciones") Mediciones: 
-           input(type="text" name="Mediciones" id="Mediciones" )
+           input(type="text" name="Mediciones" id="Mediciones" required)
           br
           label(for="Palpacion") Palpacion: 
-           input(type="text" name="Palpacion" id="Palpacion" )
+           input(type="text" name="Palpacion" id="Palpacion" required)
           br
           label(for="Auscultacion") Auscultacion: 
-           input(type="text" name="Auscultacion" id="Auscultacion" )
+           input(type="text" name="Auscultacion" id="Auscultacion" required)
           br
           label(for="Percusion") Percusion: 
-           input(type="text" name="Percusion" id="Percusion" )
+           input(type="text" name="Percusion" id="Percusion" required)
           br
           label(for="Etnicidad") Etnicidad: 
-           input(type="text" name="Etnicidad" id="Etnicidad" )
+           input(type="text" name="Etnicidad" id="Etnicidad" required)
+          br
+          label(for="Resonancia") Resonancia Magnetica: 
+           input(type="text" name="Resonancia" id="Resonancia" required)
           br
           button(class="btn btn-primary" type="submit") Guardar
           br
           a.btn.btn-warning(href="/inPac") Cancelar
+          script.
+                document.getElementById('formi').addEventListener('submit', function(event) {
+                 const TipSan = document.getElementById('TipoDeSangre');
+                 const Fisio = document.getElementById('Fisionomia');
+                 const SigVit = document.getElementById('SignosVitales');
+                 const Medicion = document.getElementById('Mediciones');
+                 const Palp = document.getElementById('Palpacion');
+                 const Ausc = document.getElementById('Auscultacion');
+                 const Perc = document.getElementById('Percusion');
+                 const Etni = document.getElementById('Etnicidad');
+                 if (TipSan.value.trim().length === 0) {
+                   alert('El Tipo De Sangre no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (TipSan.value.length > 250) {
+                   alert('El Tipo De Sangre no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 if (Fisio.value.trim().length === 0) {
+                   alert('La Fisionomia no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (Fisio.value.length > 250) {
+                   alert('La Fisionomia no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 if (SigVit.value.trim().length === 0) {
+                   alert('Los Signos Vitales no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (SigVit.value.length > 250) {
+                   alert('Los Signos Vitales no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 if (Medicion.value.trim().length === 0) {
+                   alert('La Medicion no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (Medicion.value.length > 250) {
+                   alert('La Medicion no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 if (Palp.value.trim().length === 0) {
+                   alert('La Palpacion no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (Palp.value.length > 250) {
+                   alert('La Palpacion no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 if (Ausc.value.trim().length === 0) {
+                   alert('La Auscultacion no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (Ausc.value.length > 250) {
+                   alert('La Auscultacion no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 if (Perc.value.trim().length === 0) {
+                   alert('La Percusion no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (Perc.value.length > 250) {
+                   alert('La Percusion no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 if (Etni.value.trim().length === 0) {
+                   alert('La Etnicidad no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (Etni.value.length > 250) {
+                   alert('La Etnicidad no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 });

@@ -88,13 +88,18 @@ html(lang="en")
                br
                label(for="MadreID") Madre:
                  select(name="MadreID" )
+                  option(value=0) Desconocido/Ninguno
                    for paci in pacientes
                     option(value=paci.IDPaciente) #{paci.Nombre}
                br
                label(for="PadreID") Padre:
                  select(name="PadreID" )
+                  option(value=0) Desconocido/Ninguno
                    for paci in pacientes 
                     option(value=paci.IDPaciente) #{paci.Nombre}
+               br
+               label(for="Alergias") Alergias: 
+                input(type="text" name="Alergias" id="Alergias")
                br
                button(class="btn btn-primary" type="submit") Guardar y Asignar Cama
                br
@@ -104,34 +109,36 @@ html(lang="en")
                 document.getElementById('formi').addEventListener('submit', function(event) {
                  const dniInp = document.getElementById('DNI');
                  const nomImp = document.getElementById('Nombre');
-                 //const edImp = document.getElementById('Edad');
-                 const hoy = new Date().getFullYear();
+                 const edImp = document.getElementById('Edad');
+                 const Eda = new Date(edImp.value);
+                 const hoy = new Date();
                  const dirImp = document.getElementById('Direccion');
                  const telInp = document.getElementById('Telefono');
+                 const Aler = document.getElementById('Alergias');
                  if (!dniInp.disabled && dniInp.value && DNIs.includes(Number(dniInp.value))) {
                   alert('El DNI ya está registrado.');
                   event.preventDefault();
                  }
-                 if (telInp.value.length > 10) {
+                 if (telInp.value.length > 10 && !telInp.disabled) {
                   alert('El número de teléfono no puede tener más de 10 dígitos.');
                   event.preventDefault();
                  }
-                 if (telInp.value.length < 10) {
+                 if (telInp.value.length < 10 && !telInp.disabled) {
                   alert('El número de teléfono debe tener 10 digitos.');
                   event.preventDefault();
                  }
-                 /*if (edImp.value < 1900 || edImp.value > hoy) {
+                 if (Eda.getFullYear() < 1900 || Eda > hoy) {
                    alert('El año de nacimiento debe estar entre 1900 y ' + hoy + '.');
                    event.preventDefault();
-                 }*/
+                 }
                  if(dniInp.value.length === 0 && !dniInp.disabled) {
                   alert('introduzca un DNI o marque "Sin DNI".');
                   dniInp.value = '';
                   dniInp.disabled = true;
                   event.preventDefault();
                  }
-                 if (nomImp.value.trim().length === 0) {
-                   alert('El nombre no puede estar vacío.');
+                 if (nomImp.value.trim().length < 3) {
+                   alert('El nombre debe tener almenos 3 letras');
                    event.preventDefault();
                  }
                  if (nomImp.value.length > 100) {
@@ -142,8 +149,12 @@ html(lang="en")
                    alert('El nombre no puede contener números o simbolos');
                    event.preventDefault();
                  }
-                if (dirImp.value.length > 250) {
+                 if (Aler.value.length > 250) {
+                   alert('Las Alergias no pueden tener más de 250 caracteres.');
+                   event.preventDefault();
+                 }
+                 if (dirImp.value.length > 250) {
                   alert('La dirección no puede tener más de 250 caracteres.');
                   event.preventDefault();
-                }
+                 }
                  });

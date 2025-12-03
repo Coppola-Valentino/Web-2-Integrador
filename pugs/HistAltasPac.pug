@@ -12,14 +12,16 @@ html(lang="en")
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
          h1 Historial de Altas del Paciente: #{pac.Nombre}
          table 
-          tr
+          tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
            th Medico
            th Fecha del Alta
            th Plan de Atencion Posterior
            each alt in alts
-            tr
+            tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
              td #{alt.med.Usuario}
              td #{alt.Fecha}
              td 
               a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/PlanAtencion/${alt.PlanID}`) Ver Plan
-        a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver
+        div(class="Container-fluid text-center justify-content-center")      
+         div(class="col btn btn-link" style="Padding-bottom: 40px;")
+          a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver

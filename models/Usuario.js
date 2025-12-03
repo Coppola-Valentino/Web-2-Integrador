@@ -62,6 +62,10 @@ Usuario: {
 type: DataTypes.STRING,
 allowNull: true
 },
+Especialidad: {
+type: DataTypes.STRING,
+allowNull: true
+},
 Pass: {
 type: DataTypes.STRING,
 allowNull: true

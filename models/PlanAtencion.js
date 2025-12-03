@@ -21,6 +21,14 @@ FechaFin: {
 type: DataTypes.DATE,
 allowNull: true
 },
+Intervenciones: {
+type: DataTypes.STRING,
+allowNull: true
+},
+Cuidados: {
+type: DataTypes.STRING,
+allowNull: true
+},
 Tratamiento: {
 type: DataTypes.STRING,
 allowNull: true

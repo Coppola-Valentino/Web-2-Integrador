@@ -9,30 +9,29 @@ html(lang="en")
         +bar()
         block content
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
-         h1 Añadir Plan de Atencion
-         form(action=`/InPac/${pac.IDPaciente}/AnadirAtencion/${int.IDIntern}` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
+         h1 Editar Plan #{plan.Tipo} de: #{pac.Nombre}
+         form(action=`/InPac/${pac.IDPaciente}/EditAtencion/${plan.IDPlan}` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
           label(for="FechaInicio") Fecha de Inicio:
-           input(type="date" name="FechaInicio" id="FechaInicio" required)
+           input(type="date" name="FechaInicio" id="FechaInicio" value=plan.FechaInicio)
           br
           label(for="FechaFin") Fecha de Fin
-           input(type="date" name="FechaFin" id="FechaFin" required)
+           input(type="date" name="FechaFin" id="FechaFin" required value=plan.FechaFin)
           br
           label(for="Tratamiento") Tratamiento:
-           input(type="text" name="Tratamiento" id="Tratamiento")
+           input(type="text" name="Tratamiento" id="Tratamiento" value=plan.Tratamiento)
           br
           label(for="Terapia") Terapia: 
-           input(type="text" name="Terapia" id="Terapia")
+           input(type="text" name="Terapia" id="Terapia" value=plan.Terapia)
           br
           label(for="Intervenciones") Intervenciones Inmediatas: 
-           input(type="text" name="Intervenciones" id="Intervenciones")
+           input(type="text" name="Intervenciones" id="Intervenciones" value=plan.Intervenciones)
           br
           label(for="Cuidados") Cuidados de Enfermeria: 
-           input(type="text" name="Cuidados" id="Cuidados")
+           input(type="text" name="Cuidados" id="Cuidados" value=plan.Cuidados)
           br
-          input(type="hidden" name="tipo" id="tipo" value=tipo)
           button(class="btn btn-primary" type="submit") Guardar
           br
-          a.btn.btn-warning(href="/inPac") Cancelar
+          a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/PlanAtencion/${plan.IDPlan}`) Cancelar
           script.
                 document.getElementById('formi').addEventListener('submit', function(event) {
                  const FechIni = document.getElementById('FechaInicio');
@@ -40,7 +39,7 @@ html(lang="en")
                  const hoy = new Date().getFullYear();
                  const Trat = document.getElementById('Tratamiento');
                  const Tera = document.getElementById('Terapia');
-                 const Interv = document.getElementById('Itervenciones');
+                 const Interv = document.getElementById('Intervenciones');
                  const Cuid = document.getElementById('Cuidados');
                  if (FechIni.value < hoy) {
                   alert('Fecha de Inicio invalida');
@@ -65,5 +64,5 @@ html(lang="en")
                  if (Cuid.value.length > 250) {
                    alert('Los Cuidados no pueden tener más de 250 caracteres');
                    event.preventDefault();
-                 }
+                 }                 
                  });

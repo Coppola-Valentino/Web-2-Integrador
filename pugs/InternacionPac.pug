@@ -12,14 +12,14 @@ html(lang="en")
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
          h1 Historial de Internaciones de: #{pac.Nombre}
          table 
-          tr
+          tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
            th Medico
            th Plan de Atencion
            th Fecha de Ingreso
            th Fecha de Egreso
            th Acciones
            each inter in interns
-            tr
+            tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
              td #{inter.med.Usuario}
              td 
               a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/PlanAtencion/${inter.PlanID}`) Ver Plan
@@ -27,7 +27,10 @@ html(lang="en")
              td #{inter.FechaFin}
              td 
               a.btn.btn-danger(href=`/inPac/${pac.IDPaciente}/Internaciones/${inter.IDIntern}`) Ver Detalles
-         br     
-         a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/HistAltasPac`) Ver Altas
-         br
-         a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver
+         div(class="Container-fluid text-center justify-content-center")     
+          div(class="col btn btn-link" style="Padding-bottom: 40px;")
+           br     
+           a.btn.btn-info(href=`/inPac/${pac.IDPaciente}/HistAltasPac`) Ver Altas
+          div(class="col btn btn-link" style="Padding-bottom: 40px;") 
+           br
+           a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver
