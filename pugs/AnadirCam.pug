@@ -11,7 +11,7 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
          h1 Añadir una Cama al sistema
          form(action=`/Habit/anadirCam` method="POST" style="display: flex; flex-direction: column; gap: 1px;")
-           label(for="Habitacion") Habitación donde alojar la cama:
+           label(for="Habitacion") Habitación donde alojar la cama: 
            select(name="Habitacion" required)
              each Habit in HabitsDisp
                  option(value=Habit.IDHab) Habitación #{Habit.IDHab} (#{Habit.Tipo})

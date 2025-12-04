@@ -11,10 +11,10 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
          h1 Editar
          form(action=`/inPac/${pac.IDPaciente}/editar` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;")
-           label(for="Nombre") Nombre:
+           label(for="Nombre") Nombre: 
            input(type="text" name="Nombre" id="Nombre" value=pac.Nombre required)
            br
-           label(for="Edad") Fecha de Nacimiento:
+           label(for="Edad") Fecha de Nacimiento: 
            input(type="date" name="Edad" id="Edad" value=pac.Edad required)
            if pac.Edad === null
             button(type="button" onclick="dehabagain()") Aun Desconocido
@@ -29,12 +29,12 @@ html(lang="en")
                     edd.disabled = true;
                   }}
            br
-           label(for="DNI") DNI:
+           label(for="DNI") DNI: 
            input(type="number" name="DNI" id="DNI" value=pac.DNI required)
            if pac.DNI === null
              button(type="button" onclick="dehab()") DNI aun desconocido
            br
-           label(for="Genero") Genero:
+           label(for="Genero") Genero: 
              select(name="Genero" required)
                  option(value="Masculino" selected=(pac.Genero === "Masculino")) Masculino
                  option(value="Femenino" selected=(pac.Genero === "Femenino")) Femenino
@@ -42,7 +42,7 @@ html(lang="en")
                  if pac.Genero === "Desconocido"
                    option(value="Desconocido" selected) Desconocido
            br
-           label(for="Seguro") Seguro Medico:
+           label(for="Seguro") Seguro Medico: 
               select(for="Seguro" name="Seguro" required)
                 option(value="Ninguno" selected=(pac.Seguro === "Ninguno")) Ninguno
                 option(value="Privado" selected=(pac.Seguro === "Privado")) Privado
@@ -78,13 +78,13 @@ html(lang="en")
                       dir.disabled = true;
                     }}
            br
-           label(for="MadreID") Madre:
+           label(for="MadreID") Madre: 
                  select(name="MadreID" )
                   option(value=0 selected=(pac.MadreID === 0 || pac.MadreID === null || pac.MadreID === undefined)) Desconocido/Ninguno
                    for paci in pacientes
                     option(value=paci.IDPaciente selected=(pac.MadreID == paci.IDPaciente)) #{paci.Nombre}
            br
-           label(for="PadreID") Padre:
+           label(for="PadreID") Padre: 
                  select(name="PadreID" )
                   option(value=0 selected=(pac.PadreID === 0 || pac.PadreID === null || pac.PadreID === undefined)) Desconocido/Ninguno
                    for paci in pacientes 
@@ -112,6 +112,11 @@ html(lang="en")
                   alert('El DNI ya está registrado.');
                   event.preventDefault();
                  }
+                 if(dniInp.value.length > 8 || dniInp.value.length < 8) {
+                  alert('introduzca un DNI valido');
+                  dniInp.value = '';
+                  event.preventDefault();
+                 }
                  if (telInp.value.length > 10 && !telInp.disabled) {
                   alert('El número de teléfono no puede tener más de 10 dígitos.');
                   event.preventDefault();
@@ -121,7 +126,7 @@ html(lang="en")
                   event.preventDefault();
                  }
                  if (Eda.getFullYear() < 1900 || Eda > hoy) {
-                   alert('El año de nacimiento debe estar entre 1900 y ' + hoy + '.');
+                   alert('El año de nacimiento debe estar entre 1900 y Hoy.');
                    event.preventDefault();
                  }
                  if (nomImp.value.trim().length < 3) {

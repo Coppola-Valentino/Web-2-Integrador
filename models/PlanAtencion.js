@@ -10,7 +10,7 @@ primaryKey: true,
 autoIncrement: true
 },
 PacID: {
-type: DataTypes.INTEGER,
+type: DataTypes.INTEGER, //conectado al IDPaciente de paciente
 allowNull: true
 },
 FechaInicio: {
@@ -42,7 +42,7 @@ type: DataTypes.STRING,
 allowNull: true
 },
 MedicID: {
-type: DataTypes.INTEGER,
+type: DataTypes.INTEGER, //conectado al IDUser de usuario
 allowNull: true
 }
 }, {

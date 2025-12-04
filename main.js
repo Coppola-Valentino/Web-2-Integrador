@@ -34,6 +34,8 @@ app.use(getUser);
     console.log('DB connected');
     await sequelize.sync();
 
+//Modelos
+
 const Paciente = require('./models/Paciente');
 const Habitacion = require('./models/Habitaciones');
 const Camas = require('./models/Cama');
@@ -45,6 +47,8 @@ const Citas = require('./models/Citas');
 const HistCirujias = require('./models/HistCirujias');
 const Medicamento = require('./models/Medicamento')
 const User = require('./models/Usuario');
+
+//Rutas
 
 router.get('/', async (req, res) => {
     res.render('Home'); 
@@ -217,7 +221,8 @@ router.post('/inPac/:id/AnadirAtencion/:idd', reqLv2, async (req, res) => {
   await HistInternacion.update({
     PlanID: plan.IDPlan
   } , { where: { IDIntern: req.params.idd } });
-  res.redirect("/inPac");
+  const pac = Paciente.findByPk(req.params.id);
+  res.redirect(`/inPac/${req.params.id}/Medicamentos/${plan.IDPlan}`);
     } catch (err) {
    console.error(err.message);
    res.redirect('/Error');
@@ -805,6 +810,25 @@ router.get('/inPac/:id/CitasPac', reqAuther, async (req, res) => {
   }
 });
 
+router.get('/CitasMed', reqLv2, async (req, res) => {
+  try {
+  const med = await User.findByPk(req.session.IDUser);
+  const citas = await Citas.findAll({ where: { MedicID: med.IDUser } });
+  const pacs = await Paciente.findAll()
+  const citData = citas.map(citas => {
+   const pac = pacs.find(c => c.IDPaciente === citas.PacID);
+   return {
+    ...citas.toJSON(),
+    pac
+   };
+   });
+  res.render('CitasMed', {citas: citData, med});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
 router.get('/inPac/:id/Cirujia/:idd', reqLv1, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
@@ -1005,7 +1029,10 @@ router.get('/inPac/:id/ElimMedicamento/:idd/:iddd', reqLv1, async (req, res) => 
 
 app.use('/', router);
 
+//Las Imagenes
 app.use('/Imagenes', express.static(path.join(__dirname, 'Imagenes')));
+
+//puerto local
 
 const PORT = 3000;
 app.listen(PORT, () => {

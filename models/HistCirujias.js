@@ -10,7 +10,7 @@ HistCirujias.init({
       autoIncrement: true
     },
     PacID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER, //conectado al IDPaciente del paciente
       allowNull: true
     },
     Tipo: {
@@ -34,7 +34,7 @@ HistCirujias.init({
       allowNull: true
     },
     MedicID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER, //IDUser del medico que creo la cirujia
       allowNull: true
     }
 }, {

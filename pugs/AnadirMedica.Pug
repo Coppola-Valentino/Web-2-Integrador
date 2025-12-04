@@ -12,13 +12,13 @@ html(lang="en")
          h1 Prescribir Medicamento a: #{pac.Nombre}
          h2 Alergias: #{pac.Alergias}
          form(action=`/InPac/${pac.IDPaciente}/AnadirMedicamento/${plan.IDPlan}` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
-          label(for="Nombre") Nombre del Medicamento:
+          label(for="Nombre") Nombre del Medicamento: 
            input(type="text" name="Nombre" id="Nombre" required)
           br
           label(for="Dosis") Dosis (gr/ml): 
            input(type="double" name="Dosis" id="Dosis" required)
           br
-          label(for="Tiempo") Tiempo entre Dosis (hrs):
+          label(for="Tiempo") Tiempo entre Dosis (hrs): 
            input(type="number" name="Tiempo" id="Tiempo" required)
           br
           label(for="Cantidad") Cantidad Total de Dosis: 

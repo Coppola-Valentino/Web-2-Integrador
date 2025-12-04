@@ -22,13 +22,13 @@ html(lang="en")
              option(value="Ginecologia" selected=(hab.Tipo === "Ginecologia")) Ginecologia
              option(value="Neurologia" selected=(hab.Tipo === "Neurologia")) Neurologia
            br
-           label(for="Ala") Ala de la Habitacion:
+           label(for="Ala") Ala de la Habitacion: 
            input(type="number" name="Ala" value=hab.Ala required)
            br
-           label Higenene:
+           label Higenene: 
             each cama in camasDeHab
              div
-              span Cama #{cama.IDCamas}:
+              span Cama #{cama.IDCamas}: 
               select(name=`Higenizado_${cama.IDCamas}`)
                option(value="true" selected=(cama.Higenizado === true)) Si
                option(value="false" selected=(cama.Higenizado === false)) No

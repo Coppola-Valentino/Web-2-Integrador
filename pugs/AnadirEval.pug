@@ -11,13 +11,13 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
          h1 Evaluacion Fisica de: #{pac.Nombre}
          form(action=`/InPac/${pac.IDPaciente}/AnadirEval` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
-          label(for="TipoDeSangre") Tipo de Sangre:
+          label(for="TipoDeSangre") Tipo de Sangre: 
            input(type="text" name="TipoDeSangre" id="TipoDeSangre" required)
           br
           label(for="Fisionomia") Fisionomia: 
            input(type="text" name="Fisionomia" id="Fisionomia" required)
           br
-          label(for="SignosVitales") Signos Vitales:
+          label(for="SignosVitales") Signos Vitales: 
            input(type="text" name="SignosVitales" id="SignosVitales" required)
           br
           label(for="Mediciones") Mediciones: 

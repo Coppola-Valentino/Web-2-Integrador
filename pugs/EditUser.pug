@@ -11,10 +11,10 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 40px;")
          h1 Editar Usuario
          form(action=`/Users/${user.IDUser}/Editar` id="formi" method="POST" style="display: flex; flex-direction: column; gap: 1px;")
-            label(for="Usuario") Usuario:
+            label(for="Usuario") Usuario: 
             input(type="text" name="Usuario" id="Usuario" style="width: 100%;" value=user.Usuario required autocomplete="off")
             br
-            label(for="Pass") Contraseña:
+            label(for="Pass") Contraseña: 
             input(type="text" name="Pass" id="Pass" style="width: 100%;" value=user.Pass required autocomplete="off")
             br
             label(for="Rol") Rol de usuario:
@@ -26,6 +26,7 @@ html(lang="en")
             br
             label(for="Especialidad") Especialidad 
             select(name="Especialidad" required)
+             option(value="Ninguna" selected=(user.Especialidad==='Ninguna') ) Ninguna
              option(value="Odontologo" selected=(user.Especialidad==='Odontologo') ) Odontologo
              option(value="Pediatra" selected=(user.Especialidad==='Pediatra') ) Pediatra
              option(value="Oculista" selected=(user.Especialidad==='Oculista') ) Oculista

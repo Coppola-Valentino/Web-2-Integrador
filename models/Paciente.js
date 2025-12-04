@@ -42,11 +42,11 @@ Paciente.init({
     allowNull: true
   },
   PadreID: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER, //es el IDPaciente del Padre
     allowNull: true
   },
   MadreID: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.INTEGER, //IDPaciente de la Madre
     allowNull: true
   }
 }, {

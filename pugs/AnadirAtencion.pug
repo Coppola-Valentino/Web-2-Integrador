@@ -11,13 +11,13 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
          h1 Añadir Plan de Atencion
          form(action=`/InPac/${pac.IDPaciente}/AnadirAtencion/${int.IDIntern}` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
-          label(for="FechaInicio") Fecha de Inicio:
+          label(for="FechaInicio") Fecha de Inicio: 
            input(type="date" name="FechaInicio" id="FechaInicio" required)
           br
-          label(for="FechaFin") Fecha de Fin
+          label(for="FechaFin") Fecha de Fin: 
            input(type="date" name="FechaFin" id="FechaFin" required)
           br
-          label(for="Tratamiento") Tratamiento:
+          label(for="Tratamiento") Tratamiento: 
            input(type="text" name="Tratamiento" id="Tratamiento")
           br
           label(for="Terapia") Terapia: 
@@ -37,16 +37,18 @@ html(lang="en")
                 document.getElementById('formi').addEventListener('submit', function(event) {
                  const FechIni = document.getElementById('FechaInicio');
                  const FechFin = document.getElementById('FechaFin');
-                 const hoy = new Date().getFullYear();
                  const Trat = document.getElementById('Tratamiento');
                  const Tera = document.getElementById('Terapia');
-                 const Interv = document.getElementById('Itervenciones');
+                 const Interv = document.getElementById('Intervenciones');
                  const Cuid = document.getElementById('Cuidados');
-                 if (FechIni.value < hoy) {
-                  alert('Fecha de Inicio invalida');
-                  event.preventDefault();
+                 const FechInicio = new Date(FechIni.value);
+                 const FechFinal = new Date(FechFin.value);
+                 const hoy = new Date();
+                 if (FechInicio < hoy) {
+                   alert('Fecha de Inicio Invalida');
+                   event.preventDefault();
                  }
-                 if (FechFin.value < FechIni.value) {
+                 if (FechFinal < FechInicio) {
                   alert('Fecha de Fin invalida');
                   event.preventDefault();
                  }

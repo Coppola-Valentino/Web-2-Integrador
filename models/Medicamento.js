@@ -9,7 +9,7 @@ Medicamento.init({
       autoIncrement: true
     },
     PlanID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER, //conectado al IDPlan de planAtencion
       allowNull: true
     },
     Nombre: {

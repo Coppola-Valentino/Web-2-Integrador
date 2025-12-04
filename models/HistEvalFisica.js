@@ -10,7 +10,7 @@ HistEvalFisica.init({
       autoIncrement: true
     },
     PacID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER, //conectado al IDPaciente del paciente
       allowNull: true
     },
     TipoSangre: {
@@ -54,7 +54,7 @@ HistEvalFisica.init({
       allowNull: true
     },
     MedicID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER, //IDUser del medico que haya creado la evaluacion fisica
       allowNull: true
     }
 }, {

@@ -9,11 +9,11 @@ HistInternacion.init({
       autoIncrement: true
     },
     PacID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER, //conectado al IDPaciente del paciente a internar
       allowNull: true
     },
     AltaID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER, //conectado al IDAlta de altasMedicas (solo si le dan un alta al paciente por esta internacion)
       allowNull: true
     },
     FechaInicio: {
@@ -25,7 +25,7 @@ HistInternacion.init({
       allowNull: true
     },
     PlanID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER, //conectado al IDPlan del planAtencion creado para esta internacion
       allowNull: true
     },
     Motivo: {
@@ -41,7 +41,7 @@ HistInternacion.init({
       allowNull: true
     },
     MedicID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER, //conectado al IDUser del usuario que creo la internacion
       allowNull: true
     }
 }, {

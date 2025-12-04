@@ -128,8 +128,13 @@ html(lang="en")
                   event.preventDefault();
                  }
                  if (Eda.getFullYear() < 1900 || Eda > hoy) {
-                   alert('El año de nacimiento debe estar entre 1900 y ' + hoy + '.');
+                   alert('El año de nacimiento debe estar entre 1900 y Hoy.');
                    event.preventDefault();
+                 }
+                 if(dniInp.value.length > 8 || dniInp.value.length < 8) {
+                  alert('introduzca un DNI valido');
+                  dniInp.value = '';
+                  event.preventDefault();
                  }
                  if(dniInp.value.length === 0 && !dniInp.disabled) {
                   alert('introduzca un DNI o marque "Sin DNI".');

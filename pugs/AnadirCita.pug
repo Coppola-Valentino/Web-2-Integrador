@@ -30,8 +30,9 @@ html(lang="en")
           script.
                 document.getElementById('formi').addEventListener('submit', function(event) {
                  const Fecha = document.getElementById('Fecha');
-                 const hoy = new Date().getFullYear();
-                 if (Fecha.value < hoy) {
+                 const Fecha2 = new Date(Fecha.value);
+                 const hoy = new Date();
+                 if (Fecha2 < hoy) {
                   alert('Fecha invalida');
                   event.preventDefault();
                  }

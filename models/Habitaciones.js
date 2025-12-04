@@ -17,7 +17,7 @@ Ala: {
 type: DataTypes.INTEGER,
 },
 GeneroHab: {
-type: DataTypes.STRING,
+type: DataTypes.STRING, //si hay un paciente en las camas asignadas a la habitacion, GeneroHab adopta ese mismo genero y solo permite pacientes del mismo genero
 allowNull: true,
 },
 }, {

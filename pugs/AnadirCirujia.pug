@@ -11,13 +11,13 @@ html(lang="en")
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
          h1 Añadir Cirujia al Historial de: #{pac.Nombre}
          form(action=`/InPac/${pac.IDPaciente}/AnadirCirujia` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
-          label(for="Tipo") Tipo de Cirujia:
+          label(for="Tipo") Tipo de Cirujia: 
            input(type="text" name="Tipo" id="Tipo" required)
           br
           label(for="Fecha") Fecha de la Cirujia: 
            input(type="date" name="Fecha" id="Fecha" required)
           br
-          label(for="Estado") Estado:
+          label(for="Estado") Estado: 
            select(name="Estado")
             option(value="Pendiente") Pendiente
             option(value="Finalizado") Finalizado
@@ -36,7 +36,7 @@ html(lang="en")
                 document.getElementById('formi').addEventListener('submit', function(event) {
                  const Tipo = document.getElementById('Tipo');
                  const Fecha = document.getElementById('Fecha');
-                 const hoy = new Date().getFullYear();
+                 const hoy = new Date();
                  const Diag = document.getElementById('Diagnostico');
                  const Res = document.getElementById('Resumen');
                  if (Tipo.value.trim().length === 0) {
