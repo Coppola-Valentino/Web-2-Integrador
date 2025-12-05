@@ -16,24 +16,19 @@ html(lang="en")
             input(type="text" name="Usuario" id="Usuario" required autocomplete="off")
            br
            label(for="Pass") Contraseña:
-            input(type="text" name="Pass" id="Pass" required autocomplete="off")
+            input(type="password" name="Pass" id="Pass" required autocomplete="off")
            br
            label(for="Rol") Rol de usuario:
-            select(name="Rol" required)
+            select(name="Rol" id="Rol" required)
              option(value="Admin") Admin
              option(value="Doctor") Doctor
              option(value="Enfermero") Enfermero
              option(value="Recepcionista") Recepcionista
            br
            label(for="Especialidad") Especialidad 
-            select(name="Especialidad" required)
-             option(value="Ninguna") Ninguna
-             option(value="Odontologo") Odontologo
-             option(value="Pediatra") Pediatra
-             option(value="Oculista") Oculista
-             option(value="FisioTerapeuta") FisioTerapeuta
-             option(value="Podologo") Podologo
-             option(value="Ortopeda") Ortopeda
+            select(name="Especialidad" id="Especialidad" required)
+             for spec in specs 
+              option(value=spec.IDEspecialidad) #{spec.Nombre}
            br  
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
@@ -41,6 +36,21 @@ html(lang="en")
            br
            script.
                 //const USERS = !{JSON.stringify(Nusuarios)};
+                const rol = document.getElementById('Rol');
+                const esp = document.getElementById('Especialidad');
+                
+                function updateEspecialidadState() {
+                  if (rol.value === 'Doctor') {
+                    esp.disabled = false;
+                  } else {
+                    esp.disabled = true;
+                    esp.value = 'Ninguna';
+                  }
+                }
+                
+                updateEspecialidadState();
+                
+                rol.addEventListener('change', updateEspecialidadState);
                 document.getElementById('formi').addEventListener('submit', function(event) {
                   const userImp = document.getElementById('Usuario');
                   if (userImp.value.length > 20 || userImp.value.length < 6) {

@@ -11,7 +11,7 @@ html(lang="en")
          div(style="max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
           table
            tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
-              th Numero de Habitacion
+              th Numero/Nombre de Habitacion
               th(style="min-width: 40px;") Ala
               th(style="min-width: 120px;") Tipo de Hab.
               th Cama 1
@@ -22,10 +22,12 @@ html(lang="en")
                th Administrar habitacion
               each hab in Habits
                 -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
+                -var tipo = tipos.filter(tip => tip.IDTipo === hab.TipoID);
+                -var ala = alas.filter(al => al.IDAla === hab.AlaID);
                 tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
-                  td= hab.IDHab
-                  td= hab.Ala
-                  td= hab.Tipo
+                  td= hab.Nombre
+                  td= ala.Nombre
+                  td= tipo.Nombre
                     each cama in camasDeHab
                       if cama.Paciente 
                         - var pac = pacientes.find(p => p.IDPaciente === cama.Paciente)
@@ -72,3 +74,7 @@ html(lang="en")
              a.btn.btn-primary(href=`/Habit/anadir`) Añadir Habitaciones 
             div(class="col btn btn-link")
              a.btn.btn-primary(href=`/Habit/anadirCam`) Añadir Camas
+            div(class="col btn btn-link")
+             a.btn.btn-primary(href=`/Habit/Ala`) Alas
+            div(class="col btn btn-link")
+             a.btn.btn-primary(href=`/Habit/TipoHab`) Tipos de Habitacion

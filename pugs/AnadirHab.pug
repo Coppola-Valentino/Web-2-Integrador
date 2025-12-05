@@ -11,27 +11,27 @@ html(lang="en")
         div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 120px;")
          h1 Añadir Habitacion al sistema
          form(action=`/Habit/anadir` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;")
+           label(for="Nombre") Nombre/Numero de la Habitacion: 
+           input(type="text" name="Nombre" id="Nombre" required)
+           br
+           label(for="Tipo") Tipo de Habitacion:
+           select(name="Tipo" required)
+            each tipo in tipos
+             option(value=tipo.IDTipo) #{tipo.Nombre}
+           br
            label(for="Ala") Ala de la Habitacion: 
-            input(type="number" name="Ala" id="Ala" required)
-           br 
-           label(for="Tipo") Tipo de Habitacion: 
-            select(name="Tipo" required)
-             option(value="Urgencias") Urgencias
-             option(value="Quimioterapia") Quimioterapia
-             option(value="Cirujia") Cirujia
-             option(value="Pediatria") Pediatria
-             option(value="Traumatologia") Traumatologia
-             option(value="Ginecologia") Ginecologia
-             option(value="Neurologia") Neurologia
-           br  
+           select(name="Ala" required)
+            each ala in alas
+             option(value=ala.IDAla) #{ala.Nombre}
+           br
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
            a.btn.btn-warning(href="/Habitaciones") Cancelar
-              script.
+           script.
                 document.getElementById('formi').addEventListener('submit', function(event) {
-                  const alaImp = document.getElementById('Ala');
-                  if (alaImp.value.length > 4) {
-                    alert('El Ala no puede tener más de 4 digitos.');
-                    event.preventDefault();
-                  }
+                 const nomImp = document.getElementById('Nombre');
+                 if (nomImp.value.length > 100) {
+                   alert('El nombre no puede tener más de 100 caracteres.');
+                   event.preventDefault();
+                 }
                  });

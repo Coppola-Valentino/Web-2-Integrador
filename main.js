@@ -47,6 +47,9 @@ const Citas = require('./models/Citas');
 const HistCirujias = require('./models/HistCirujias');
 const Medicamento = require('./models/Medicamento')
 const User = require('./models/Usuario');
+const Ala = require('./models/Ala');
+const Especialidades = require('./models/Especialidades');
+const TipoHab = require('./models/TipoHab');
 
 //Rutas
 
@@ -267,7 +270,9 @@ router.get('/Habitaciones', reqAuther , async (req, res) => {
     const pacientes = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
     const camas = await Camas.findAll();
-    res.render('Habit', { Habits, camas, pacientes});
+    const tipos = await TipoHab.findAll();
+    const alas = await Ala.findAll();
+    res.render('Habit', { Habits, camas, pacientes, tipos, alas});
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -279,7 +284,9 @@ router.get('/Habit/anadir', reqLv3 , async (req, res) => {
     const pacientes = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
     const camas = await Camas.findAll();
-    res.render('AnadirHab', { Habits, camas, pacientes});
+    const alas = await Ala.findAll();
+    const tipos = await TipoHab.findAll();
+    res.render('AnadirHab', { Habits, camas, pacientes, alas, tipos});
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -398,7 +405,9 @@ router.get('/Habit/:id/editar', reqLv1, async (req, res) => {
     const pacientes = await Paciente.findAll();
     const hab = await Habitacion.findByPk(req.params.id);
     const camas = await Camas.findAll();
-    res.render('EditHab', { hab, camas, pacientes});
+    const alas = await Ala.findAll();
+    const tipos = await TipoHab.findAll();
+    res.render('EditHab', { hab, camas, pacientes, alas, tipos});
   } catch (err) {
    console.error(err.message);
    res.redirect('/Error');
@@ -1024,6 +1033,154 @@ router.get('/inPac/:id/ElimMedicamento/:idd/:iddd', reqLv1, async (req, res) => 
   } catch (err) {
    console.error(err.message);
    res.redirect('/Error');
+  }
+});
+
+
+router.get('/Habit/Ala', reqAuther , async (req, res) => {
+  try {
+    const alas = await Ala.findAll();
+    res.render('Ala', {alas});
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Habit/TipoHab', reqAuther , async (req, res) => {
+  try {
+    const tipos = await TipoHab.findAll();
+    res.render('TipoHab', {tipos});
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Users/Especialidades', reqAuther , async (req, res) => {
+  try {
+    const specs = await Especialidades.findAll();
+    res.render('Especialidades', {specs});
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Habit/AnadirAla', reqLv3 , async (req, res) => {
+  try {
+    res.render('AnadirAla');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Habit/AnadirTipo', reqLv3 , async (req, res) => {
+  try {
+    res.render('AnadirTipo');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Users/AnadirEspec', reqLv3 , async (req, res) => {
+  try {
+    res.render('AnadirEspec');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Habit/EditAla/:id', reqLv3 , async (req, res) => {
+  try {
+    const ala = await Ala.findByPk(req.params.id);
+    res.render('EditAla', {ala});
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Habit/EditTipo/:id', reqLv3 , async (req, res) => {
+  try {
+    const tipo = await TipoHab.findByPk(req.params.id);
+    res.render('EditTipo', {tipo});
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Users/EditEspec/:id', reqLv3 , async (req, res) => {
+  try {
+    const spec = await Especialidades.findByPk(req.params.id);
+    res.render('EditEspec', {spec});
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.post('/Habit/AnadirAla', reqLv3 , async (req, res) => {
+  try {
+    Ala.create(req.body);
+    res.redirect('/Habit/Ala');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.post('/Habit/AnadirTipo', reqLv3 , async (req, res) => {
+  try {
+    TipoHab.create(req.body);
+    res.redirect('/Habit/TipoHab');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.post('/Users/AnadirEspec', reqLv3 , async (req, res) => {
+  try {
+    Especialidades.create(req.body);
+    res.redirect('/Users/Especialidades');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.post('/Habit/EditAla/:id', reqLv3 , async (req, res) => {
+  try {
+    Ala.update(req.body, {where: {IDAla: req.params.id}});
+    res.redirect('/Habit/Ala');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.post('/Habit/EditTipo/:id', reqLv3 , async (req, res) => {
+  try {
+    TipoHab.update(req.body, {where: {IDTipo: req.params.id}});
+    res.redirect('/Habit/TipoHab');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.post('/Users/EditEspec/:id', reqLv3 , async (req, res) => {
+  try {
+    Especialidades.update(req.body, {where: {IDEspecialidades: req.params.id}});
+    res.redirect('/Users/Especialidades');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
   }
 });
 

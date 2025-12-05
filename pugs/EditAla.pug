@@ -1,0 +1,31 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Editar
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+        div(style="max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 95px;")
+         h1 Editar Ala
+         form(action=`/Habit/EditAla/${ala.IDAla}` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
+          label(for="Nombre") Nombre/Numero de Ala: 
+           input(type="text" name="Nombre" id="Nombre" value=ala.Nombre required)
+          br
+          button(class="btn btn-primary" type="submit") Guardar
+          br
+          a.btn.btn-warning(href=`/Habitaciones`) Cancelar
+          script.
+                document.getElementById('formi').addEventListener('submit', function(event) {
+                 const Nom = document.getElementById('Nombre');
+                 if (Nom.value.trim().length === 0) {
+                   alert('El Nombre no puede estar vacío');
+                   event.preventDefault();
+                 }
+                 if (Nom.value.length > 250) {
+                   alert('El Nombre no puede tener más de 250 caracteres');
+                   event.preventDefault();
+                 }
+                 });

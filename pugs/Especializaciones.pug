@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Especialidades
+    body(style="background: rgb(184, 253, 219);")
+        include bar.pug
+        +bar()
+        block content
+        div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
+         h1 Especialidades de Doctor
+         table 
+          tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
+           th Nombre
+           each spec in specs
+            tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
+             td #{spec.Nombre}
+              a.btn.btn-info(href=`/Users/EditSpec/${spec.IDEspecialidades}`) Editar
+              br
+              a.btn.btn-warning(href=`/Users/ElimSpec/${spec.IDEspecialidades}`) Eliminar
+        div(class="Container-fluid text-center justify-content-center")      
+         div(class="col btn btn-link" style="Padding-bottom: 40px;")              
+          a.btn.btn-success(href=`/Users/AnadirEspec`) Añadir Especializacion
+          br
+         div(class="col btn btn-link" style="Padding-bottom: 40px;") 
+          a.btn.btn-warning(href=`/Users`) Volver

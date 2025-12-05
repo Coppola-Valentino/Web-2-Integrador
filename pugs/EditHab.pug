@@ -12,18 +12,18 @@ html(lang="en")
          h1 Editar Habitacion
          form(action=`/Habit/${hab.IDHab}/editar` id="formi" method="POST" style="display: flex; flex-direction: column; gap: 1px;")
            -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
+           label(for="Nombre") Nombre/Numero de la Habitacion: 
+           input(type="text" name="Nombre" id="Nombre" value=hab.Nombre required)
+           br
            label(for="Tipo") Tipo de Habitacion:
            select(name="Tipo" required)
-             option(value="Urgencias" selected=(hab.Tipo === "Urgencias") ) Urgencias
-             option(value="Quimioterapia" selected=(hab.Tipo === "Quimioterapia")) Quimioterapia
-             option(value="Cirujia" selected=(hab.Tipo === "Cirujia") ) Cirujia
-             option(value="Pediatria" selected=(hab.Tipo === "Pediatria") ) Pediatria
-             option(value="Traumatologia" selected=(hab.Tipo === "Traumatologia") ) Traumatologia
-             option(value="Ginecologia" selected=(hab.Tipo === "Ginecologia")) Ginecologia
-             option(value="Neurologia" selected=(hab.Tipo === "Neurologia")) Neurologia
+            each tipo in tipos
+             option(value=tipo.IDTipo selected=(tipo.IDTipo == hab.TipoID)) #{tipo.Nombre}
            br
            label(for="Ala") Ala de la Habitacion: 
-           input(type="number" name="Ala" value=hab.Ala required)
+           select(name="Ala" required)
+            each ala in alas
+             option(value=ala.IDAla selected=(ala.IDAla == hab.AlaID)) #{ala.Nombre}
            br
            label Higenene: 
             each cama in camasDeHab
@@ -37,9 +37,9 @@ html(lang="en")
            a.btn.btn-warning(href="/Habitaciones") Cancelar
            script.
                 document.getElementById('formi').addEventListener('submit', function(event) {
-                  const alaImp = document.getElementById('Ala');
-                  if (alaImp.value.length > 4) {
-                    alert('El Ala no puede tener más de 4 digitos.');
-                    event.preventDefault();
-                  }
+                 const nomImp = document.getElementById('Nombre');
+                 if (nomImp.value.length > 100) {
+                   alert('El nombre no puede tener más de 100 caracteres.');
+                   event.preventDefault();
+                 }
                  });

@@ -13,10 +13,10 @@ html(lang="en")
           h2 Añadir Datos Conocidos del Paciente
           form(action=`/Emergencias` id="formi" method="POST" style="display: flex; flex-direction: column;")
                br
-               label(for="Nombre") Nombre:
+               label(for="Nombre") Nombre: 
                input(type="text" name="Nombre" id="Nombre" value="John Doe" required)
                br
-               label(for="Edad") Fecha de Nacimiento:
+               label(for="Edad") Fecha de Nacimiento: 
                input(type="date" name="Edad" id="Edad" value="0" required)
                button(type="button" onclick="dehabagain()") Desconocido
                script.
@@ -30,7 +30,7 @@ html(lang="en")
                     edd.disabled = true;
                   }}
                br
-               label(for="DNI") DNI:
+               label(for="DNI") DNI: 
                input(type="number" name="DNI" id="DNI" value="0")
                button(type="button" onclick="dehab()") Sin DNI
                script.
@@ -44,14 +44,14 @@ html(lang="en")
                     dni.disabled = true;
                   }}
                br
-               label(for="Genero") Genero:
+               label(for="Genero") Genero: 
                  select(name="Genero" required)
                    option(value="Desconocido") Desconocido
                    option(value="Masculino") Masculino
                    option(value="Femenino") Femenino
                    option(value="Otro") Otro
                br
-               label(for="Seguro") Seguro Medico:
+               label(for="Seguro") Seguro Medico: 
                   select(for="Seguro" name="Seguro" required)
                     option(value="Desconocido") Desconocido
                     option(value="Ninguno") Ninguno
@@ -86,13 +86,13 @@ html(lang="en")
                       dir.disabled = true;
                     }}
                br
-               label(for="MadreID") Madre:
+               label(for="MadreID") Madre: 
                  select(name="MadreID" )
                   option(value=0) Desconocido/Ninguno
                    for paci in pacientes
                     option(value=paci.IDPaciente) #{paci.Nombre}
                br
-               label(for="PadreID") Padre:
+               label(for="PadreID") Padre: 
                  select(name="PadreID" )
                   option(value=0) Desconocido/Ninguno
                    for paci in pacientes 
@@ -131,7 +131,7 @@ html(lang="en")
                    alert('El año de nacimiento debe estar entre 1900 y Hoy.');
                    event.preventDefault();
                  }
-                 if(dniInp.value.length > 8 || dniInp.value.length < 8) {
+                 if(dniInp.value.length > 8 || dniInp.value.length < 8 && dniInp.value.length > 1) {
                   alert('introduzca un DNI valido');
                   dniInp.value = '';
                   event.preventDefault();

@@ -15,36 +15,47 @@ html(lang="en")
             input(type="text" name="Usuario" id="Usuario" style="width: 100%;" value=user.Usuario required autocomplete="off")
             br
             label(for="Pass") Contraseña: 
-            input(type="text" name="Pass" id="Pass" style="width: 100%;" value=user.Pass required autocomplete="off")
+            input(type="password" name="Pass" id="Pass" style="width: 100%;" value=user.Pass required autocomplete="off")
             br
             label(for="Rol") Rol de usuario:
-            select(name="Rol" required)
+            select(name="Rol" id="Rol" required)
              option(value="Admin" selected=(user.Rol==='Admin') ) Admin
              option(value="Doctor" selected=(user.Rol==='Doctor') ) Doctor
              option(value="Enfermero" selected=(user.Rol==='Enfermero') ) Enfermero
              option(value="Recepcionista" selected=(user.Rol==='Recepcionista') ) Recepcionista
             br
             label(for="Especialidad") Especialidad 
-            select(name="Especialidad" required)
-             option(value="Ninguna" selected=(user.Especialidad==='Ninguna') ) Ninguna
-             option(value="Odontologo" selected=(user.Especialidad==='Odontologo') ) Odontologo
-             option(value="Pediatra" selected=(user.Especialidad==='Pediatra') ) Pediatra
-             option(value="Oculista" selected=(user.Especialidad==='Oculista') ) Oculista
-             option(value="FisioTerapeuta" selected=(user.Especialidad==='FisioTerapeuta') ) FisioTerapeuta
-             option(value="Podologo" selected=(user.Especialidad==='Podologo') ) Podologo
-             option(value="Ortopeda" selected=(user.Especialidad==='Ortopeda') ) Ortopeda
+             select(name="Especialidad" id="Especialidad" required)
+              for spec in specs 
+               option(value=spec.IDEspecialidad selected=(spec.IDEspecialidad == user.EspecialidadID)) #{spec.Nombre} 
             br
             button(class="btn btn-primary" type="submit") Guardar cambios
             br
             a.btn.btn-warning(href="/Users") Cancelar
             script.
                 //const USERS = !{JSON.stringify(Nusuarios)};
+                const rol = document.getElementById('Rol');
+                const esp = document.getElementById('Especialidad');
+                
+                function updateEspecialidadState() {
+                  if (rol.value === 'Doctor') {
+                    esp.disabled = false;
+                  } else {
+                    esp.disabled = true;
+                    esp.value = 'Ninguna';
+                  }
+                }
+                
+                updateEspecialidadState();
+                
+                rol.addEventListener('change', updateEspecialidadState);
                 document.getElementById('formi').addEventListener('submit', function(event) {
                   const userImp = document.getElementById('Usuario');
                   if (userImp.value.length > 20 || userImp.value.length < 6) {
                     alert('El usuario debe tener entre 6 y 20 caracteres');
                     event.preventDefault();
                   }
+
                   const passImp = document.getElementById('Pass');
                   if (passImp.value.length > 80) {
                     alert('La contraseña no puede tener más de 80 caracteres.');

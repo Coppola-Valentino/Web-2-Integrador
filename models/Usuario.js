@@ -62,7 +62,7 @@ Usuario: {
 type: DataTypes.STRING,
 allowNull: true
 },
-Especialidad: {
+EspecialidadID: {
 type: DataTypes.STRING,
 allowNull: true
 },
