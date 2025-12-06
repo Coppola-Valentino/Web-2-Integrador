@@ -18,8 +18,13 @@ html(lang="en")
           br
           a.btn.btn-warning(href=`/Habitaciones`) Cancelar
           script.
+                const Noms = !{JSON.stringify(noms)};
                 document.getElementById('formi').addEventListener('submit', function(event) {
                  const Nom = document.getElementById('Nombre');
+                 if (Noms.includes(String(Nom.value))){
+                   alert('El Ala ya Existe');
+                   event.preventDefault();
+                 }
                  if (Nom.value.trim().length === 0) {
                    alert('El Nombre no puede estar vacío');
                    event.preventDefault();

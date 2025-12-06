@@ -15,13 +15,13 @@ html(lang="en")
            label(for="Nombre") Nombre/Numero de la Habitacion: 
            input(type="text" name="Nombre" id="Nombre" value=hab.Nombre required)
            br
-           label(for="Tipo") Tipo de Habitacion:
-           select(name="Tipo" required)
+           label(for="Tipo") Tipo de Habitacion: 
+           select(name="Tipo" id="Tipo" required)
             each tipo in tipos
              option(value=tipo.IDTipo selected=(tipo.IDTipo == hab.TipoID)) #{tipo.Nombre}
            br
            label(for="Ala") Ala de la Habitacion: 
-           select(name="Ala" required)
+           select(name="Ala" id="Ala" required)
             each ala in alas
              option(value=ala.IDAla selected=(ala.IDAla == hab.AlaID)) #{ala.Nombre}
            br
@@ -32,6 +32,7 @@ html(lang="en")
               select(name=`Higenizado_${cama.IDCamas}`)
                option(value="true" selected=(cama.Higenizado === true)) Si
                option(value="false" selected=(cama.Higenizado === false)) No
+           br    
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
            a.btn.btn-warning(href="/Habitaciones") Cancelar

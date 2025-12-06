@@ -3,36 +3,36 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Cita
+        title Cirujia
     body(style="background: rgb(184, 253, 219);")
         include bar.pug
         +bar()
         block content
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
-         h1 Añadir Cita Medica a: #{pac.Nombre}
-         form(action=`/InPac/${pac.IDPaciente}/AnadirCita` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
+         h1 Editar Cita Medica
+         form(action=`/InPac/${pac.IDPaciente}/EditCita/${cita.IDCita}` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
           label(for="Medic") Medico: 
            select(name="Medic" required)
             each med in meds
-             option(value=med.IDUser) #{med.Usuario}, #{med.Especialidad}
+             option(value=med.IDUser selected=(cita.MedicID == med.IDUser)) #{med.Usuario}, #{med.Especialidad}
           br
           label(for="Fecha") Fecha de la Cita: 
-           input(type="date" name="Fecha" id="Fecha" required)
+           input(type="date" name="Fecha" id="Fecha" value=cita.Fecha required)
           br
           label(for="HoraInicio") Hora inicial de la cita: 
-           input(type="time" name="HoraInicio" id="HoraInicio" required)
+           input(type="time" name="HoraInicio" id="HoraInicio" value=cita.HoraInicio required)
           br
           label(for="HoraFin") Hora del final de la cita: 
-           input(type="time" name="HoraFin" id="HoraFin" required)
+           input(type="time" name="HoraFin" id="HoraFin" value=cita.HoraFin required)
           br
           label(for="Tipo") Tipo de Cita Medica: 
            select(name="Tipo" required)
-            option(value="Cirujia") Cirujia
-            option(value="EvalFisica") Evaluacion Fisica
+            option(value="Cirujia" selected=(cita.Tipo == "Cirujia")) Cirujia
+            option(value="EvalFisica" selected=(cita.Tipo == "EvalFisica")) Evaluacion Fisica
           br
           button(class="btn btn-primary" type="submit") Guardar
           br
-          a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/CitasPac`) Cancela
+          a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/CitasPac`) Cancelar
           script.
                 document.getElementById('formi').addEventListener('submit', function(event) {
                  const Fecha = document.getElementById('Fecha');

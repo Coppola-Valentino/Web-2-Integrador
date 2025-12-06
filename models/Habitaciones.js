@@ -20,11 +20,7 @@ allowNull: false,
 AlaID: {
 type: DataTypes.INTEGER,
 allowNull: true,
-},
-GeneroHab: {
-type: DataTypes.STRING, //si hay un paciente en las camas asignadas a la habitacion, GeneroHab adopta ese mismo genero y solo permite pacientes del mismo genero
-allowNull: true,
-},
+}
 }, {
 
 sequelize,

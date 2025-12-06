@@ -17,6 +17,14 @@ Citas.init({
       type: DataTypes.STRING,
       allowNull: true
     },
+    HoraFin: {
+      type: DataTypes.TIME,
+      allowNull: true
+    },
+    HoraInicio: {
+      type: DataTypes.TIME,
+      allowNull: true
+    },
     MedicID: {
       type: DataTypes.INTEGER, //IDUser del medico seleccionado
       allowNull: true

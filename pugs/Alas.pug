@@ -13,11 +13,12 @@ html(lang="en")
          table 
           tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
            th Nombre
+           th acciones
            each ala in alas
             tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
              td #{ala.Nombre}
+             td
               a.btn.btn-info(href=`/Habit/EditAla/${ala.IDAla}`) Editar
-              br
               a.btn.btn-warning(href=`/Habit/ElimAla/${ala.IDAla}`) Eliminar
         div(class="Container-fluid text-center justify-content-center")      
          div(class="col btn btn-link" style="Padding-bottom: 40px;")              

@@ -131,7 +131,7 @@ html(lang="en")
                    alert('El año de nacimiento debe estar entre 1900 y Hoy.');
                    event.preventDefault();
                  }
-                 if(dniInp.value.length > 8 || dniInp.value.length < 8 && dniInp.value.length > 1) {
+                 if(dniInp.value.length > 8 || dniInp.value.length < 8 && !dniInp.disabled) {
                   alert('introduzca un DNI valido');
                   dniInp.value = '';
                   event.preventDefault();

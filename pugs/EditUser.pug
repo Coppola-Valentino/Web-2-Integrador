@@ -17,7 +17,7 @@ html(lang="en")
             label(for="Pass") Contraseña: 
             input(type="password" name="Pass" id="Pass" style="width: 100%;" value=user.Pass required autocomplete="off")
             br
-            label(for="Rol") Rol de usuario:
+            label(for="Rol") Rol de usuario: 
             select(name="Rol" id="Rol" required)
              option(value="Admin" selected=(user.Rol==='Admin') ) Admin
              option(value="Doctor" selected=(user.Rol==='Doctor') ) Doctor
@@ -27,7 +27,7 @@ html(lang="en")
             label(for="Especialidad") Especialidad 
              select(name="Especialidad" id="Especialidad" required)
               for spec in specs 
-               option(value=spec.IDEspecialidad selected=(spec.IDEspecialidad == user.EspecialidadID)) #{spec.Nombre} 
+               option(value=spec.IDEspecialidades selected=(spec.IDEspecialidades == user.EspecialidadID)) #{spec.Nombre} 
             br
             button(class="btn btn-primary" type="submit") Guardar cambios
             br

@@ -13,12 +13,13 @@ html(lang="en")
          table 
           tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
            th Nombre
+           th Acciones
            each spec in specs
             tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
              td #{spec.Nombre}
-              a.btn.btn-info(href=`/Users/EditSpec/${spec.IDEspecialidades}`) Editar
-              br
-              a.btn.btn-warning(href=`/Users/ElimSpec/${spec.IDEspecialidades}`) Eliminar
+             td
+              a.btn.btn-info(href=`/Users/EditEspec/${spec.IDEspecialidades}`) Editar
+              a.btn.btn-warning(href=`/Users/ElimEspec/${spec.IDEspecialidades}`) Eliminar
         div(class="Container-fluid text-center justify-content-center")      
          div(class="col btn btn-link" style="Padding-bottom: 40px;")              
           a.btn.btn-success(href=`/Users/AnadirEspec`) Añadir Especializacion

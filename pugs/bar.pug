@@ -18,7 +18,10 @@ mixin bar()
               a.btn.btn-primary(href="/Logout") Log Out
              if activeUser.Rol === 'Admin' || activeUser.Rol ==='Doctor' 
               div(class="col btn btn-link")
-               a.btn.btn-primary(href="/CitasMed") Mis Citas
+               a.btn.btn-primary(href=`/CitasMed`) Mis Citas
+             if activeUser.Rol === 'Recepcionista'
+              div(class="col btn btn-link")
+               a.btn.btn-primary(href=`/Medics`) Medicos
              if activeUser.Rol === 'Admin'
               div(class="col btn btn-link")
                a.btn.btn-primary(href="/Users") Usuarios

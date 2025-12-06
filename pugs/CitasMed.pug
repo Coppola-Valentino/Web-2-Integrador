@@ -14,12 +14,17 @@ html(lang="en")
           tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
            th Paciente
            th Fecha 
+           th Hora de Inicio
+           th Hora de Fin
            th Tipo de Cita
            each cita in citas
             tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
              td #{cita.pac.Nombre}
              td #{cita.Fecha}
+             td #{cita.HoraInicio}
+             td #{cita.HoraFin}
              td #{cita.Tipo}
         div(class="Container-fluid text-center justify-content-center")      
          div(class="col btn btn-link" style="Padding-bottom: 40px;")
+          br
           a.btn.btn-warning(href=`/inPac`) Volver

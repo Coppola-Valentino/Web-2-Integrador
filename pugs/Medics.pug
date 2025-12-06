@@ -3,7 +3,7 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Usuarios
+        title Medicos
     body(style="background: rgb(184, 253, 219);")
         include bar.pug
         +bar()
@@ -11,26 +11,14 @@ html(lang="en")
         div(style="max-width: 1500px; margin: 0 auto; display: flex; justify-content: space-between; flex-direction: column; horizontal-align: center; padding-top: 80px;")
             table 
              tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
-                th Usuario
-                th Rol
+                th Medico
                 th Especialidad
                 th Acciones
                  each user in USERS
                   - var spec = specs.find(spe => spe.IDEspecialidades === user.EspecialidadID);
                      tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
                       td= user.Usuario
-                      td= user.Rol
                       td
-                       if user.Rol === 'Doctor'
-                        span #{spec.Nombre}
-                       else
-                        span(style="color: Red;") no es Doctor
+                       span #{spec.Nombre}
                       td
-                       a(href=`/Users/${user.IDUser}/Editar`) Editar
-                       br
-                       a(href=`/Users/${user.IDUser}/Eliminar`) Eliminar
-            div(class="Container-fluid text-center justify-content-center")
-             div(class="col btn btn-link" style="Padding-bottom: 40px;")
-              a.btn.btn-primary(href=`/Users/Register`) Añadir Usuario
-             div(class="col btn btn-link" style="Padding-bottom: 40px;")
-              a.btn.btn-primary(href=`/Users/Especialidades`) Especialidades
+                       a.btn.btn-info(href=`/CitasSelect/${user.IDUser}`) Citas del Doctor

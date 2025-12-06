@@ -14,7 +14,7 @@ html(lang="en")
            label(for="Cama") Cama a asignar:
            select(name="Cama" required)
             each cama in camasDisponibles
-             option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion} - Tipo #{cama.habitacion.Tipo}
+             option(value=cama.IDCamas) Cama #{cama.IDCamas} - Habitación #{cama.Habitacion.Nombre} - Tipo #{cama.Tipo.Nombre} - Ala #{cama.Ala.Nombre}
            br
            label(for="Motivo") Motivo de la Internacion: 
             input(type="text" name="Motivo" id="Motivo" style="width: 100%;" required)
@@ -27,9 +27,9 @@ html(lang="en")
            //br
            label(for="Prioridad") Prioridad:
             select(name="Prioridad" required)
-             option(value="Baja" selected=(pacS.Prioridad==='Baja')) Baja
-             option(value="Media" selected=(pacS.Prioridad==='Media')) Media
-             option(value="Alta" selected=(pacS.Prioridad==='Alta')) Alta
+             option(value="Baja") Baja
+             option(value="Media") Media
+             option(value="Alta") Alta
            br
            button(class="btn btn-primary" type="submit") Guardar
            br

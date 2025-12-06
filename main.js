@@ -108,18 +108,30 @@ router.get(`/inPac/:id/internar`, reqLv2 , async (req, res) => {
     const pacT = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
     const camas = await Camas.findAll();
+    const tipos = await TipoHab.findAll();
+    const alas = await Ala.findAll();
     const camasDisponibles = camas.filter(cama => {
-     const hab = Habits.find(h => h.IDHab === cama.Habitacion);
+     //const hab = Habits.find(h => h.IDHab === cama.Habitacion);
+     const cam = camas.filter(c => c.Habitacion === cama.Habitacion && c.IDCamas !== cama.IDCamas)
+     let pac = null;
+     if (cam.length > 0){
+      const ca = cam[0];
+      if(ca.Paciente != null){
+        pac = pacT.find(c => c.IDPaciente === ca.Paciente);
+      }
+     }
      return (
-      (cama.Paciente === null || cama.Paciente === undefined) &&
-      cama.Higenizado === true &&
-      (hab?.GeneroHab.toLowerCase() === pacS.Genero.toLowerCase() || hab?.GeneroHab === "Vacio")
+      (cama.Paciente === null || cama.Paciente === undefined) && cama.Higenizado === true && (!pac || (pac?.Genero.toLowerCase() === pacS.Genero.toLowerCase()))
   );
 }).map(cama => {
         const hab = Habits.find(h => h.IDHab === cama.Habitacion);
+        const tipo = tipos.find(t => t.IDTipo === hab.TipoID);
+        const ala = alas.find(a => a.IDAla === hab.AlaID);
         return {
           ...cama.toJSON(),
-          habitacion: hab,
+          Habitacion: hab,
+          Ala: ala,
+          Tipo: tipo,
         };
       });
     res.render('Inter', { pacT, pacS, Habits, camas, camasDisponibles });
@@ -153,10 +165,10 @@ router.post('/inPac/:id/internar', reqLv2 , async (req, res) => {
       { where: { IDCamas: req.body.Cama } }
     );
     const cama = await Camas.findByPk(req.body.Cama);
-    await Habitacion.update(
+    /*await Habitacion.update(
       { GeneroHab: pac.Genero},
       { where: { IDHab: cama.Habitacion} }
-    );
+    );*/
     res.redirect(`/inPac/${pac.IDPaciente}/AnadirAtencion/${int.IDIntern}?tipo=Preliminar`);
   } catch (err) {
     console.error(err.message);
@@ -211,12 +223,6 @@ router.post('/inPac/:id/AnadirAtencion/:idd', reqLv2, async (req, res) => {
        { Paciente: null },
        { where: { Paciente: req.params.id } }
   );
-  if (camasDeHab.every(c => c.Paciente === null)) {
-    await Habitacion.update(
-      { GeneroHab: "Vacio" },
-      { where: { IDHab: hab.IDHab } }
-    );
-    }
   }
   console.log(plan);
   console.log(plan.IDPlan);
@@ -295,7 +301,11 @@ router.get('/Habit/anadir', reqLv3 , async (req, res) => {
 
 router.post('/Habit/anadir', reqLv3, async (req, res) => {
   try {
-    await Habitacion.create({...req.body, GeneroHab: "Vacio" });
+    await Habitacion.create({    
+    Nombre: req.body.Nombre,
+    AlaID: req.body.Ala,
+    TipoID: req.body.Tipo
+  });
     res.redirect('/Habitaciones');
   } catch (err) {
     console.error(err.message);
@@ -387,12 +397,12 @@ router.get('/Cama/:id/eliminar', reqLv3,async (req, res) => {
    await Camas.destroy({ where: { IDCamas: req.params.id } });
    const hab = await Habitacion.findByPk(cama.Habitacion)
    const camasDeHab = await Camas.findAll({ where: { Habitacion: hab.IDHab } });
-   if (camasDeHab.length === 0 || camasDeHab.every(c => c.Paciente === null)) {
+   /*if (camasDeHab.length === 0 || camasDeHab.every(c => c.Paciente === null)) {
     await Habitacion.update(
       { GeneroHab: "Vacio" },
       { where: { IDHab: hab.IDHab } }
     );
-  }
+  }*/
    res.redirect('/Habitaciones');
   } catch (err) {
     console.error(err.message);
@@ -416,7 +426,11 @@ router.get('/Habit/:id/editar', reqLv1, async (req, res) => {
 
 router.post('/Habit/:id/editar', reqLv1, async (req, res) => {
   try {
-   await Habitacion.update(req.body, { where: { IDHab: req.params.id } });
+   await Habitacion.update({
+    Nombre: req.body.Nombre,
+    AlaID: req.body.Ala,
+    TipoID: req.body.Tipo
+   }, { where: { IDHab: req.params.id } });
    const camasDeHab = await Camas.findAll({ where: { Habitacion: req.params.id } });
     for (const cama of camasDeHab) {
       const higenizadoValue = req.body[`Higenizado_${cama.IDCamas}`] === "true";
@@ -488,10 +502,10 @@ router.post('/inPac/:id/editar', reqAuther, async (req, res) => {
     const hab = await Habitacion.findByPk(cama.Habitacion);
     const camasDeHab = await Camas.findAll({ where: { Habitacion: hab.IDHab } });
     if(camasDeHab.length === 1){
-     await Habitacion.update(
+     /*await Habitacion.update(
       { GeneroHab: pac.Genero},
       { where: { IDHab: cama.Habitacion} }
-     );
+     );*/
     } else {
       for(const cam2 of camasDeHab){
         if(cam2.Paciente !== pac.IDPaciente){
@@ -504,10 +518,10 @@ router.post('/inPac/:id/editar', reqAuther, async (req, res) => {
             );
           }
          }else{
-          await Habitacion.update(
+          /*await Habitacion.update(
           { GeneroHab: pac.Genero},
           { where: { IDHab: cama.Habitacion} }
-          );
+          );*/
          }
         }
       }
@@ -597,7 +611,19 @@ router.get('/Logout', reqAuther, logout, (req, res) => {
 router.get('/Users', reqLv3, async (req, res) => {
   try {
     const USERS = await User.findAll();
-    res.render('Users', { USERS });
+    const specs = await Especialidades.findAll();
+    res.render('Users', { USERS, specs });
+  } catch (err){
+   console.error(err.message); 
+   res.redirect('/Error');
+  }
+});
+
+router.get('/Medics', reqAuther, async (req, res) => {
+  try {
+    const USERS = await User.findAll({where: {Rol: "Doctor"}});
+    const specs = await Especialidades.findAll();
+    res.render('Medics', { USERS, specs });
   } catch (err){
    console.error(err.message); 
    res.redirect('/Error');
@@ -617,7 +643,8 @@ router.get('/Users/:id/Eliminar', reqLv3, async (req, res) => {
 router.get('/Users/:id/Editar', reqLv3, async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
-    res.render('EditUser', { user });
+    const specs = await Especialidades.findAll();
+    res.render('EditUser', { user, specs });
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -627,7 +654,12 @@ router.get('/Users/:id/Editar', reqLv3, async (req, res) => {
 router.post('/Users/:id/Editar', reqLv3, async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
-    await user.update(req.body);
+    await user.update({
+      Usuario: req.body.Usuario,
+      Pass: req.body.Pass,
+      Rol: req.body.Rol,
+      EspecialidadID: req.body.Especialidad
+    });
     res.redirect('/Users');
   } catch (err) {
     console.error(err.message);
@@ -639,7 +671,8 @@ router.get('/Users/Register', reqLv3, async (req, res) => {
   try {
     //const tUSERS = await User.findAll();
     //const USERS = tUSERS.map(u => u.Usuario);
-    res.render('Register');
+    const specs = await Especialidades.findAll();
+    res.render('Register', {specs});
   } catch (err) {
    console.error(err.message);
    res.redirect('/Error');
@@ -648,7 +681,12 @@ router.get('/Users/Register', reqLv3, async (req, res) => {
 
 router.post('/Users/Register', reqLv3, async (req, res) => {
   try {
-    await User.create(req.body);
+    await User.create({
+      Usuario: req.body.Usuario,
+      Pass: req.body.Pass,
+      Rol: req.body.Rol,
+      EspecialidadID: req.body.Especialidad
+    });
     res.redirect('/Users');
   } catch (err) {
    console.error(err.message);
@@ -819,6 +857,25 @@ router.get('/inPac/:id/CitasPac', reqAuther, async (req, res) => {
   }
 });
 
+router.get('/CitasSelect/:id', reqAuther, async (req, res) => {
+  try {
+  const med = await User.findByPk(req.params.id);
+  const citas = await Citas.findAll({ where: { MedicID: med.IDUser } });
+  const pacs = await Paciente.findAll()
+  const citData = citas.map(citas => {
+   const pac = pacs.find(c => c.IDPaciente === citas.PacID);
+   return {
+    ...citas.toJSON(),
+    pac
+   };
+   });
+  res.render('CitasMed', {citas: citData, med});
+    } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
 router.get('/CitasMed', reqLv2, async (req, res) => {
   try {
   const med = await User.findByPk(req.session.IDUser);
@@ -957,8 +1014,40 @@ try {
     PacID: pac.IDPaciente,
     MedicID: req.body.Medic,
     Fecha: req.body.Fecha,
+    HoraFin: req.body.HoraFin,
+    HoraInicio: req.body.HoraInicio,
     Tipo: req.body.Tipo
   });
+  res.redirect(`/inPac/${pac.IDPaciente}/CitasPac`);
+  } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.get('/inPac/:id/EditCita/:idd', reqAuther, async (req, res) =>{
+try {
+  const pac = await Paciente.findByPk(req.params.id)
+  const cita = await Citas.findByPk(req.params.idd);
+  const meds = await User.findAll({where: {Rol : "Doctor"}})
+  res.render('EditCita', {pac, meds, cita})
+  } catch (err) {
+   console.error(err.message);
+   res.redirect('/Error');
+  }
+});
+
+router.post('/inPac/:id/EditCita/:idd', reqAuther, async (req, res) => {
+try {
+  const pac = await Paciente.findByPk(req.params.id);
+  await Citas.update({
+    PacID: pac.IDPaciente,
+    MedicID: req.body.Medic,
+    Fecha: req.body.Fecha,
+    HoraFin: req.body.HoraFin,
+    HoraInicio: req.body.HoraInicio,
+    Tipo: req.body.Tipo
+  }, {where: {IDCita: req.params.idd}});
   res.redirect(`/inPac/${pac.IDPaciente}/CitasPac`);
   } catch (err) {
    console.error(err.message);
@@ -1040,7 +1129,7 @@ router.get('/inPac/:id/ElimMedicamento/:idd/:iddd', reqLv1, async (req, res) => 
 router.get('/Habit/Ala', reqAuther , async (req, res) => {
   try {
     const alas = await Ala.findAll();
-    res.render('Ala', {alas});
+    res.render('Alas', {alas});
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -1069,7 +1158,9 @@ router.get('/Users/Especialidades', reqAuther , async (req, res) => {
 
 router.get('/Habit/AnadirAla', reqLv3 , async (req, res) => {
   try {
-    res.render('AnadirAla');
+    const alas = await Ala.findAll();
+    const noms = alas.map(a => a.Nombre).filter(Nombre => Nombre != null);
+    res.render('AnadirAla', {noms});
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -1078,7 +1169,9 @@ router.get('/Habit/AnadirAla', reqLv3 , async (req, res) => {
 
 router.get('/Habit/AnadirTipo', reqLv3 , async (req, res) => {
   try {
-    res.render('AnadirTipo');
+    const tipos = await TipoHab.findAll();
+    const noms = tipos.map(a => a.Nombre).filter(Nombre => Nombre != null);
+    res.render('AnadirTipo', {noms} );
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -1087,7 +1180,9 @@ router.get('/Habit/AnadirTipo', reqLv3 , async (req, res) => {
 
 router.get('/Users/AnadirEspec', reqLv3 , async (req, res) => {
   try {
-    res.render('AnadirEspec');
+    const specs = await Especialidades.findAll();
+    const noms = specs.map(a => a.Nombre).filter(Nombre => Nombre != null);
+    res.render('AnadirEspec', {noms});
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -1097,7 +1192,9 @@ router.get('/Users/AnadirEspec', reqLv3 , async (req, res) => {
 router.get('/Habit/EditAla/:id', reqLv3 , async (req, res) => {
   try {
     const ala = await Ala.findByPk(req.params.id);
-    res.render('EditAla', {ala});
+    const alas = await Ala.findAll();
+    const noms = alas.map(a => a.Nombre).filter(Nombre => Nombre != null && Nombre !=  ala.Nombre);
+    res.render('EditAla', {ala, noms});
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -1107,7 +1204,9 @@ router.get('/Habit/EditAla/:id', reqLv3 , async (req, res) => {
 router.get('/Habit/EditTipo/:id', reqLv3 , async (req, res) => {
   try {
     const tipo = await TipoHab.findByPk(req.params.id);
-    res.render('EditTipo', {tipo});
+    const tipos = await TipoHab.findAll();
+    const noms = tipos.map(a => a.Nombre).filter(Nombre => Nombre != null && Nombre !=  tipo.Nombre);
+    res.render('EditTipo', {tipo, noms});
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -1117,7 +1216,9 @@ router.get('/Habit/EditTipo/:id', reqLv3 , async (req, res) => {
 router.get('/Users/EditEspec/:id', reqLv3 , async (req, res) => {
   try {
     const spec = await Especialidades.findByPk(req.params.id);
-    res.render('EditEspec', {spec});
+    const specs = await Especialidades.findAll();
+    const noms = specs.map(a => a.Nombre).filter(Nombre => Nombre != null && Nombre !=  spec.Nombre);
+    res.render('EditEspec', {spec, noms});
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');
@@ -1178,6 +1279,36 @@ router.post('/Users/EditEspec/:id', reqLv3 , async (req, res) => {
   try {
     Especialidades.update(req.body, {where: {IDEspecialidades: req.params.id}});
     res.redirect('/Users/Especialidades');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Users/ElimEspec/:id', reqLv3 , async (req, res) => {
+  try {
+    Especialidades.destroy({where: {IDEspecialidades: req.params.id}});
+    res.redirect('/Users/Especialidades');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Habit/ElimAla/:id', reqLv3 , async (req, res) => {
+  try {
+    Ala.destroy({where: {IDAla: req.params.id}});
+    res.redirect('/Habit/Ala');
+  } catch (err) {
+    console.error(err.message);
+    res.redirect('/Error');
+  }
+});
+
+router.get('/Habit/ElimTipo/:id', reqLv3 , async (req, res) => {
+  try {
+    TipoHab.destroy({where: {IDTipo: req.params.id}});
+    res.redirect('/Habit/TipoHab');
   } catch (err) {
     console.error(err.message);
     res.redirect('/Error');

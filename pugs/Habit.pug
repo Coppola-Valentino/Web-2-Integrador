@@ -22,8 +22,8 @@ html(lang="en")
                th Administrar habitacion
               each hab in Habits
                 -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
-                -var tipo = tipos.filter(tip => tip.IDTipo === hab.TipoID);
-                -var ala = alas.filter(al => al.IDAla === hab.AlaID);
+                -var tipo = tipos.find(tip => tip.IDTipo === hab.TipoID);
+                -var ala = alas.find(al => al.IDAla === hab.AlaID);
                 tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
                   td= hab.Nombre
                   td= ala.Nombre
@@ -31,7 +31,7 @@ html(lang="en")
                     each cama in camasDeHab
                       if cama.Paciente 
                         - var pac = pacientes.find(p => p.IDPaciente === cama.Paciente)
-                        td #{pac.Nombre} - #{pac.Genero} - ID: #{pac.IDPaciente} - Cama #{cama.IDCamas} - Prioridad #{pac.Prioridad}
+                        td #{pac.Nombre} - #{pac.Genero} - DNI: #{pac.DNI} - Cama #{cama.IDCamas}
                         if camasDeHab.length === 1
                           td Sin Cama 
                       else

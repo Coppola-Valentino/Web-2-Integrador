@@ -12,13 +12,13 @@ html(lang="en")
          h1 Registrar Usuario al sistema
          form(action=`/Users/Register` method="POST" id="formi" style="display: flex; flex-direction: column; gap: 1px;" )
            br
-           label(for="Usuario") Usuario:
+           label(for="Usuario") Usuario: 
             input(type="text" name="Usuario" id="Usuario" required autocomplete="off")
            br
-           label(for="Pass") Contraseña:
+           label(for="Pass") Contraseña: 
             input(type="password" name="Pass" id="Pass" required autocomplete="off")
            br
-           label(for="Rol") Rol de usuario:
+           label(for="Rol") Rol de usuario: 
             select(name="Rol" id="Rol" required)
              option(value="Admin") Admin
              option(value="Doctor") Doctor
@@ -28,7 +28,7 @@ html(lang="en")
            label(for="Especialidad") Especialidad 
             select(name="Especialidad" id="Especialidad" required)
              for spec in specs 
-              option(value=spec.IDEspecialidad) #{spec.Nombre}
+              option(value=spec.IDEspecialidades) #{spec.Nombre}
            br  
            button(class="btn btn-primary" type="submit") Guardar cambios
            br

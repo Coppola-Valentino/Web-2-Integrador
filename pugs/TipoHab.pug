@@ -13,11 +13,12 @@ html(lang="en")
          table 
           tr(style="border: 1px solid #ddd; background: rgb(170, 170, 170);")
            th Nombre
+           th Acciones
            each tipo in tipos
             tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
              td #{tipo.Nombre}
+             td
               a.btn.btn-info(href=`/Habit/EditTipo/${tipo.IDTipo}`) Editar
-              br
               a.btn.btn-warning(href=`/Habit/ElimTipo/${tipo.IDTipo}`) Eliminar
         div(class="Container-fluid text-center justify-content-center")      
          div(class="col btn btn-link" style="Padding-bottom: 40px;")              

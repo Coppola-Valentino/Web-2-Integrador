@@ -70,7 +70,7 @@ html(lang="en")
                           span(style="color: Blue;") No asignada 
                       td 
                         if (pac.cama)
-                          span Habitación #{pac.habitacion.IDHab} - #{pac.habitacion.Tipo}
+                          span Habitación #{pac.habitacion.Nombre}
                         else
                           span(style="color: Blue;") No asignada 
                         if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'  

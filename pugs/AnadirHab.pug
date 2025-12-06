@@ -14,13 +14,13 @@ html(lang="en")
            label(for="Nombre") Nombre/Numero de la Habitacion: 
            input(type="text" name="Nombre" id="Nombre" required)
            br
-           label(for="Tipo") Tipo de Habitacion:
-           select(name="Tipo" required)
+           label(for="Tipo") Tipo de Habitacion: 
+           select(name="Tipo" id="Tipo" required)
             each tipo in tipos
              option(value=tipo.IDTipo) #{tipo.Nombre}
            br
            label(for="Ala") Ala de la Habitacion: 
-           select(name="Ala" required)
+           select(name="Ala" id="Ala" required)
             each ala in alas
              option(value=ala.IDAla) #{ala.Nombre}
            br

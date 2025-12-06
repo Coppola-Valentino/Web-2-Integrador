@@ -82,13 +82,15 @@ html(lang="en")
                  select(name="MadreID" )
                   option(value=0 selected=(pac.MadreID === 0 || pac.MadreID === null || pac.MadreID === undefined)) Desconocido/Ninguno
                    for paci in pacientes
-                    option(value=paci.IDPaciente selected=(pac.MadreID == paci.IDPaciente)) #{paci.Nombre}
+                    if paci.IDPaciente != pac.IDPaciente
+                     option(value=paci.IDPaciente selected=(pac.MadreID == paci.IDPaciente)) #{paci.Nombre}
            br
            label(for="PadreID") Padre: 
                  select(name="PadreID" )
                   option(value=0 selected=(pac.PadreID === 0 || pac.PadreID === null || pac.PadreID === undefined)) Desconocido/Ninguno
                    for paci in pacientes 
-                    option(value=paci.IDPaciente selected=(pac.PadreID == paci.IDPaciente)) #{paci.Nombre}
+                    if paci.IDPaciente != pac.IDPaciente
+                     option(value=paci.IDPaciente selected=(pac.PadreID == paci.IDPaciente)) #{paci.Nombre}
            br
            label(for="Alergias") Alergias: 
            input(type="text" name="Alergias" id="Alergias" value=pac.Alergias)
@@ -112,7 +114,7 @@ html(lang="en")
                   alert('El DNI ya está registrado.');
                   event.preventDefault();
                  }
-                 if(dniInp.value.length > 8 || dniInp.value.length < 8) {
+                 if(dniInp.value.length > 8 || dniInp.value.length < 8 && !dniImp.disabled) {
                   alert('introduzca un DNI valido');
                   dniInp.value = '';
                   event.preventDefault();

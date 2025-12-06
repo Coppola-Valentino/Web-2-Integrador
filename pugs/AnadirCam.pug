@@ -14,7 +14,7 @@ html(lang="en")
            label(for="Habitacion") Habitación donde alojar la cama: 
            select(name="Habitacion" required)
              each Habit in HabitsDisp
-                 option(value=Habit.IDHab) Habitación #{Habit.IDHab} (#{Habit.Tipo})
+                 option(value=Habit.IDHab) Habitación #{Habit.IDHab} (#{Habit.Nombre})
            br       
            button(class="btn btn-primary" type="submit") Guardar cambios
            br
