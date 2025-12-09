@@ -68,7 +68,56 @@ const reqAuther = async (req, res, next) => {
     next();
 }
 
-const reqLv1 = (req, res, next) => {
+const reqMed = (req, res, next) => {
+    if (req.session.Rol !== 'Doctor') {
+        return res.redirect('/Permiso');
+    }
+    next();
+}
+
+const reqRec = (req, res, next) => {
+    if (req.session.Rol !== 'Recepcionista') {
+        return res.redirect('/Permiso');
+    }
+    next();
+}
+
+const reqAdm = (req, res, next) => {
+    if (req.session.Rol !== 'Admin') {
+        return res.redirect('/Permiso');
+    }
+    next();
+}
+
+const reqNoAdm = (req, res, next) => {
+    if (req.session.Rol !== 'Recepcionista' && req.session.Rol !== 'Doctor' && req.session.Rol !== 'Enfermero') {
+        return res.redirect('/Permiso');
+    }
+    next();
+}
+
+const reqMedYEnf = (req, res, next) => {
+    if (req.session.Rol !== 'Doctor' && req.session.Rol !== 'Enfermero') {
+        return res.redirect('/Permiso');
+    }
+    next();
+}
+
+const reqAdmYEnf = (req, res, next) => {
+    if (req.session.Rol !== 'Admin' && req.session.Rol !== 'Enfermero') {
+        return res.redirect('/Permiso');
+    }
+    next();
+}
+
+const reqEnfYRec = (req, res, next) => {
+    if (req.session.Rol !== 'Recepcionista' || req.session.Rol !== 'Enfermero') {
+        return res.redirect('/Permiso');
+    }
+    next();
+}
+
+/*const reqLv1 = (req, res, next) => {
     if (req.session.Rol !== 'Enfermero' && req.session.Rol !== 'Doctor' && req.session.Rol !== 'Admin') {
         return res.redirect('/Permiso');
     }
@@ -87,6 +136,6 @@ const reqLv3 = (req, res, next) => {
         return res.redirect('/Permiso');
     }
     next();
-}
+}*/
 
-module.exports = { reqAuther, auther, getUser, logout, reqLv1, reqLv2, reqLv3};
+module.exports = { reqAuther, auther, getUser, logout, reqMed, reqRec, reqAdm, reqMedYEnf, reqNoAdm, reqEnfYRec, reqAdmYEnf};

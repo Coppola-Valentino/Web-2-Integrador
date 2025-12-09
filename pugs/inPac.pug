@@ -50,10 +50,10 @@ html(lang="en")
                 th Seguro
                 th Cama asignada 
                 th Habitacion
-                if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'
+                if activeUser.Rol === 'Recepcionista' || activeUser.Rol === 'Doctor'
                  th(style="min-width: 60px;") Acciones
                 each pac in paciente
-                     tr(style="border: 1px solid #ddd; background: rgb(255, 255, 255);")
+                     tr(style="border: 2px solid #ddd; background: rgb(255, 255, 255);")
                       td= pac.Nombre
                       td= pac.Edad
                       td= pac.DNI
@@ -73,17 +73,18 @@ html(lang="en")
                           span Habitación #{pac.habitacion.Nombre}
                         else
                           span(style="color: Blue;") No asignada 
-                        if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero' || activeUser.Rol === 'Doctor'  
-                         td
+                        td  
+                         if activeUser.Rol === 'Recepcionista'  
                           a(href=`/inPac/${pac.IDPaciente}/editar`) Editar
                           br
-                          if activeUser.Rol === 'Admin' || activeUser.Rol === 'Doctor'
-                           if (!pac.cama)
-                            a(href=`/inPac/${pac.IDPaciente}/internar`) Internar
-                            br  
-                           if (pac.cama)
-                            a(href=`/inPac/${pac.IDPaciente}/AltaPac`) Dar de Alta
-                            br
+                         if activeUser.Rol === 'Doctor'
+                          if (!pac.cama)
+                           a(href=`/inPac/${pac.IDPaciente}/internar`) Internar
+                           br  
+                          if (pac.cama)
+                           a(href=`/inPac/${pac.IDPaciente}/AltaPac`) Dar de Alta
+                           br
             div(class="Container-fluid text-center justify-content-center")
              div(class="col btn btn-link" style="Padding-bottom: 40px;")
-              a.btn.btn-primary(href=`/inPac/anadir`) Admitir Paciente
+              if activeUser.Rol === 'Recepcionista'
+               a.btn.btn-primary(href=`/inPac/anadir`) Admitir Paciente

@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 const router = express.Router();
 const { Sequelize, DataTypes } = require('sequelize');
-const { getUser, logout, auther, reqAuther, reqLv1, reqLv2, reqLv3 } = require('./authent')
+const { getUser, logout, auther, reqAuther, reqMed, reqRec, reqAdm, reqNoAdm, reqMedYEnf, reqEnfYRec, reqAdmYEnf} = require('./authent')
 
 const { sequelize } = require('./db');
 
@@ -60,7 +60,7 @@ router.get('/Home', async (req, res) => {
     res.render('Home'); 
 });
 
-router.get('/inPac/:id/Historial', reqLv1 , async (req, res) => {
+router.get('/inPac/:id/Historial', reqMedYEnf , async (req, res) => {
   try {
     const pac = await Paciente.findByPk(req.params.id);
     res.render('histo', { pac });
@@ -70,7 +70,7 @@ router.get('/inPac/:id/Historial', reqLv1 , async (req, res) => {
   }
 });
 
-router.post('/inPac/:id/Historial', reqLv1, async (req, res) => {
+router.post('/inPac/:id/Historial', reqMedYEnf, async (req, res) => {
   try {
    await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
    res.redirect(`/inPac/${req.params.id}/Historial`);
@@ -80,7 +80,7 @@ router.post('/inPac/:id/Historial', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac', reqAuther , async (req, res) => {
+router.get('/inPac', reqNoAdm , async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
     const camas = await Camas.findAll();
@@ -102,7 +102,7 @@ router.get('/inPac', reqAuther , async (req, res) => {
   }
 });
 
-router.get(`/inPac/:id/internar`, reqLv2 , async (req, res) => {
+router.get(`/inPac/:id/internar`, reqMed , async (req, res) => {
   try {
     const pacS = await Paciente.findByPk(req.params.id);
     const pacT = await Paciente.findAll();
@@ -141,7 +141,7 @@ router.get(`/inPac/:id/internar`, reqLv2 , async (req, res) => {
   }
 });
 
-router.post('/inPac/:id/internar', reqLv2 , async (req, res) => {
+router.post('/inPac/:id/internar', reqMed , async (req, res) => {
   try {
     await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
     const pac = await Paciente.findByPk(req.params.id);
@@ -176,7 +176,7 @@ router.post('/inPac/:id/internar', reqLv2 , async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/AnadirAtencion/:idd', reqLv2, async (req, res) => {
+router.get('/inPac/:id/AnadirAtencion/:idd', reqMed, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);  
   const int = await HistInternacion.findByPk(req.params.idd);
@@ -188,7 +188,7 @@ router.get('/inPac/:id/AnadirAtencion/:idd', reqLv2, async (req, res) => {
   }
 });
 
-router.post('/inPac/:id/AnadirAtencion/:idd', reqLv2, async (req, res) => {
+router.post('/inPac/:id/AnadirAtencion/:idd', reqMed, async (req, res) => {
   try {
   const Tipo = req.body.tipo || req.query.tipo || 'Posterior';
   const plan = await PlanAtencion.create({
@@ -238,7 +238,7 @@ router.post('/inPac/:id/AnadirAtencion/:idd', reqLv2, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/AnadirEval', reqLv2, async (req, res) => {
+router.get('/inPac/:id/AnadirEval', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   res.render('AnadirEval', { pac});
@@ -248,7 +248,7 @@ router.get('/inPac/:id/AnadirEval', reqLv2, async (req, res) => {
   }
 });
 
-router.post('/inPac/:id/AnadirEval', reqLv2, async (req, res) => {
+router.post('/inPac/:id/AnadirEval', reqMedYEnf, async (req, res) => {
   try {
   await HistEvalFisica.create({
     PacID: req.params.id,
@@ -285,7 +285,7 @@ router.get('/Habitaciones', reqAuther , async (req, res) => {
   }
 });
 
-router.get('/Habit/anadir', reqLv3 , async (req, res) => {
+router.get('/Habit/anadir', reqAdm , async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
@@ -299,7 +299,7 @@ router.get('/Habit/anadir', reqLv3 , async (req, res) => {
   }
 });
 
-router.post('/Habit/anadir', reqLv3, async (req, res) => {
+router.post('/Habit/anadir', reqAdm, async (req, res) => {
   try {
     await Habitacion.create({    
     Nombre: req.body.Nombre,
@@ -313,7 +313,7 @@ router.post('/Habit/anadir', reqLv3, async (req, res) => {
   }
 });
 
-router.get('/Habit/anadirCam', reqLv3, async (req, res) => {
+router.get('/Habit/anadirCam', reqAdm, async (req, res) => {
   try {
     const habits = await Habitacion.findAll();
     const camas = await Camas.findAll();
@@ -329,7 +329,7 @@ router.get('/Habit/anadirCam', reqLv3, async (req, res) => {
   }
 });
 
-router.post('/Habit/anadirCam', reqLv3, async (req, res) => {
+router.post('/Habit/anadirCam', reqAdm, async (req, res) => {
   try {
     await Camas.create(req.body);
     res.redirect('/Habitaciones');
@@ -339,7 +339,7 @@ router.post('/Habit/anadirCam', reqLv3, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/AltaPac', reqLv2 , async (req, res) => {
+router.get('/inPac/:id/AltaPac', reqMed , async (req, res) => {
  try {
     const pac = await Paciente.findByPk(req.params.id);
     const int = await HistInternacion.findOne({where : { PacID: pac.IDPaciente }});
@@ -391,7 +391,7 @@ router.get('/inPac/:id/AltaPac', reqLv2 , async (req, res) => {
   res.redirect('/Habitaciones');
 });*/
 
-router.get('/Cama/:id/eliminar', reqLv3,async (req, res) => {
+router.get('/Cama/:id/eliminar', reqAdm,async (req, res) => {
  try {
    const cama = await Camas.findByPk(req.params.id);
    await Camas.destroy({ where: { IDCamas: req.params.id } });
@@ -410,7 +410,7 @@ router.get('/Cama/:id/eliminar', reqLv3,async (req, res) => {
   }
 });
 
-router.get('/Habit/:id/editar', reqLv1, async (req, res) => {
+router.get('/Habit/:id/editar', reqAdmYEnf, async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
     const hab = await Habitacion.findByPk(req.params.id);
@@ -424,7 +424,7 @@ router.get('/Habit/:id/editar', reqLv1, async (req, res) => {
   }
 });
 
-router.post('/Habit/:id/editar', reqLv1, async (req, res) => {
+router.post('/Habit/:id/editar', reqAdmYEnf, async (req, res) => {
   try {
    await Habitacion.update({
     Nombre: req.body.Nombre,
@@ -443,7 +443,7 @@ router.post('/Habit/:id/editar', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/Habit/:id/eliminar', reqLv3, async (req, res) => {
+router.get('/Habit/:id/eliminar', reqAdm, async (req, res) => {
  try{
   await Camas.destroy({ where: { Habitacion: req.params.id }})
   await Habitacion.destroy({ where: { IDHab: req.params.id } });
@@ -454,7 +454,7 @@ router.get('/Habit/:id/eliminar', reqLv3, async (req, res) => {
  }
 });
 
-router.get('/Emergencias', reqAuther, async (req, res) => {
+router.get('/Emergencias', reqRec, async (req, res) => {
   try {
     const pacientes = await Paciente.findAll();
     const Habits = await Habitacion.findAll();
@@ -467,7 +467,7 @@ router.get('/Emergencias', reqAuther, async (req, res) => {
   }
 });
 
-router.post('/Emergencias', reqAuther, async (req, res) => {
+router.post('/Emergencias', reqRec, async (req, res) => {
   try {
     if (req.body.Telefono === '') {
       delete req.body.Telefono;
@@ -480,7 +480,7 @@ router.post('/Emergencias', reqAuther, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/editar', reqAuther,async (req, res) => {
+router.get('/inPac/:id/editar', reqRec, async (req, res) => {
  try {
   const pac = await Paciente.findByPk(req.params.id);
   const pacientes = await Paciente.findAll(); 
@@ -492,7 +492,7 @@ router.get('/inPac/:id/editar', reqAuther,async (req, res) => {
  }
 });
 
-router.post('/inPac/:id/editar', reqAuther, async (req, res) => {
+router.post('/inPac/:id/editar', reqRec, async (req, res) => {
  try {
   await Paciente.update(req.body, { where: { IDPaciente: req.params.id } });
   const pac = await Paciente.findByPk(req.params.id);
@@ -558,7 +558,7 @@ router.post('/inPac/:id/editar', reqAuther, async (req, res) => {
  }
 });
 */
-router.get('/inPac/anadir', reqAuther, async (req, res) => {
+router.get('/inPac/anadir', reqRec, async (req, res) => {
   try{
     const pacientes = await Paciente.findAll();
     const dnis = pacientes.map(p => p.DNI).filter(dni => dni != null);
@@ -569,7 +569,7 @@ router.get('/inPac/anadir', reqAuther, async (req, res) => {
   }
 });
 
-router.post('/inPac/anadir', reqAuther, async (req, res) => {
+router.post('/inPac/anadir', reqRec, async (req, res) => {
   try {
     if (req.body.Telefono === '') {
       delete req.body.Telefono;
@@ -608,7 +608,7 @@ router.get('/Logout', reqAuther, logout, (req, res) => {
   res.redirect('/Login');
 });
 
-router.get('/Users', reqLv3, async (req, res) => {
+router.get('/Users', reqAdm, async (req, res) => {
   try {
     const USERS = await User.findAll();
     const specs = await Especialidades.findAll();
@@ -619,7 +619,7 @@ router.get('/Users', reqLv3, async (req, res) => {
   }
 });
 
-router.get('/Medics', reqAuther, async (req, res) => {
+router.get('/Medics', reqRec, async (req, res) => {
   try {
     const USERS = await User.findAll({where: {Rol: "Doctor"}});
     const specs = await Especialidades.findAll();
@@ -630,7 +630,7 @@ router.get('/Medics', reqAuther, async (req, res) => {
   }
 });
 
-router.get('/Users/:id/Eliminar', reqLv3, async (req, res) => {
+router.get('/Users/:id/Eliminar', reqAdm, async (req, res) => {
   try {
     await User.destroy({ where: { IDUser: req.params.id } })
     res.redirect('/Users');
@@ -640,7 +640,7 @@ router.get('/Users/:id/Eliminar', reqLv3, async (req, res) => {
   }
 });
 
-router.get('/Users/:id/Editar', reqLv3, async (req, res) => {
+router.get('/Users/:id/Editar', reqAdm, async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
     const specs = await Especialidades.findAll();
@@ -651,7 +651,7 @@ router.get('/Users/:id/Editar', reqLv3, async (req, res) => {
   }
 });
 
-router.post('/Users/:id/Editar', reqLv3, async (req, res) => {
+router.post('/Users/:id/Editar', reqAdm, async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
     await user.update({
@@ -667,7 +667,7 @@ router.post('/Users/:id/Editar', reqLv3, async (req, res) => {
   }
 });
 
-router.get('/Users/Register', reqLv3, async (req, res) => {
+router.get('/Users/Register', reqAdm, async (req, res) => {
   try {
     //const tUSERS = await User.findAll();
     //const USERS = tUSERS.map(u => u.Usuario);
@@ -679,7 +679,7 @@ router.get('/Users/Register', reqLv3, async (req, res) => {
   }
 });
 
-router.post('/Users/Register', reqLv3, async (req, res) => {
+router.post('/Users/Register', reqAdm, async (req, res) => {
   try {
     await User.create({
       Usuario: req.body.Usuario,
@@ -706,7 +706,7 @@ router.get('/About', async (req, res) => {
   res.render('About');
 });
 
-router.get('/inPac/:id/VistaMedica', reqAuther, async (req, res) => {
+router.get('/inPac/:id/VistaMedica', reqNoAdm, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   res.render('VistaMedica', { pac });
@@ -716,7 +716,7 @@ router.get('/inPac/:id/VistaMedica', reqAuther, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/PlanAtencionPac', reqLv1, async (req, res) => {
+router.get('/inPac/:id/PlanAtencionPac', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const plans = await PlanAtencion.findAll({ where: { PacID: pac.IDPaciente } });
@@ -736,7 +736,7 @@ router.get('/inPac/:id/PlanAtencionPac', reqLv1, async (req, res) => {
   }
 });
 //quizas /inPac/:id/:idd/PlanAtencion? id por paciente y idd por plan
-router.get('/inPac/:id/PlanAtencion/:idd', reqLv1, async (req, res) => {
+router.get('/inPac/:id/PlanAtencion/:idd', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const plan = await PlanAtencion.findByPk(req.params.idd);
@@ -748,7 +748,7 @@ router.get('/inPac/:id/PlanAtencion/:idd', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/Internaciones/:idd', reqLv1, async (req, res) => {
+router.get('/inPac/:id/Internaciones/:idd', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const intern = await HistInternacion.findByPk(req.params.idd);
@@ -762,7 +762,7 @@ router.get('/inPac/:id/Internaciones/:idd', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/InternacionPac', reqLv1, async (req, res) => {
+router.get('/inPac/:id/InternacionPac', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const interns = await HistInternacion.findAll({ where: { PacID: req.params.id } });
@@ -788,7 +788,7 @@ router.get('/inPac/:id/InternacionPac', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/HistAltasPac', reqLv1, async (req, res) => {
+router.get('/inPac/:id/HistAltasPac', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const users = await User.findAll();
@@ -807,7 +807,7 @@ router.get('/inPac/:id/HistAltasPac', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/EvalFisica/:idd', reqLv1, async (req, res) => {
+router.get('/inPac/:id/EvalFisica/:idd', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const eva = await HistEvalFisica.findByPk(req.params.idd);
@@ -819,7 +819,7 @@ router.get('/inPac/:id/EvalFisica/:idd', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/EvalFisicasPac', reqLv1, async (req, res) => {
+router.get('/inPac/:id/EvalFisicasPac', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const evals = await HistEvalFisica.findAll({ where: { PacID: pac.IDPaciente } });
@@ -838,7 +838,7 @@ router.get('/inPac/:id/EvalFisicasPac', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/CitasPac', reqAuther, async (req, res) => {
+router.get('/inPac/:id/CitasPac', reqNoAdm, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const citas = await Citas.findAll({ where: { PacID: pac.IDPaciente } });
@@ -857,7 +857,7 @@ router.get('/inPac/:id/CitasPac', reqAuther, async (req, res) => {
   }
 });
 
-router.get('/CitasSelect/:id', reqAuther, async (req, res) => {
+router.get('/CitasSelect/:id', reqNoAdm, async (req, res) => {
   try {
   const med = await User.findByPk(req.params.id);
   const citas = await Citas.findAll({ where: { MedicID: med.IDUser } });
@@ -876,7 +876,7 @@ router.get('/CitasSelect/:id', reqAuther, async (req, res) => {
   }
 });
 
-router.get('/CitasMed', reqLv2, async (req, res) => {
+router.get('/CitasMed', reqMed, async (req, res) => {
   try {
   const med = await User.findByPk(req.session.IDUser);
   const citas = await Citas.findAll({ where: { MedicID: med.IDUser } });
@@ -895,7 +895,7 @@ router.get('/CitasMed', reqLv2, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/Cirujia/:idd', reqLv1, async (req, res) => {
+router.get('/inPac/:id/Cirujia/:idd', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const ciru = await HistCirujias.findByPk(req.params.idd);
@@ -907,7 +907,7 @@ router.get('/inPac/:id/Cirujia/:idd', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/CirujiasPac', reqLv1, async (req, res) => {
+router.get('/inPac/:id/CirujiasPac', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);
   const cirus = await HistCirujias.findAll({ where: { PacID: pac.IDPaciente } });
@@ -926,7 +926,7 @@ router.get('/inPac/:id/CirujiasPac', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/Medicamentos/:idd', reqLv1, async (req, res) => {
+router.get('/inPac/:id/Medicamentos/:idd', reqMedYEnf, async (req, res) => {
   try {
   const pac = await Paciente.findByPk(req.params.id);  
   const plan = await PlanAtencion.findByPk(req.params.idd);
@@ -938,7 +938,7 @@ router.get('/inPac/:id/Medicamentos/:idd', reqLv1, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/AnadirMedicamento/:idd', reqLv2, async (req, res) => {
+router.get('/inPac/:id/AnadirMedicamento/:idd', reqMedYEnf, async (req, res) => {
   try {
     const pac = await Paciente.findByPk(req.params.id);
     const plan = await PlanAtencion.findByPk(req.params.idd);
@@ -949,7 +949,7 @@ router.get('/inPac/:id/AnadirMedicamento/:idd', reqLv2, async (req, res) => {
   }
 });
 
-router.post('/inPac/:id/AnadirMedicamento/:idd', reqLv2, async (req, res) => {
+router.post('/inPac/:id/AnadirMedicamento/:idd', reqMedYEnf, async (req, res) => {
 try {
   const pac = await Paciente.findByPk(req.params.id);
   const plan = await PlanAtencion.findByPk(req.params.idd);
@@ -967,7 +967,7 @@ try {
   }
 });
 
-router.get('/inPac/:id/AnadirCirujia', reqLv2, async (req, res) =>{
+router.get('/inPac/:id/AnadirCirujia', reqMed, async (req, res) =>{
 try {
   const pac = await Paciente.findByPk(req.params.id)
   res.render('AnadirCirujia', {pac})
@@ -977,7 +977,7 @@ try {
   }
 });
 
-router.post('/inPac/:id/AnadirCirujia', reqLv2, async (req, res) => {
+router.post('/inPac/:id/AnadirCirujia', reqMed, async (req, res) => {
 try {
   const pac = await Paciente.findByPk(req.params.id);
   await HistCirujias.create({
@@ -996,7 +996,7 @@ try {
   }
 });
 
-router.get('/inPac/:id/AnadirCita', reqAuther, async (req, res) =>{
+router.get('/inPac/:id/AnadirCita', reqRec, async (req, res) =>{
 try {
   const pac = await Paciente.findByPk(req.params.id)
   const meds = await User.findAll({where: {Rol : "Doctor"}})
@@ -1007,7 +1007,7 @@ try {
   }
 });
 
-router.post('/inPac/:id/AnadirCita', reqAuther, async (req, res) => {
+router.post('/inPac/:id/AnadirCita', reqRec, async (req, res) => {
 try {
   const pac = await Paciente.findByPk(req.params.id);
   await Citas.create({
@@ -1025,7 +1025,7 @@ try {
   }
 });
 
-router.get('/inPac/:id/EditCita/:idd', reqAuther, async (req, res) =>{
+router.get('/inPac/:id/EditCita/:idd', reqRec, async (req, res) =>{
 try {
   const pac = await Paciente.findByPk(req.params.id)
   const cita = await Citas.findByPk(req.params.idd);
@@ -1037,7 +1037,7 @@ try {
   }
 });
 
-router.post('/inPac/:id/EditCita/:idd', reqAuther, async (req, res) => {
+router.post('/inPac/:id/EditCita/:idd', reqRec, async (req, res) => {
 try {
   const pac = await Paciente.findByPk(req.params.id);
   await Citas.update({
@@ -1055,7 +1055,7 @@ try {
   }
 });
 
-router.get('/inPac/:id/EditAtencion/:idd', reqLv2, async (req, res) => {
+router.get('/inPac/:id/EditAtencion/:idd', reqMedYEnf, async (req, res) => {
   try {
     const pac = await Paciente.findByPk(req.params.id);
     const plan = await PlanAtencion.findByPk(req.params.idd);
@@ -1066,7 +1066,7 @@ router.get('/inPac/:id/EditAtencion/:idd', reqLv2, async (req, res) => {
   }
 });
 
-router.post('/inPac/:id/EditAtencion/:idd', reqLv2, async (req, res) => {
+router.post('/inPac/:id/EditAtencion/:idd', reqMedYEnf, async (req, res) => {
   try {
    await PlanAtencion.update({
     FechaInicio: req.body.FechaInicio,
@@ -1084,7 +1084,7 @@ router.post('/inPac/:id/EditAtencion/:idd', reqLv2, async (req, res) => {
   }
 });
 
-router.get('/inPac/:id/EditMedicamento/:idd/:iddd', reqLv1, async (req, res) => {
+router.get('/inPac/:id/EditMedicamento/:idd/:iddd', reqMedYEnf, async (req, res) => {
   try {
     const pac = await Paciente.findByPk(req.params.id);
     const plan = await PlanAtencion.findByPk(req.params.idd);
@@ -1096,7 +1096,7 @@ router.get('/inPac/:id/EditMedicamento/:idd/:iddd', reqLv1, async (req, res) => 
   }
 });
 
-router.post('/inPac/:id/EditMedicamento/:idd/:iddd', reqLv1, async (req, res) => {
+router.post('/inPac/:id/EditMedicamento/:idd/:iddd', reqMedYEnf, async (req, res) => {
   try {
    await Medicamento.update({
     Nombre: req.body.Nombre,
@@ -1113,7 +1113,7 @@ router.post('/inPac/:id/EditMedicamento/:idd/:iddd', reqLv1, async (req, res) =>
   }
 });
 
-router.get('/inPac/:id/ElimMedicamento/:idd/:iddd', reqLv1, async (req, res) => {
+router.get('/inPac/:id/ElimMedicamento/:idd/:iddd', reqMedYEnf, async (req, res) => {
   try {
     await Medicamento.destroy({where: {IDMedicamento: req.params.iddd}});
    const pac = await Paciente.findByPk(req.params.id);
@@ -1126,7 +1126,7 @@ router.get('/inPac/:id/ElimMedicamento/:idd/:iddd', reqLv1, async (req, res) => 
 });
 
 
-router.get('/Habit/Ala', reqAuther , async (req, res) => {
+router.get('/Habit/Ala', reqAdm, async (req, res) => {
   try {
     const alas = await Ala.findAll();
     res.render('Alas', {alas});
@@ -1136,7 +1136,7 @@ router.get('/Habit/Ala', reqAuther , async (req, res) => {
   }
 });
 
-router.get('/Habit/TipoHab', reqAuther , async (req, res) => {
+router.get('/Habit/TipoHab', reqAdm, async (req, res) => {
   try {
     const tipos = await TipoHab.findAll();
     res.render('TipoHab', {tipos});
@@ -1146,7 +1146,7 @@ router.get('/Habit/TipoHab', reqAuther , async (req, res) => {
   }
 });
 
-router.get('/Users/Especialidades', reqAuther , async (req, res) => {
+router.get('/Users/Especialidades', reqAdm, async (req, res) => {
   try {
     const specs = await Especialidades.findAll();
     res.render('Especialidades', {specs});
@@ -1156,7 +1156,7 @@ router.get('/Users/Especialidades', reqAuther , async (req, res) => {
   }
 });
 
-router.get('/Habit/AnadirAla', reqLv3 , async (req, res) => {
+router.get('/Habit/AnadirAla', reqAdm, async (req, res) => {
   try {
     const alas = await Ala.findAll();
     const noms = alas.map(a => a.Nombre).filter(Nombre => Nombre != null);
@@ -1167,7 +1167,7 @@ router.get('/Habit/AnadirAla', reqLv3 , async (req, res) => {
   }
 });
 
-router.get('/Habit/AnadirTipo', reqLv3 , async (req, res) => {
+router.get('/Habit/AnadirTipo', reqAdm, async (req, res) => {
   try {
     const tipos = await TipoHab.findAll();
     const noms = tipos.map(a => a.Nombre).filter(Nombre => Nombre != null);
@@ -1178,7 +1178,7 @@ router.get('/Habit/AnadirTipo', reqLv3 , async (req, res) => {
   }
 });
 
-router.get('/Users/AnadirEspec', reqLv3 , async (req, res) => {
+router.get('/Users/AnadirEspec', reqAdm, async (req, res) => {
   try {
     const specs = await Especialidades.findAll();
     const noms = specs.map(a => a.Nombre).filter(Nombre => Nombre != null);
@@ -1189,7 +1189,7 @@ router.get('/Users/AnadirEspec', reqLv3 , async (req, res) => {
   }
 });
 
-router.get('/Habit/EditAla/:id', reqLv3 , async (req, res) => {
+router.get('/Habit/EditAla/:id', reqAdm, async (req, res) => {
   try {
     const ala = await Ala.findByPk(req.params.id);
     const alas = await Ala.findAll();
@@ -1201,7 +1201,7 @@ router.get('/Habit/EditAla/:id', reqLv3 , async (req, res) => {
   }
 });
 
-router.get('/Habit/EditTipo/:id', reqLv3 , async (req, res) => {
+router.get('/Habit/EditTipo/:id', reqAdm, async (req, res) => {
   try {
     const tipo = await TipoHab.findByPk(req.params.id);
     const tipos = await TipoHab.findAll();
@@ -1213,7 +1213,7 @@ router.get('/Habit/EditTipo/:id', reqLv3 , async (req, res) => {
   }
 });
 
-router.get('/Users/EditEspec/:id', reqLv3 , async (req, res) => {
+router.get('/Users/EditEspec/:id', reqAdm, async (req, res) => {
   try {
     const spec = await Especialidades.findByPk(req.params.id);
     const specs = await Especialidades.findAll();
@@ -1225,7 +1225,7 @@ router.get('/Users/EditEspec/:id', reqLv3 , async (req, res) => {
   }
 });
 
-router.post('/Habit/AnadirAla', reqLv3 , async (req, res) => {
+router.post('/Habit/AnadirAla', reqAdm, async (req, res) => {
   try {
     Ala.create(req.body);
     res.redirect('/Habit/Ala');
@@ -1235,7 +1235,7 @@ router.post('/Habit/AnadirAla', reqLv3 , async (req, res) => {
   }
 });
 
-router.post('/Habit/AnadirTipo', reqLv3 , async (req, res) => {
+router.post('/Habit/AnadirTipo', reqAdm, async (req, res) => {
   try {
     TipoHab.create(req.body);
     res.redirect('/Habit/TipoHab');
@@ -1245,7 +1245,7 @@ router.post('/Habit/AnadirTipo', reqLv3 , async (req, res) => {
   }
 });
 
-router.post('/Users/AnadirEspec', reqLv3 , async (req, res) => {
+router.post('/Users/AnadirEspec', reqAdm, async (req, res) => {
   try {
     Especialidades.create(req.body);
     res.redirect('/Users/Especialidades');
@@ -1255,7 +1255,7 @@ router.post('/Users/AnadirEspec', reqLv3 , async (req, res) => {
   }
 });
 
-router.post('/Habit/EditAla/:id', reqLv3 , async (req, res) => {
+router.post('/Habit/EditAla/:id', reqAdm, async (req, res) => {
   try {
     Ala.update(req.body, {where: {IDAla: req.params.id}});
     res.redirect('/Habit/Ala');
@@ -1265,7 +1265,7 @@ router.post('/Habit/EditAla/:id', reqLv3 , async (req, res) => {
   }
 });
 
-router.post('/Habit/EditTipo/:id', reqLv3 , async (req, res) => {
+router.post('/Habit/EditTipo/:id', reqAdm, async (req, res) => {
   try {
     TipoHab.update(req.body, {where: {IDTipo: req.params.id}});
     res.redirect('/Habit/TipoHab');
@@ -1275,7 +1275,7 @@ router.post('/Habit/EditTipo/:id', reqLv3 , async (req, res) => {
   }
 });
 
-router.post('/Users/EditEspec/:id', reqLv3 , async (req, res) => {
+router.post('/Users/EditEspec/:id', reqAdm, async (req, res) => {
   try {
     Especialidades.update(req.body, {where: {IDEspecialidades: req.params.id}});
     res.redirect('/Users/Especialidades');
@@ -1285,7 +1285,7 @@ router.post('/Users/EditEspec/:id', reqLv3 , async (req, res) => {
   }
 });
 
-router.get('/Users/ElimEspec/:id', reqLv3 , async (req, res) => {
+router.get('/Users/ElimEspec/:id', reqAdm, async (req, res) => {
   try {
     Especialidades.destroy({where: {IDEspecialidades: req.params.id}});
     res.redirect('/Users/Especialidades');
@@ -1295,7 +1295,7 @@ router.get('/Users/ElimEspec/:id', reqLv3 , async (req, res) => {
   }
 });
 
-router.get('/Habit/ElimAla/:id', reqLv3 , async (req, res) => {
+router.get('/Habit/ElimAla/:id', reqAdm, async (req, res) => {
   try {
     Ala.destroy({where: {IDAla: req.params.id}});
     res.redirect('/Habit/Ala');
@@ -1305,7 +1305,7 @@ router.get('/Habit/ElimAla/:id', reqLv3 , async (req, res) => {
   }
 });
 
-router.get('/Habit/ElimTipo/:id', reqLv3 , async (req, res) => {
+router.get('/Habit/ElimTipo/:id', reqAdm, async (req, res) => {
   try {
     TipoHab.destroy({where: {IDTipo: req.params.id}});
     res.redirect('/Habit/TipoHab');

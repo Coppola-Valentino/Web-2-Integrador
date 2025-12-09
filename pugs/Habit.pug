@@ -17,8 +17,9 @@ html(lang="en")
               th Cama 1
               th Cama 2
               th(style="min-width: 120px;") Higenizado  
-              if activeUser && activeUser.Rol === 'Admin'
+              if activeUser.Rol === 'Admin' 
                th(style="min-width: 130px;") Camas 
+              if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero'
                th Administrar habitacion
               each hab in Habits
                 -var camasDeHab = camas.filter(cama => cama.Habitacion === hab.IDHab);
@@ -59,13 +60,13 @@ html(lang="en")
                         -var pac = pacientes.find(p => p.IDPaciente === cama.Paciente);
                         a(href=`/inPac/${pac.IDPaciente}/AltaPac`) Dar de Alta
                         br 
-                  if activeUser && activeUser.Rol === 'Admin' 
+                  if activeUser.Rol === 'Admin' || activeUser.Rol === 'Enfermero'
                    td
                     a(href=`/Habit/${hab.IDHab}/editar`) Editar
                     br
                     -var otrasCamas = camas.filter(c => c.Habitacion === camas.Habitacion && c.IDCama !== camas.IDCama);
                     -var todasLibres = camasDeHab.every(c => c.Paciente === null || c.Paciente === undefined)
-                    if todasLibres
+                    if todasLibres && activeUser.Rol === 'Admin'
                      a(href=`/Habit/${hab.IDHab}/eliminar`) Eliminar     
           br
           if activeUser && (activeUser.Rol === 'Admin')

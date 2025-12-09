@@ -26,9 +26,10 @@ html(lang="en")
              td #{ciru.Tipo}
              th 
               a.btn.btn-danger(href=`/inPac/${pac.IDPaciente}/Cirujia/${ciru.IDCiru}`) Ver Detalles
-        div(class="Container-fluid text-center justify-content-center")      
-         div(class="col btn btn-link" style="Padding-bottom: 40px;")              
-          a.btn.btn-success(href=`/inPac/${pac.IDPaciente}/AnadirCirujia`) Añadir Cirujia al Historial
-          br
+        div(class="Container-fluid text-center justify-content-center")
+         if activeUser.Rol === 'Medico'
+          div(class="col btn btn-link" style="Padding-bottom: 40px;")              
+           a.btn.btn-success(href=`/inPac/${pac.IDPaciente}/AnadirCirujia`) Añadir Cirujia al Historial
+           br
          div(class="col btn btn-link" style="Padding-bottom: 40px;") 
           a.btn.btn-warning(href=`/inPac/${pac.IDPaciente}/VistaMedica`) Volver
